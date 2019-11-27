@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/outer"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/inner">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search'N Share"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:id="@+id/title"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintTop_toTopOf="@id/inner"
+            app:layout_constraintEnd_toEndOf="@id/inner"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/search"
+            android:weightSum="4"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="@id/inner">
+
+            <EditText
+                android:id="@+id/text_field"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="20dp"/>
+
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="SEARCH"
+                android:textSize="15dp"
+                android:layout_weight="3" />
+            <!--        android:onClick="showSearch"-->
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/backbutton"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintRight_toLeftOf="@id/radioButtons"
+            app:layout_constraintBottom_toBottomOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@id/search"/>
+        <!--            android:onClick="previousPage"/>-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/radioButtons"
+            app:layout_constraintLeft_toRightOf="@id/backButton"
+            app:layout_constraintRight_toLeftOf="@id/forwardButton"
+            app:layout_constraintBottom_toBottomOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@id/search">
+
+            <RadioButton
+                android:id="@+id/Twitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:text="Twitter">
+                <!--                android:onClick="onRadioButtonClicked">-->
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/Reddit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:text="Reddit">
+                <!--                android:onClick="onRadioButtonClicked">-->
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/Flickr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:text="Flickr">
+                <!--                android:onClick="onRadioButtonClicked">-->
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/News"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:text="News">
+                <!--                android:onClick="onRadioButtonClicked">-->
+            </RadioButton>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/forwardButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/forwardbutton"
+            app:layout_constraintLeft_toRightOf="@id/radioButtons"
+            app:layout_constraintEnd_toEndOf="@id/inner"
+            app:layout_constraintBottom_toBottomOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@id/search"/>
+        <!--            android:onClick="nextPage"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
