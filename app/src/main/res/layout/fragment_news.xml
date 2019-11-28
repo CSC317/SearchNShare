@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/news_outer"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="News"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:id="@+id/news_title"
+        app:layout_constraintStart_toStartOf="@id/news_outer"
+        app:layout_constraintTop_toTopOf="@id/news_outer"
+        app:layout_constraintEnd_toEndOf="@id/news_outer"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/Nsearch"
+        android:weightSum="4"
+        app:layout_constraintStart_toStartOf="@id/news_outer"
+        app:layout_constraintTop_toBottomOf="@id/news_title"
+        app:layout_constraintEnd_toEndOf="@id/news_outer">
+
+        <EditText
+            android:id="@+id/news_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="20dp"/>
+
+        <Button
+            android:id="@+id/search_news"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="SEARCH"
+            android:textSize="15dp"
+            android:layout_weight="3" />
+        <!--            android:onClick="showSearch"-->
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/backbutton"
+        app:layout_constraintStart_toStartOf="@id/news_outer"
+        app:layout_constraintRight_toLeftOf="@id/article_list"
+        app:layout_constraintBottom_toBottomOf="@id/news_outer"
+        app:layout_constraintTop_toBottomOf="@id/Nsearch"/>
+
+    <ListView
+        android:id="@+id/article_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/backButton"
+        app:layout_constraintRight_toLeftOf="@id/forwardButton"
+        app:layout_constraintBottom_toBottomOf="@id/news_outer"
+        app:layout_constraintTop_toBottomOf="@id/Nsearch"/>
+
+    <Button
+        android:id="@+id/forwardButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/forwardbutton"
+        app:layout_constraintLeft_toRightOf="@id/article_list"
+        app:layout_constraintEnd_toEndOf="@id/news_outer"
+        app:layout_constraintBottom_toBottomOf="@id/news_outer"
+        app:layout_constraintTop_toBottomOf="@id/Nsearch"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
