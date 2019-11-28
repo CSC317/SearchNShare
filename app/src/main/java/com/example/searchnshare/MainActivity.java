@@ -92,4 +92,84 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public void nextFragment(View v) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (v.getId() == R.id.TForwardButton) {
+            RedditFragment frag = new RedditFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else if (v.getId() == R.id.RForwardButton) {
+            FlickrFragment frag = new FlickrFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else if (v.getId() == R.id.FForwardButton) {
+            NewsFragment frag = new NewsFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else if (v.getId() == R.id.NForwardButton) {
+            FavoritesFragment frag = new FavoritesFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        // Favorites forward button
+        else {
+            MenuFragment frag = new MenuFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+    }
+
+    public void previousFragment(View v) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (v.getId() == R.id.TBackButton) {
+            MenuFragment frag = new MenuFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else if (v.getId() == R.id.RBackButton) {
+            TwitterFragment frag = new TwitterFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else if (v.getId() == R.id.FBackButton) {
+            RedditFragment frag = new RedditFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else if (v.getId() == R.id.NBackButton) {
+            FlickrFragment frag = new FlickrFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        // Favorites back button
+        else {
+            NewsFragment frag = new NewsFragment();
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+    }
 }
