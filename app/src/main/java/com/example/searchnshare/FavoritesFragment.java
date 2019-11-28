@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FlickrFragment extends Fragment {
+public class FavoritesFragment extends Fragment {
 
     public Activity containerActivity = null;
 
-    public FlickrFragment() {}
+    public FavoritesFragment() {}
 
     /**
      * Sets the container activity to the activity passed as a parameter.
@@ -33,7 +33,7 @@ public class FlickrFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_flickr, container, false);
+        View v = inflater.inflate(R.layout.fragment_favorites, container, false);
         return v;
     }
 
