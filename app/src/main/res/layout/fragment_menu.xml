@@ -86,13 +86,13 @@
                 android:id="@+id/search_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Search with..."
+                android:text="@string/searchButton"
                 android:textSize="35dp"
                 app:layout_constraintStart_toStartOf="@id/inner"
                 app:layout_constraintEnd_toEndOf="@id/inner"
                 app:layout_constraintBottom_toTopOf="@id/Twitter"
-                app:layout_constraintTop_toBottomOf="@id/search"/>
-<!--                android:onClick="showSearch"-->
+                app:layout_constraintTop_toBottomOf="@id/search"
+                android:onClick="showSearch"/>
 
             <RadioButton
                 android:id="@+id/Twitter"
@@ -100,10 +100,11 @@
                 android:layout_height="wrap_content"
                 android:textSize="30dp"
                 android:text="Twitter"
+                android:checked="true"
+                android:onClick="onRadioButtonClicked"
                 app:layout_constraintStart_toStartOf="@id/inner"
                 app:layout_constraintBottom_toTopOf="@id/Reddit"
                 app:layout_constraintTop_toBottomOf="@id/search_button">
-                <!--                android:onClick="onRadioButtonClicked">-->
             </RadioButton>
 
             <RadioButton
@@ -112,10 +113,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="30dp"
                 android:text="Reddit"
+                android:onClick="onRadioButtonClicked"
                 app:layout_constraintStart_toStartOf="@id/inner"
                 app:layout_constraintBottom_toTopOf="@id/Flickr"
                 app:layout_constraintTop_toBottomOf="@id/Twitter">
-                <!--                android:onClick="onRadioButtonClicked">-->
             </RadioButton>
 
             <RadioButton
@@ -124,10 +125,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="30dp"
                 android:text="Flickr"
+                android:onClick="onRadioButtonClicked"
                 app:layout_constraintStart_toStartOf="@id/inner"
                 app:layout_constraintBottom_toTopOf="@id/News"
                 app:layout_constraintTop_toBottomOf="@id/Reddit">
-                <!--                android:onClick="onRadioButtonClicked">-->
             </RadioButton>
 
             <RadioButton
@@ -136,10 +137,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="30dp"
                 android:text="News"
+                android:onClick="onRadioButtonClicked"
                 app:layout_constraintStart_toStartOf="@id/inner"
                 app:layout_constraintBottom_toBottomOf="@id/inner"
                 app:layout_constraintTop_toBottomOf="@id/Flickr">
-                <!--                android:onClick="onRadioButtonClicked">-->
             </RadioButton>
 
 <!--        </LinearLayout>-->
