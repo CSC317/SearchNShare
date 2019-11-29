@@ -19,36 +19,36 @@
         app:layout_constraintTop_toTopOf="@id/favorites_outer"
         app:layout_constraintEnd_toEndOf="@id/favorites_outer"/>
 
-    <Button
-        android:id="@+id/FavBackButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/backbutton"
-        android:onClick="previousFragment"
-        app:layout_constraintStart_toStartOf="@id/favorites_outer"
-        app:layout_constraintRight_toLeftOf="@id/favorites_list"
-        app:layout_constraintBottom_toBottomOf="@id/favorites_outer"
-        app:layout_constraintTop_toBottomOf="@id/favorites_title"/>
+<!--    <Button-->
+<!--        android:id="@+id/FavBackButton"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:background="@drawable/backbutton"-->
+<!--        android:onClick="previousFragment"-->
+<!--        app:layout_constraintStart_toStartOf="@id/favorites_outer"-->
+<!--        app:layout_constraintRight_toLeftOf="@id/favorites_list"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/favorites_outer"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/favorites_title"/>-->
 
     <ListView
         android:id="@+id/favorites_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/FavBackButton"
-        app:layout_constraintRight_toLeftOf="@id/FavForwardButton"
-        app:layout_constraintBottom_toBottomOf="@id/favorites_outer"
-        app:layout_constraintTop_toBottomOf="@id/favorites_title"/>
-
-    <Button
-        android:id="@+id/FavForwardButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/forwardbutton"
-        android:onClick="nextFragment"
-        app:layout_constraintLeft_toRightOf="@id/favorites_list"
+        app:layout_constraintStart_toStartOf="@id/favorites_outer"
         app:layout_constraintEnd_toEndOf="@id/favorites_outer"
         app:layout_constraintBottom_toBottomOf="@id/favorites_outer"
         app:layout_constraintTop_toBottomOf="@id/favorites_title"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/FavForwardButton"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:background="@drawable/forwardbutton"-->
+<!--        android:onClick="nextFragment"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/favorites_list"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/favorites_outer"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/favorites_outer"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/favorites_title"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

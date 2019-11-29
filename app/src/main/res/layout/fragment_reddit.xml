@@ -47,36 +47,36 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/RBackButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/backbutton"
-        android:onClick="previousFragment"
-        app:layout_constraintStart_toStartOf="@id/reddit_outer"
-        app:layout_constraintRight_toLeftOf="@id/reddit_post_list"
-        app:layout_constraintBottom_toBottomOf="@id/reddit_outer"
-        app:layout_constraintTop_toBottomOf="@id/Rsearch"/>
+<!--    <Button-->
+<!--        android:id="@+id/RBackButton"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:background="@drawable/backbutton"-->
+<!--        android:onClick="previousFragment"-->
+<!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
+<!--        app:layout_constraintRight_toLeftOf="@id/reddit_post_list"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/reddit_outer"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/Rsearch"/>-->
 
     <ListView
         android:id="@+id/reddit_post_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/RBackButton"
-        app:layout_constraintRight_toLeftOf="@id/RForwardButton"
-        app:layout_constraintBottom_toBottomOf="@id/reddit_outer"
-        app:layout_constraintTop_toBottomOf="@id/Rsearch"/>
-
-    <Button
-        android:id="@+id/RForwardButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/forwardbutton"
-        android:onClick="nextFragment"
-        app:layout_constraintLeft_toRightOf="@id/reddit_post_list"
+        app:layout_constraintStart_toStartOf="@id/reddit_outer"
         app:layout_constraintEnd_toEndOf="@id/reddit_outer"
         app:layout_constraintBottom_toBottomOf="@id/reddit_outer"
         app:layout_constraintTop_toBottomOf="@id/Rsearch"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/RForwardButton"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:background="@drawable/forwardbutton"-->
+<!--        android:onClick="nextFragment"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/reddit_post_list"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/reddit_outer"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/reddit_outer"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/Rsearch"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
