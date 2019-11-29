@@ -47,36 +47,36 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/NBackButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/backbutton"
-        android:onClick="previousFragment"
-        app:layout_constraintStart_toStartOf="@id/news_outer"
-        app:layout_constraintRight_toLeftOf="@id/article_list"
-        app:layout_constraintBottom_toBottomOf="@id/news_outer"
-        app:layout_constraintTop_toBottomOf="@id/Nsearch"/>
+<!--    <Button-->
+<!--        android:id="@+id/NBackButton"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:background="@drawable/backbutton"-->
+<!--        android:onClick="previousFragment"-->
+<!--        app:layout_constraintStart_toStartOf="@id/news_outer"-->
+<!--        app:layout_constraintRight_toLeftOf="@id/article_list"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/news_outer"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/Nsearch"/>-->
 
     <ListView
         android:id="@+id/article_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/NBackButton"
-        app:layout_constraintRight_toLeftOf="@id/NForwardButton"
-        app:layout_constraintBottom_toBottomOf="@id/news_outer"
-        app:layout_constraintTop_toBottomOf="@id/Nsearch"/>
-
-    <Button
-        android:id="@+id/NForwardButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/forwardbutton"
-        android:onClick="nextFragment"
-        app:layout_constraintLeft_toRightOf="@id/article_list"
+        app:layout_constraintStart_toStartOf="@id/news_outer"
         app:layout_constraintEnd_toEndOf="@id/news_outer"
         app:layout_constraintBottom_toBottomOf="@id/news_outer"
         app:layout_constraintTop_toBottomOf="@id/Nsearch"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/NForwardButton"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:background="@drawable/forwardbutton"-->
+<!--        android:onClick="nextFragment"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/article_list"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/news_outer"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/news_outer"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/Nsearch"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
