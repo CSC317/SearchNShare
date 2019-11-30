@@ -70,6 +70,10 @@ public class NewsFragment extends Fragment {
         return;
     }
 
+    public void showFragSearch() {
+        new GetNewsTask().execute();
+    }
+
     /**
      * Fills the ListView with the websites and authors of certain articles with the given search term.
      */

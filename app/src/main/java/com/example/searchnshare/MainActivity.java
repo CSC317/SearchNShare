@@ -13,6 +13,12 @@ import android.widget.RadioButton;
 public class MainActivity extends AppCompatActivity {
 
     public static String search = "";
+    public MenuFragment menuFrag;
+    public TwitterFragment twitterFrag;
+    public RedditFragment redditFrag;
+    public FlickrFragment flickrFrag;
+    public NewsFragment newsFrag;
+    public FavoritesFragment favFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         MenuFragment frag = new MenuFragment();
+        menuFrag = frag;
         frag.setContainerActivity(this);
         transaction.replace(R.id.main_inner, frag);
         transaction.addToBackStack(null);
@@ -32,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (item.getItemId() == R.id.twitter_item) {
             TwitterFragment frag = new TwitterFragment();
+            twitterFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -39,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.reddit_item) {
             RedditFragment frag = new RedditFragment();
+            redditFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -46,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.flickr_item) {
             FlickrFragment frag = new FlickrFragment();
+            flickrFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -53,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.news_item) {
             NewsFragment frag = new NewsFragment();
+            newsFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -60,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.favorites_item) {
             FavoritesFragment frag = new FavoritesFragment();
+            favFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -67,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             MenuFragment frag = new MenuFragment();
+            menuFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -114,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (Twitter.isChecked()) {
             TwitterFragment frag = new TwitterFragment();
+            twitterFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -121,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (Reddit.isChecked()) {
             RedditFragment frag = new RedditFragment();
+            redditFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -128,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (Flickr.isChecked()) {
             FlickrFragment frag = new FlickrFragment();
+            flickrFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -135,12 +151,36 @@ public class MainActivity extends AppCompatActivity {
         }
         else  {
             NewsFragment frag = new NewsFragment();
+            newsFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
             transaction.commit();
         }
 
+    }
+
+    public void showFragSearch(View v) {
+        if (v.getId() == R.id.search_twitter) {
+            EditText field = findViewById(R.id.twitter_field);
+            search = field.getText().toString();
+            String Do = "RUN TWITTER ASYNC TASK";
+        }
+        else if (v.getId() == R.id.search_reddit) {
+            EditText field = findViewById(R.id.reddit_field);
+            search = field.getText().toString();
+            String Do = "RUN REDDIT ASYNC TASK";
+        }
+        else if (v.getId() == R.id.search_flickr) {
+            EditText field = findViewById(R.id.flickr_field);
+            search = field.getText().toString();
+            flickrFrag.showFragSearch();
+        }
+        else if (v.getId() == R.id.search_news) {
+            EditText field = findViewById(R.id.news_field);
+            search = field.getText().toString();
+            newsFrag.showFragSearch();
+        }
     }
 
 //    public void nextFragment(View v) {
