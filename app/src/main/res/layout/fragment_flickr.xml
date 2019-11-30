@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,20 +14,20 @@
         android:text="Flickr"
         android:textSize="30dp"
         android:gravity="center"
-        android:id="@+id/flickr_title"
-        app:layout_constraintStart_toStartOf="@id/flickr_outer"
-        app:layout_constraintTop_toTopOf="@id/flickr_outer"
-        app:layout_constraintEnd_toEndOf="@id/flickr_outer"/>
+        android:id="@+id/flickr_title"/>
+<!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
+<!--        app:layout_constraintTop_toTopOf="@id/flickr_outer"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/flickr_outer"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/Fsearch"
-        android:weightSum="4"
-        app:layout_constraintStart_toStartOf="@id/flickr_outer"
-        app:layout_constraintTop_toBottomOf="@id/flickr_title"
-        app:layout_constraintEnd_toEndOf="@id/flickr_outer">
+        android:weightSum="4">
+<!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/flickr_title"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/flickr_outer">-->
 
         <EditText
             android:id="@+id/flickr_field"
@@ -61,11 +61,11 @@
     <ListView
         android:id="@+id/image_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/flickr_outer"
-        app:layout_constraintEnd_toEndOf="@id/flickr_outer"
-        app:layout_constraintBottom_toBottomOf="@id/flickr_outer"
-        app:layout_constraintTop_toBottomOf="@id/Fsearch"/>
+        android:layout_height="wrap_content"/>
+<!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/flickr_outer"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/flickr_outer"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/Fsearch"/>-->
 
 <!--    <Button-->
 <!--        android:id="@+id/FForwardButton"-->
@@ -79,4 +79,4 @@
 <!--        app:layout_constraintTop_toBottomOf="@id/Fsearch"/>-->
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
