@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/searchButton"
                 android:textSize="35dp"
+                android:textAllCaps="false"
                 app:layout_constraintStart_toStartOf="@id/inner"
                 app:layout_constraintEnd_toEndOf="@id/inner"
                 app:layout_constraintBottom_toTopOf="@id/Twitter"
