@@ -6,7 +6,7 @@
         android:title="Main Menu"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/twitter_item"
+    <item android:id="@+id/meme_item"
         android:title="Twitter"
         app:showAsAction="never"/>
 

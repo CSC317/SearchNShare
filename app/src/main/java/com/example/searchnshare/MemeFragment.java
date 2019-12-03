@@ -17,11 +17,13 @@ import android.widget.EditText;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TwitterFragment extends Fragment {
+public class MemeFragment extends Fragment {
 
     public Activity containerActivity = null;
+    public String memeUrl = "http://version1.api.memegenerator.net//Generators_Search?q=spongebob&pageIndex=0&pageSize=25&apiKey=demo";
+    public String APIkey = "demo";
 
-    public TwitterFragment() {}
+    public MemeFragment() {}
 
     /**
      * Sets the container activity to the activity passed as a parameter.
@@ -37,8 +39,8 @@ public class TwitterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-        View v = inflater.inflate(R.layout.fragment_twitter, container, false);
-        EditText field = v.findViewById(R.id.twitter_field);
+        View v = inflater.inflate(R.layout.fragment_meme, container, false);
+        EditText field = v.findViewById(R.id.meme_field);
         field.setText(MainActivity.search);
         return v;
     }

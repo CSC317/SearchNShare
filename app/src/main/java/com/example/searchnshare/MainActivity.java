@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String search = "";
     public MenuFragment menuFrag;
-    public TwitterFragment twitterFrag;
+    public MemeFragment memeFrag;
     public RedditFragment redditFrag;
     public FlickrFragment flickrFrag;
     public NewsFragment newsFrag;
@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (item.getItemId() == R.id.twitter_item) {
-            TwitterFragment frag = new TwitterFragment();
-            twitterFrag = frag;
+        if (item.getItemId() == R.id.meme_item) {
+            MemeFragment frag = new MemeFragment();
+            memeFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -91,43 +91,43 @@ public class MainActivity extends AppCompatActivity {
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
 
-        RadioButton Twitter = (RadioButton) findViewById(R.id.Twitter);
+        RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         RadioButton News = (RadioButton) findViewById(R.id.News);
         // Check which radio button was clicked
-        if (view.getId() == R.id.Twitter && checked) {
+        if (view.getId() == R.id.Meme && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
             News.setChecked(false);
         }
         if (view.getId() == R.id.Reddit && checked) {
-            Twitter.setChecked(false);
+            Meme.setChecked(false);
             Flickr.setChecked(false);
             News.setChecked(false);
         }
         if (view.getId() == R.id.Flickr && checked) {
             Reddit.setChecked(false);
-            Twitter.setChecked(false);
+            Meme.setChecked(false);
             News.setChecked(false);
         }
         if (view.getId() == R.id.News && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
-            Twitter.setChecked(false);
+            Meme.setChecked(false);
         }
     }
 
     public void showSearch(View view) {
         EditText textField = (EditText) findViewById(R.id.text_field);
-        RadioButton Twitter = (RadioButton) findViewById(R.id.Twitter);
+        RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         search = textField.getText().toString();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (Twitter.isChecked()) {
-            TwitterFragment frag = new TwitterFragment();
-            twitterFrag = frag;
+        if (Meme.isChecked()) {
+            MemeFragment frag = new MemeFragment();
+            memeFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showFragSearch(View v) {
-        if (v.getId() == R.id.search_twitter) {
-            EditText field = findViewById(R.id.twitter_field);
+        if (v.getId() == R.id.search_meme) {
+            EditText field = findViewById(R.id.meme_field);
             search = field.getText().toString();
             String Do = "RUN TWITTER ASYNC TASK";
         }

@@ -16,7 +16,7 @@ public class CustomAdapter extends ArrayAdapter<FlickrRowItem> {
     Context context;
 
     public CustomAdapter(Context context, int resourceId,
-                                 List<FlickrRowItem> items) {
+                         List<FlickrRowItem> items) {
         super(context, resourceId, items);
         this.context = context;
     }

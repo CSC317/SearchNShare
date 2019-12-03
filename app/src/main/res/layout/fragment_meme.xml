@@ -4,17 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/twitter_outer"
+    android:id="@+id/meme_outer"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Twitter"
+        android:text="Meme"
         android:textSize="30dp"
         android:gravity="center"
-        android:id="@+id/twitter_title"/>
+        android:id="@+id/meme_title"/>
 <!--        app:layout_constraintStart_toStartOf="@id/twitter_outer"-->
 <!--        app:layout_constraintTop_toTopOf="@id/twitter_outer"-->
 <!--        app:layout_constraintEnd_toEndOf="@id/twitter_outer"/>-->
@@ -23,21 +23,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/Tsearch"
+        android:id="@+id/Msearch"
         android:weightSum="4">
 <!--        app:layout_constraintStart_toStartOf="@id/twitter_outer"-->
 <!--        app:layout_constraintTop_toBottomOf="@id/twitter_title"-->
 <!--        app:layout_constraintEnd_toEndOf="@id/twitter_outer">-->
 
         <EditText
-            android:id="@+id/twitter_field"
+            android:id="@+id/meme_field"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="20dp"/>
 
         <Button
-            android:id="@+id/search_twitter"
+            android:id="@+id/search_meme"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="SEARCH"
@@ -60,7 +60,7 @@
 <!--        app:layout_constraintTop_toBottomOf="@id/Tsearch"/>-->
 
     <ListView
-        android:id="@+id/tweets_list"
+        android:id="@+id/memes_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 <!--        app:layout_constraintStart_toStartOf="@id/twitter_outer"-->
