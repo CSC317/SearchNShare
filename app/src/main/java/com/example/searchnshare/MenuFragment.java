@@ -34,6 +34,7 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
         EditText field = v.findViewById(R.id.text_field);
         field.setText(MainActivity.search);
