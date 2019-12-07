@@ -128,16 +128,12 @@ public class RedditFragment extends Fragment {
         protected JSONObject doInBackground(Object[] objects) {
             try {
                 String json = "" ;
-
-                //randString = Long.toString(System.currentTimeMillis());
                 URL url = new URL(RedditURL+RedditURLTerm+endURL);
                 try {
-                    // System.out.println(url.toString());
                     BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                     String hold;
                     while ((hold = in.readLine()) != null){
                         json += hold;
-                        //System.out.println(hold);
                     }
                     JSONObject jsonObject = new JSONObject(json);
                     in.close();

@@ -117,7 +117,7 @@ public class MemeFragment extends Fragment {
                     if (memeList.getJSONObject(i).has("imageUrl")) {
                         String title = memeList.getJSONObject(i).getString("displayName");
                         String imageUrl = memeList.getJSONObject(i).getString("imageUrl");
-                        System.out.println(title);
+                        //System.out.println(title);
                         System.out.println(imageUrl);
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
 
