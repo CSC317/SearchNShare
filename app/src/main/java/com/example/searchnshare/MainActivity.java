@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
             EditText field = findViewById(R.id.meme_field);
             search = field.getText().toString();
             String Do = "RUN TWITTER ASYNC TASK";
+            memeFrag.showFragSearch();
         }
         else if (v.getId() == R.id.search_reddit) {
             EditText field = findViewById(R.id.reddit_field);

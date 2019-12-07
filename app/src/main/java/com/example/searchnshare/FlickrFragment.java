@@ -15,10 +15,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -149,7 +146,6 @@ public class FlickrFragment extends Fragment {
                     }
                 }
                 return rowItems;
-//                return imageList;
 
             } catch (Exception e) { e.printStackTrace(); }
 
@@ -160,23 +156,19 @@ public class FlickrFragment extends Fragment {
          *
          *
          * @param aList a List of HashMaps for the simpleAdapter.
-         */
-        @Override
+         */@Override
         protected void onPostExecute(List<FlickrRowItem> aList) {
             try {
                 String[] from = {"flickr_row_title", "flickr_row_image"};
                 int[] to = {R.id.flickr_row_title, R.id.flickr_row_image};
 
-//                SimpleAdapter simpleAdapter =
-//                        new SimpleAdapter(containerActivity, aList,
-//                                R.layout.flickr_row, from, to);
+
 
                 CustomAdapter adapter = new CustomAdapter(containerActivity,
                         R.layout.flickr_row, aList);
 
 
                 ListView imageListView = (ListView) containerActivity.findViewById(R.id.image_list);
-//                tierListView.setAdapter(simpleAdapter);
                 imageListView.setAdapter(adapter);
 
 

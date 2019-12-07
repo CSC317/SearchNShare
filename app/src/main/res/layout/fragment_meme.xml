@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/meme_outer"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -15,9 +14,6 @@
         android:textSize="30dp"
         android:gravity="center"
         android:id="@+id/meme_title"/>
-<!--        app:layout_constraintStart_toStartOf="@id/twitter_outer"-->
-<!--        app:layout_constraintTop_toTopOf="@id/twitter_outer"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/twitter_outer"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,9 +21,7 @@
         android:orientation="horizontal"
         android:id="@+id/Msearch"
         android:weightSum="4">
-<!--        app:layout_constraintStart_toStartOf="@id/twitter_outer"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/twitter_title"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/twitter_outer">-->
+
 
         <EditText
             android:id="@+id/meme_field"
@@ -44,40 +38,10 @@
             android:textSize="15dp"
             android:onClick="showFragSearch"
             android:layout_weight="3" />
-<!--            android:onClick="showSearch"-->
 
     </LinearLayout>
-
-<!--    <Button-->
-<!--        android:id="@+id/TBackButton"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:background="@drawable/backbutton"-->
-<!--        android:onClick="previousFragment"-->
-<!--        app:layout_constraintStart_toStartOf="@id/twitter_outer"-->
-<!--        app:layout_constraintRight_toLeftOf="@id/tweets_list"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/twitter_outer"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/Tsearch"/>-->
-
     <ListView
         android:id="@+id/memes_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-<!--        app:layout_constraintStart_toStartOf="@id/twitter_outer"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/twitter_outer"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/twitter_outer"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/Tsearch"/>-->
-
-<!--    <Button-->
-<!--        android:id="@+id/TForwardButton"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:background="@drawable/forwardbutton"-->
-<!--        android:onClick="nextFragment"-->
-<!--        app:layout_constraintLeft_toRightOf="@id/tweets_list"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/twitter_outer"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/twitter_outer"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/Tsearch"/>-->
-
-
 </LinearLayout>

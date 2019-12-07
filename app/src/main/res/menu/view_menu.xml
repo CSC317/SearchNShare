@@ -7,7 +7,7 @@
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/meme_item"
-        android:title="Twitter"
+        android:title="Meme"
         app:showAsAction="never"/>
 
     <item android:id="@+id/reddit_item"
