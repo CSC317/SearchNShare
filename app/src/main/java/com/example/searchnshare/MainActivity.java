@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -19,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
     public FlickrFragment flickrFrag;
     public NewsFragment newsFrag;
     public FavoritesFragment favFrag;
+
+    private EditText searchEdit; // EditText of the search Term
+    private String searchText; // String reference to the search term
+    private WebView myWebView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +123,42 @@ public class MainActivity extends AppCompatActivity {
             Flickr.setChecked(false);
             Twitter.setChecked(false);
         }
+    }
+
+    public void redditSearch(View v){
+        searchEdit = findViewById(R.id.reddit_field);
+        searchText = searchEdit.getText().toString();
+        if (redditFrag == null)
+            return;
+        if (searchText.contains(" ")) {
+            String[] searchTerms = searchText.split(" ");
+            searchText = "";
+            for (int i = 0; i<searchTerms.length;i++){
+                searchText += searchTerms[i];
+                searchText += "+";
+            }
+        }
+        redditFrag.newSearchRequest(searchText);
+    }
+
+    @Override
+    public void onBackPressed() {
+        myWebView = findViewById(R.id.webView);
+        if (myWebView == null)
+            super.onBackPressed();
+        else if (myWebView.canGoBack()) {
+            myWebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public void openSubreddit(View v){
+        redditFrag.openSubreddit();
+    }
+
+    public void redditWebViewOpen(View v){
+        redditFrag.loadWebView();
     }
 
     public void showSearch(View view) {
