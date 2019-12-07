@@ -61,16 +61,16 @@
                 android:textSize="35dp"
                 app:layout_constraintStart_toStartOf="@id/inner"
                 app:layout_constraintEnd_toEndOf="@id/inner"
-                app:layout_constraintBottom_toTopOf="@id/Twitter"
+                app:layout_constraintBottom_toTopOf="@id/Meme"
                 app:layout_constraintTop_toBottomOf="@id/search"
                 android:onClick="showSearch"/>
 
             <RadioButton
-                android:id="@+id/Twitter"
+                android:id="@+id/Meme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="30dp"
-                android:text="Twitter"
+                android:text="Meme"
                 android:checked="true"
                 android:onClick="onRadioButtonClicked"
                 app:layout_constraintStart_toStartOf="@id/inner"
@@ -87,7 +87,7 @@
                 android:onClick="onRadioButtonClicked"
                 app:layout_constraintStart_toStartOf="@id/inner"
                 app:layout_constraintBottom_toTopOf="@id/Flickr"
-                app:layout_constraintTop_toBottomOf="@id/Twitter">
+                app:layout_constraintTop_toBottomOf="@id/Meme">
             </RadioButton>
 
             <RadioButton

@@ -1,6 +1,7 @@
 package com.example.searchnshare;
 
 import android.app.Activity;
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class CustomAdapter extends ArrayAdapter<FlickrRowItem> {
+public class MemeAdapter extends ArrayAdapter<MemeRowItem> {
 
     Context context;
 
-    public CustomAdapter(Context context, int resourceId,
-                         List<FlickrRowItem> items) {
+    public MemeAdapter(Context context, int resourceId,
+                         List<MemeRowItem> items) {
         super(context, resourceId, items);
         this.context = context;
     }
@@ -28,15 +29,15 @@ public class CustomAdapter extends ArrayAdapter<FlickrRowItem> {
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        FlickrRowItem rowItem = getItem(position);
+        MemeRowItem rowItem = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.flickr_row, null);
+            convertView = mInflater.inflate(R.layout.meme_row, null);
             holder = new ViewHolder();
-            holder.txtTitle = (TextView) convertView.findViewById(R.id.flickr_row_title);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.flickr_row_image);
+            holder.txtTitle = (TextView) convertView.findViewById(R.id.meme_row_title);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.meme_row_image);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();

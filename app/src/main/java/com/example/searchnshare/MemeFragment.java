@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -34,13 +35,15 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FlickrFragment extends Fragment {
-
+public class MemeFragment extends Fragment {
     public Activity containerActivity = null;
-    public String urlBeginning = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=c68268937007bf1cc8ac4be2d67276b0&text=";
-    public String urlEnd = "&extras=url_c%2C+date_upload&per_page=30&format=json&nojsoncallback=1";
+    public String memeUrl = "http://version1.api.memegenerator.net//Generators_Search?q=";
+    public String APIkey = "&pageIndex=0&pageSize=25&apiKey=demo";
 
-    public FlickrFragment() {}
+    //TYPE IN + IN BETWEEN SPACES OF A SEARCH
+
+    public MemeFragment() {
+    }
 
     /**
      * Sets the container activity to the activity passed as a parameter.
@@ -56,10 +59,10 @@ public class FlickrFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-        View v = inflater.inflate(R.layout.fragment_flickr, container, false);
-        EditText field = v.findViewById(R.id.flickr_field);
+        View v = inflater.inflate(R.layout.fragment_meme, container, false);
+        EditText field = v.findViewById(R.id.meme_field);
         field.setText(MainActivity.search);
-        new GetImagesTask().execute();
+        //new GetMemesTask().execute();
         return v;
     }
 
@@ -69,13 +72,6 @@ public class FlickrFragment extends Fragment {
         return;
     }
 
-    /**
-     * Returns a bitmap for the given URL as a parameter.
-     *
-     * @param src is a URl as a string.
-     *
-     * @return a bitmap for the given URL.
-     */
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
@@ -90,29 +86,19 @@ public class FlickrFragment extends Fragment {
             return null;
         }
     }
-
     public void showFragSearch() {
-        new GetImagesTask().execute();
+        new MemeFragment.GetMemesTask().execute();
     }
 
-    public class GetImagesTask extends AsyncTask<Object, Void, List<FlickrRowItem>> {
-
-        /**
-         * Creates a new JSON object with the current url with the given search term.
-         * Fills the contents of a String[][] with the articles information for later use.
-         * Uses a simpleAdapter for conversion into the ListView.
-         *
-         * @param objs
-         * @return the List of HashMaps for the simpleAdapter.
-         */
+    public class GetMemesTask extends AsyncTask<Object, Void, List<MemeRowItem>> {
         @Override
-        protected List<FlickrRowItem> doInBackground(Object[] objs) {
+        protected List<MemeRowItem> doInBackground(Object[] objs) {
             try {
 
                 String json = "";
                 String line;
 
-                URL url = new URL(urlBeginning + MainActivity.search + urlEnd);
+                URL url = new URL(memeUrl + MainActivity.search + APIkey);
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                 while ((line = in.readLine()) != null) {
@@ -121,59 +107,50 @@ public class FlickrFragment extends Fragment {
                 in.close();
 
                 JSONObject jsonObject = new JSONObject(json);
-                JSONObject photos = jsonObject.getJSONObject("photos");
-                JSONArray photoList = photos.getJSONArray("photo");
+                JSONArray memeList = jsonObject.getJSONArray("result");
 
 
+                List<HashMap<String, String>> memeArrayList = new ArrayList<HashMap<String, String>>();
+                List<MemeRowItem> rowItems = new ArrayList<>();
 
-                List<HashMap<String, String>> imageList = new ArrayList<HashMap<String, String>>();
-                List<FlickrRowItem> rowItems = new ArrayList<>();
-
-                for (int i = 0; i < photoList.length(); i++) {
-                    if (photoList.getJSONObject(i).has("url_c")) {
-                        String title = photoList.getJSONObject(i).getString("title");
-                        String imageUrl = photoList.getJSONObject(i).getString("url_c");
+                for (int i = 0; i < memeList.length(); i++) {
+                    if (memeList.getJSONObject(i).has("imageUrl")) {
+                        String title = memeList.getJSONObject(i).getString("displayName");
+                        String imageUrl = memeList.getJSONObject(i).getString("imageUrl");
+                        System.out.println(title);
+                        System.out.println(imageUrl);
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
 
-                        FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
+                        MemeRowItem rowItem = new MemeRowItem(title, imageBitmap);
                         rowItems.add(rowItem);
 
-
                         HashMap<String, String> hm = new HashMap<String, String>();
-                        hm.put("flickr_row_title", title);
-                        hm.put("flickr_row_image", imageBitmap.toString());
-                        imageList.add(hm);
+                        hm.put("meme_row_title", title);
+                        hm.put("meme_row_image", imageBitmap.toString());
+                        memeArrayList.add(hm);
                     }
+
                 }
                 return rowItems;
-
-            } catch (Exception e) { e.printStackTrace(); }
-
-            return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        return null;
         }
-
-        /**
-         *
-         *
-         * @param aList a List of HashMaps for the simpleAdapter.
-         */@Override
-        protected void onPostExecute(List<FlickrRowItem> aList) {
+        @Override
+        protected void onPostExecute(List<MemeRowItem> aList) {
             try {
-                String[] from = {"flickr_row_title", "flickr_row_image"};
-                int[] to = {R.id.flickr_row_title, R.id.flickr_row_image};
+                String[] from = {"meme_row_title", "meme_row_image"};
+                int[] to = {R.id.meme_row_title, R.id.meme_row_image};
 
+               MemeAdapter adapter = new MemeAdapter(containerActivity,
+                        R.layout.meme_row, aList);
 
-
-                CustomAdapter adapter = new CustomAdapter(containerActivity,
-                        R.layout.flickr_row, aList);
-
-
-                ListView imageListView = (ListView) containerActivity.findViewById(R.id.image_list);
+                ListView imageListView = (ListView) containerActivity.findViewById(R.id.memes_list);
                 imageListView.setAdapter(adapter);
-
 
             } catch (Exception e) { e.printStackTrace(); }
         }
     }
-
 }
+

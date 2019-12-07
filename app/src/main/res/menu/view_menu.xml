@@ -6,8 +6,8 @@
         android:title="Main Menu"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/twitter_item"
-        android:title="Twitter"
+    <item android:id="@+id/meme_item"
+        android:title="Meme"
         app:showAsAction="never"/>
 
     <item android:id="@+id/reddit_item"
