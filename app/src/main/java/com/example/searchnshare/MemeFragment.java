@@ -62,7 +62,7 @@ public class MemeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_meme, container, false);
         EditText field = v.findViewById(R.id.meme_field);
         field.setText(MainActivity.search);
-        //new GetMemesTask().execute();
+        new GetMemesTask().execute();
         return v;
     }
 
