@@ -113,7 +113,7 @@ public class MemeFragment extends Fragment {
                 List<HashMap<String, String>> memeArrayList = new ArrayList<HashMap<String, String>>();
                 List<MemeRowItem> rowItems = new ArrayList<>();
 
-                for (int i = 0; i < memeList.length(); i++) {
+                for (int i = 0; i <5; i++) {
                     if (memeList.getJSONObject(i).has("imageUrl")) {
                         String title = memeList.getJSONObject(i).getString("displayName");
                         String imageUrl = memeList.getJSONObject(i).getString("imageUrl");
