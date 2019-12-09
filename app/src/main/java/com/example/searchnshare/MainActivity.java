@@ -183,6 +183,16 @@ public class MainActivity extends AppCompatActivity {
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
             transaction.commit();
+            searchText = search;
+            if (searchText.contains(" ")) {
+                String[] searchTerms = searchText.split(" ");
+                searchText = "";
+                for (int i = 0; i<searchTerms.length;i++){
+                    searchText += searchTerms[i];
+                    searchText += "+";
+                }
+            }
+            redditFrag.initialSearchRequest(searchText);
         }
         else if (Flickr.isChecked()) {
             FlickrFragment frag = new FlickrFragment();
@@ -213,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
         else if (v.getId() == R.id.search_reddit) {
             EditText field = findViewById(R.id.reddit_field);
             search = field.getText().toString();
-            String Do = "RUN REDDIT ASYNC TASK";
+            redditFrag.newSearchRequest(search);
         }
         else if (v.getId() == R.id.search_flickr) {
             EditText field = findViewById(R.id.flickr_field);
