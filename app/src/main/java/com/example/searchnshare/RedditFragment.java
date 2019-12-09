@@ -196,6 +196,7 @@ public class RedditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_reddit, container, false);
         redditListView = v.findViewById(R.id.reddit_post_list);
         try {
@@ -217,6 +218,10 @@ public class RedditFragment extends Fragment {
                     fragTransaction.commit();
                 }
             });
+            EditText et = (EditText) v.findViewById(R.id.reddit_field);
+            et.setText(MainActivity.search);
+
+            newSearchRequest(MainActivity.search);
             return v;
         }
         catch (Exception e){

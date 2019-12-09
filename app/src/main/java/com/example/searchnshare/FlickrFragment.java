@@ -38,7 +38,7 @@ public class FlickrFragment extends Fragment {
 
     public Activity containerActivity = null;
     public String urlBeginning = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=c68268937007bf1cc8ac4be2d67276b0&text=";
-    public String urlEnd = "&extras=url_c%2C+date_upload&per_page=30&format=json&nojsoncallback=1";
+    public String urlEnd = "&extras=url_c%2C+date_upload&per_page=10&format=json&nojsoncallback=1";
 
     public FlickrFragment() {}
 
@@ -83,7 +83,9 @@ public class FlickrFragment extends Fragment {
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
+            System.out.println("Im here");
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            input.close();
             return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
@@ -133,8 +135,9 @@ public class FlickrFragment extends Fragment {
                     if (photoList.getJSONObject(i).has("url_c")) {
                         String title = photoList.getJSONObject(i).getString("title");
                         String imageUrl = photoList.getJSONObject(i).getString("url_c");
-                        Bitmap imageBitmap = getBitmapFromURL(imageUrl);
 
+                        Bitmap imageBitmap = getBitmapFromURL(imageUrl);
+                        System.out.println("Hello?");
                         FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
                         rowItems.add(rowItem);
 

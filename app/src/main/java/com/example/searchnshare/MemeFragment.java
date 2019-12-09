@@ -62,7 +62,7 @@ public class MemeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_meme, container, false);
         EditText field = v.findViewById(R.id.meme_field);
         field.setText(MainActivity.search);
-        //new GetMemesTask().execute();
+        new GetMemesTask().execute();
         return v;
     }
 
@@ -72,14 +72,18 @@ public class MemeFragment extends Fragment {
         return;
     }
 
-    public static Bitmap getBitmapFromURL(String src) {
+    public Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            System.out.println("POOOOP");
             connection.setDoInput(true);
             connection.connect();
+            System.out.println("POOOOP");
             InputStream input = connection.getInputStream();
+            System.out.println("POOOOP");
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            input.close();
             return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,9 +116,13 @@ public class MemeFragment extends Fragment {
 
                 List<HashMap<String, String>> memeArrayList = new ArrayList<HashMap<String, String>>();
                 List<MemeRowItem> rowItems = new ArrayList<>();
+                int length = 10;
+                if (memeList.length() < length) {
+                    length = memeList.length();
+                }
 
-                for (int i = 0; i < memeList.length(); i++) {
-                    if (memeList.getJSONObject(i).has("imageUrl")) {
+                for (int i = 0; i < length; i++) {
+//                    if (memeList.getJSONObject(i).has("imageUrl")) {
                         String title = memeList.getJSONObject(i).getString("displayName");
                         String imageUrl = memeList.getJSONObject(i).getString("imageUrl");
                         System.out.println(title);
@@ -128,7 +136,7 @@ public class MemeFragment extends Fragment {
                         hm.put("meme_row_title", title);
                         hm.put("meme_row_image", imageBitmap.toString());
                         memeArrayList.add(hm);
-                    }
+                    //}
 
                 }
                 return rowItems;
