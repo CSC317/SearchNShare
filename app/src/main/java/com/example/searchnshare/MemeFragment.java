@@ -71,14 +71,18 @@ public class MemeFragment extends Fragment {
         return;
     }
 
-    public static Bitmap getBitmapFromURL(String src) {
+    public Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            System.out.println("POOOOP");
             connection.setDoInput(true);
             connection.connect();
+            System.out.println("POOOOP");
             InputStream input = connection.getInputStream();
+            System.out.println("POOOOP");
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            input.close();
             return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
@@ -119,11 +123,16 @@ public class MemeFragment extends Fragment {
 
                 List<HashMap<String, String>> memeArrayList = new ArrayList<HashMap<String, String>>();
                 List<MemeRowItem> rowItems = new ArrayList<>();
+                int length = 10;
+                if (memeList.length() < length) {
+                    length = memeList.length();
+                }
 
                 for (int i = 0; i < 15; i++) {
                     if (memeList.getJSONObject(i).has("url")) {
                         String title = memeList.getJSONObject(i).getString("title");
                         String imageUrl = memeList.getJSONObject(i).getString("url");
+
                         System.out.println(title);
                         System.out.println(imageUrl);
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
@@ -136,6 +145,7 @@ public class MemeFragment extends Fragment {
                         hm.put("meme_row_image", imageBitmap.toString());
                         memeArrayList.add(hm);
                     }
+
                 }
                 return rowItems;
             } catch (Exception e) {
