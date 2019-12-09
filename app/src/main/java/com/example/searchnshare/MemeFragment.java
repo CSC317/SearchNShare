@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -97,8 +96,17 @@ public class MemeFragment extends Fragment {
 
                 String json = "";
                 String line;
+                String searchText = MainActivity.search;
 
-                URL url = new URL(memeUrl + MainActivity.search + APIkey);
+                if (searchText.contains(" ")) {
+                    String[] searchTerms = searchText.split(" ");
+                    searchText = "";
+                    for (int i = 0; i<searchTerms.length;i++){
+                        searchText += searchTerms[i];
+                        searchText += "+";
+                    }
+                }
+                URL url = new URL(memeUrl + searchText + APIkey);
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                 while ((line = in.readLine()) != null) {
@@ -108,7 +116,6 @@ public class MemeFragment extends Fragment {
 
                 JSONObject jsonObject = new JSONObject(json);
                 JSONArray memeList = jsonObject.getJSONArray("memes");
-
 
                 List<HashMap<String, String>> memeArrayList = new ArrayList<HashMap<String, String>>();
                 List<MemeRowItem> rowItems = new ArrayList<>();
@@ -129,7 +136,6 @@ public class MemeFragment extends Fragment {
                         hm.put("meme_row_image", imageBitmap.toString());
                         memeArrayList.add(hm);
                     }
-
                 }
                 return rowItems;
             } catch (Exception e) {
