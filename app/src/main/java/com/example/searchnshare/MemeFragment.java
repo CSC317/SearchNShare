@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -37,8 +36,8 @@ import java.util.List;
  */
 public class MemeFragment extends Fragment {
     public Activity containerActivity = null;
-    public String memeUrl = "http://version1.api.memegenerator.net//Generators_Search?q=";
-    public String APIkey = "&pageIndex=0&pageSize=25&apiKey=demo";
+    public String memeUrl = "https://meme-api.herokuapp.com/gimme/";
+    public String APIkey = "/15";
 
     //TYPE IN + IN BETWEEN SPACES OF A SEARCH
 
@@ -101,8 +100,17 @@ public class MemeFragment extends Fragment {
 
                 String json = "";
                 String line;
+                String searchText = MainActivity.search;
 
-                URL url = new URL(memeUrl + MainActivity.search + APIkey);
+                if (searchText.contains(" ")) {
+                    String[] searchTerms = searchText.split(" ");
+                    searchText = "";
+                    for (int i = 0; i<searchTerms.length;i++){
+                        searchText += searchTerms[i];
+                        searchText += "+";
+                    }
+                }
+                URL url = new URL(memeUrl + searchText + APIkey);
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                 while ((line = in.readLine()) != null) {
@@ -111,8 +119,7 @@ public class MemeFragment extends Fragment {
                 in.close();
 
                 JSONObject jsonObject = new JSONObject(json);
-                JSONArray memeList = jsonObject.getJSONArray("result");
-
+                JSONArray memeList = jsonObject.getJSONArray("memes");
 
                 List<HashMap<String, String>> memeArrayList = new ArrayList<HashMap<String, String>>();
                 List<MemeRowItem> rowItems = new ArrayList<>();
@@ -121,10 +128,11 @@ public class MemeFragment extends Fragment {
                     length = memeList.length();
                 }
 
-                for (int i = 0; i < length; i++) {
-//                    if (memeList.getJSONObject(i).has("imageUrl")) {
-                        String title = memeList.getJSONObject(i).getString("displayName");
-                        String imageUrl = memeList.getJSONObject(i).getString("imageUrl");
+                for (int i = 0; i < 15; i++) {
+                    if (memeList.getJSONObject(i).has("url")) {
+                        String title = memeList.getJSONObject(i).getString("title");
+                        String imageUrl = memeList.getJSONObject(i).getString("url");
+
                         System.out.println(title);
                         System.out.println(imageUrl);
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
@@ -136,7 +144,7 @@ public class MemeFragment extends Fragment {
                         hm.put("meme_row_title", title);
                         hm.put("meme_row_image", imageBitmap.toString());
                         memeArrayList.add(hm);
-                    //}
+                    }
 
                 }
                 return rowItems;

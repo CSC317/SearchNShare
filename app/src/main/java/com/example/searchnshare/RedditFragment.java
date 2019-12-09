@@ -52,7 +52,6 @@ public class RedditFragment extends Fragment {
     private SubredditFragment newFragment;
 
 
-
     public RedditFragment() {
 
         titleRedditSubreddits = new ArrayList<String>();
@@ -61,31 +60,39 @@ public class RedditFragment extends Fragment {
         permalinkRedditSubreddits = new ArrayList<String>();
     }
 
-    public void loadWebView(){
+    public void loadWebView() {
         newFragment.loadWebView();
     }
 
-    public void openSubreddit(){
+    public void openSubreddit() {
         newFragment.openSubreddit();
     }
 
     /**
-     *
      * @return String fro the webUrl to open for the content that is currently selected
      */
-    public String sharePosting(){
-        return "https://www.reddit.com"+currentFragmentPermalink;
+    public String sharePosting() {
+        return "https://www.reddit.com" + currentFragmentPermalink;
     }
 
 
+    public String shareSubreddit() {
+        return "https://www.reddit.com" + currentFragmentSubreddit;
+    }
 
-    public String shareSubreddit(){
-        return "https://www.reddit.com"+currentFragmentSubreddit;
+    public void initialSearchRequest(String searchTerm) {
+        this.RedditURLTerm = searchTerm;
+        titleRedditSubreddits = new ArrayList<String>();
+        urlRedditSubreddits = new ArrayList<String>();
+        prefixRedditSubreddits = new ArrayList<String>();
+        permalinkRedditSubreddits = new ArrayList<String>();
+        new DownloadRedditPosts().execute();
     }
 
     /**
      * This method will reset the arrayList items to new refernces as they will need to be
      * populated with their own specific information
+     *
      * @param searchTerm String to the new search term that was selected
      */
     public void newSearchRequest(String searchTerm) {
@@ -94,11 +101,12 @@ public class RedditFragment extends Fragment {
         urlRedditSubreddits = new ArrayList<String>();
         prefixRedditSubreddits = new ArrayList<String>();
         permalinkRedditSubreddits = new ArrayList<String>();
-        new DownloadRedditPosts().execute();
-        articleArrayAdapter = new ArrayAdapter<String>(containerActivity, R.layout.layout_resource_file,
-                R.id.redditTextView, titleRedditSubreddits);
+        articleArrayAdapter = new ArrayAdapter<String>(containerActivity, R.layout.layout_resource_file, R.id.redditTextView, titleRedditSubreddits);
         redditListView.setAdapter(articleArrayAdapter);
-    }
+        new DownloadRedditPosts().execute();
+
+
+}
 
     /**
      * Sets the container activity to the activity passed as a parameter.
@@ -120,16 +128,12 @@ public class RedditFragment extends Fragment {
         protected JSONObject doInBackground(Object[] objects) {
             try {
                 String json = "" ;
-
-                //randString = Long.toString(System.currentTimeMillis());
                 URL url = new URL(RedditURL+RedditURLTerm+endURL);
                 try {
-                    // System.out.println(url.toString());
                     BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                     String hold;
                     while ((hold = in.readLine()) != null){
                         json += hold;
-                        //System.out.println(hold);
                     }
                     JSONObject jsonObject = new JSONObject(json);
                     in.close();
@@ -173,6 +177,7 @@ public class RedditFragment extends Fragment {
                         urlRedditSubreddits.add(data.getString("url"));
                     }
                 }
+
                 articleArrayAdapter.notifyDataSetChanged();
             }
             catch (Exception e){
@@ -199,6 +204,7 @@ public class RedditFragment extends Fragment {
         setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_reddit, container, false);
         redditListView = v.findViewById(R.id.reddit_post_list);
+        setHasOptionsMenu(true);
         try {
             //new DownloadRedditPosts().execute();
             articleArrayAdapter = new ArrayAdapter<String>(containerActivity, R.layout.layout_resource_file,

@@ -183,6 +183,16 @@ public class MainActivity extends AppCompatActivity {
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
             transaction.commit();
+            searchText = search;
+            if (searchText.contains(" ")) {
+                String[] searchTerms = searchText.split(" ");
+                searchText = "";
+                for (int i = 0; i<searchTerms.length;i++){
+                    searchText += searchTerms[i];
+                    searchText += "+";
+                }
+            }
+            redditFrag.initialSearchRequest(searchText);
         }
         else if (Flickr.isChecked()) {
             FlickrFragment frag = new FlickrFragment();
