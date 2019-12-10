@@ -203,9 +203,9 @@ public class MainActivity extends AppCompatActivity {
         redditFrag.openSubreddit();
     }
 
-    public void redditWebViewOpen(View v){
-        redditFrag.loadWebView();
-    }
+//    public void redditWebViewOpen(View v){
+//        redditFrag.loadWebView();
+//    }
 
     public void showSearch(View view) {
         EditText textField = (EditText) findViewById(R.id.text_field);
@@ -213,6 +213,9 @@ public class MainActivity extends AppCompatActivity {
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         search = textField.getText().toString();
+        if (search.equals("")){
+            search = "java";
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (Meme.isChecked()) {
             MemeFragment frag = new MemeFragment();
@@ -248,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
             transaction.commit();
         }
-        else  {
+        else {
             NewsFragment frag = new NewsFragment();
             newsFrag = frag;
             frag.setContainerActivity(this);

@@ -70,6 +70,7 @@ public class SubredditFragment extends Fragment {
         } else {
             myWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
+        loadWebView();
         return v;
     }
 }

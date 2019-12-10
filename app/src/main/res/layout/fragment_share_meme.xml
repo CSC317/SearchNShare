@@ -6,19 +6,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context=".MainActivity"
+    style="@style/GithubTheme"
 
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        style="@style/GithubTheme"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3"
-
+            android:weightSum="2"
+            style="@style/GithubTheme"
             >
 
             <Button
@@ -30,6 +32,7 @@
                 android:text="Visit Meme Website"
                 android:textSize="10dp"
                 android:textAllCaps="false"
+                style="@style/GithubTheme"
 
                 >
 
@@ -45,6 +48,7 @@
                 android:text="Share Meme"
                 android:textSize="10dp"
                 android:textAllCaps="false"
+                style="@style/GithubTheme"
                 >
             </Button>
 

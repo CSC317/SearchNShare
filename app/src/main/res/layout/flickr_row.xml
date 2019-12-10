@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/FlickrTheme"
     android:id="@+id/flickr_row">
     <!--    android:weightSum="5"-->
     <!--    android:onClick="showPreview"-->

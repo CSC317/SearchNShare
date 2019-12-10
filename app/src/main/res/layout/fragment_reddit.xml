@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/reddit_outer"
     android:orientation="vertical"
-
+    style="@style/RedditTheme"
     tools:context=".MainActivity">
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/Rsearch"
-
+        style="@style/RedditTheme"
         android:weightSum="4">
 <!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
 <!--        app:layout_constraintTop_toBottomOf="@id/reddit_title"-->
@@ -90,6 +90,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewReddit"
         style="@style/RedditTheme"
+        android:textSize="15dp"
         >
 
     </TextView>

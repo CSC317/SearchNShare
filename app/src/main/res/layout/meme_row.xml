@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/GithubTheme"
     android:id="@+id/meme_row">
     <!--    android:weightSum="5"-->
     <!--    android:onClick="showPreview"-->
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        style="@style/GithubTheme"
         android:textSize="25dp"/>
     <!--        android:layout_weight="2"/>-->
 
@@ -19,6 +21,7 @@
         android:id="@+id/meme_row_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/GithubTheme"
         android:gravity="center"
         />
     <!--        android:layout_weight="3"/>-->
