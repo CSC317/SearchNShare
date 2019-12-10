@@ -255,30 +255,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * This function presents a list of the user's contacts to the user and passes along the
-     * file path for the image. Creates and displays the fragment showing the contacts. Executes
-     * when the share button is pressed.
-     *
-     * @param v the current View object
-     */
-    public void showContacts(View v) {
-
-        ImageView collageView = findViewById(R.id.meme_row_image);
-
-        Bitmap bitmap = Bitmap.createBitmap(
-                collageView.getWidth(), collageView.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        collageView.draw(canvas);
-
-        ContactsFragment cf = new ContactsFragment();
-        cf.sketcherFile = createImageFileToSend(bitmap);
-        cf.setContainerActivity(this);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.outer, cf);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
     // CollageCreator assignment.
@@ -296,34 +272,11 @@ public class MainActivity extends AppCompatActivity {
         return file;
     }
 
-    //Creates the image file path of the screenshot taken of the drawing. This function was taken
-    // from CollageCreator assignment
-    public File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    /**
-     * This function executes when the user clicks on the contact that they want to send their
-     * drawing to. It gets the email of the contact by using a Content Provider and uses an Intent
-     * to start an activity that opens an email app that will send the drawing to whoever the user
-     * just clicked on.
-     *
-     * @param v the current View object
-     */
     public void onInfoClick(View v) {
         String text = ((TextView) v).getText().toString();
         String id = text.substring(text.indexOf(" :: ") + 4);
         String name = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
-
+        String contactEmail = null;
         Cursor emails = memeFrag.containerActivity.getContentResolver().query(
                 ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
                 ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
@@ -340,12 +293,36 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{contactEmail});
 
         Uri uri = FileProvider.getUriForFile(memeFrag.containerActivity,
-                BuildConfig.APPLICATION_ID + ".fileprovider", new File(currentPhotoPath));
+                BuildConfig.APPLICATION_ID + ".fileprovider", new File(memeFrag.fullUrl));
         intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         startActivity(intent);
+    }
+
+    //Creates the image file path of the screenshot taken of the drawing. This function was taken
+    // from CollageCreator assignment
+    public File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+    public void shareMeme(View v){
+        ShareMemeFragment shareMemeFrag = memeFrag.shareMemeFrag;
+        ContactsFragment cf = new ContactsFragment(memeFrag.fullUrl);
+        cf.setContainerActivity(shareMemeFrag.getActivity());
+        FragmentTransaction transaction = shareMemeFrag.getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_inner, cf);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 //    public void nextFragment(View v) {
