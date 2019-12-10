@@ -48,6 +48,7 @@ public class MemeFragment extends Fragment {
     List<HashMap<String, String>> memeArrayList;
     public String fullUrl;
     public ShareMemeFragment shareMemeFrag;
+    public String jpgMeme;
 
 
     public MemeFragment() {
@@ -190,7 +191,7 @@ public class MemeFragment extends Fragment {
                     if (memeList.getJSONObject(i).has("url")) {
                         String title = memeList.getJSONObject(i).getString("title");
                         String imageUrl = memeList.getJSONObject(i).getString("url");
-
+                        jpgMeme = imageUrl;
                         System.out.println(title);
                         System.out.println(imageUrl);
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);

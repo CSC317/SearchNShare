@@ -1,9 +1,12 @@
 package com.example.searchnshare;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import android.provider.ContactsContract;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,8 +30,10 @@ public class ContactsFragment extends Fragment {
     private ListView contactsListView;
     ArrayAdapter<String> contactsAdapter = null;
     private ArrayList<String> contacts = new ArrayList<String>();
+    public String url;
 
-    public ContactsFragment() {
+    public ContactsFragment(String url) {
+        this.url = url;
     }
 
     public void setContainerActivity(Activity containerActivity) {
@@ -73,6 +79,7 @@ public class ContactsFragment extends Fragment {
 
     // sets an adapter of containing all contacts to a ListView in order to display the user's contacts.
     private void setupContactsAdapter() {
+        String contactEmail;
         contactsListView =
                 (ListView) containerActivity.findViewById(R.id.contact_list_view);
         contactsAdapter = new
