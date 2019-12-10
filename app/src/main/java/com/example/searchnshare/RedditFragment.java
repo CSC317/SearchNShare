@@ -233,7 +233,7 @@ public class RedditFragment extends Fragment {
             EditText et = (EditText) v.findViewById(R.id.reddit_field);
             et.setText(MainActivity.search);
 
-            newSearchRequest(MainActivity.search);
+
             return v;
         }
         catch (Exception e){

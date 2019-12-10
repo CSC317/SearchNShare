@@ -142,10 +142,10 @@ public class FlickrFragment extends Fragment {
                         rowItems.add(rowItem);
 
 
-                        HashMap<String, String> hm = new HashMap<String, String>();
-                        hm.put("flickr_row_title", title);
-                        hm.put("flickr_row_image", imageBitmap.toString());
-                        imageList.add(hm);
+//                        HashMap<String, String> hm = new HashMap<String, String>();
+//                        hm.put("flickr_row_title", title);
+//                        hm.put("flickr_row_image", imageBitmap.toString());
+//                        imageList.add(hm);
                     }
                 }
                 return rowItems;
@@ -162,8 +162,8 @@ public class FlickrFragment extends Fragment {
          */@Override
         protected void onPostExecute(List<FlickrRowItem> aList) {
             try {
-                String[] from = {"flickr_row_title", "flickr_row_image"};
-                int[] to = {R.id.flickr_row_title, R.id.flickr_row_image};
+//                String[] from = {"flickr_row_title", "flickr_row_image"};
+//                int[] to = {R.id.flickr_row_title, R.id.flickr_row_image};
 
 
 

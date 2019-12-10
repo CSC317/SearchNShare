@@ -25,6 +25,7 @@ public class CustomAdapter extends ArrayAdapter<FlickrRowItem> {
     private class ViewHolder {
         ImageView imageView;
         TextView txtTitle;
+
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
@@ -43,6 +44,7 @@ public class CustomAdapter extends ArrayAdapter<FlickrRowItem> {
 
         holder.txtTitle.setText(rowItem.getTitle());
         holder.imageView.setImageBitmap(rowItem.getImageBitmap());
+
 
         return convertView;
     }
