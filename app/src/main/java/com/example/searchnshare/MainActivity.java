@@ -291,9 +291,9 @@ public class MainActivity extends AppCompatActivity {
         intent.setType("vnd.android.cursor.dir/email");
 
         intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{contactEmail});
-
-        Uri uri = FileProvider.getUriForFile(memeFrag.containerActivity,
-                BuildConfig.APPLICATION_ID + ".fileprovider", new File(memeFrag.fullUrl));
+System.out.println(memeFrag.fullUrl);
+        Uri uri = FileProvider.getUriForFile(this,
+                BuildConfig.APPLICATION_ID + ".fileprovider", new File(memeFrag.jpgMeme));
         intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
