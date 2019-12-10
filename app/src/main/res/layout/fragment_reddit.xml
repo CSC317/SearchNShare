@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/reddit_outer"
     android:orientation="vertical"
+
     tools:context=".MainActivity">
 
     <TextView
@@ -14,6 +15,7 @@
         android:text="Reddit"
         android:textSize="30dp"
         android:gravity="center"
+        style="@style/RedditTheme"
         android:id="@+id/reddit_title"/>
 <!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
 <!--        app:layout_constraintTop_toTopOf="@id/reddit_outer"-->
@@ -24,6 +26,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/Rsearch"
+
         android:weightSum="4">
 <!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
 <!--        app:layout_constraintTop_toBottomOf="@id/reddit_title"-->
@@ -34,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            style="@style/RedditTheme"
             android:textSize="20dp"/>
 
         <Button
@@ -42,6 +46,7 @@
             android:layout_height="match_parent"
             android:text="SEARCH"
             android:textSize="15dp"
+            style="@style/RedditTheme"
             android:onClick="showFragSearch"
             android:layout_weight="3" />
         <!--            android:onClick="showSearch"-->
@@ -62,6 +67,7 @@
     <ListView
         android:id="@+id/reddit_post_list"
         android:layout_width="match_parent"
+        style="@style/RedditTheme"
         android:layout_height="wrap_content"
         />
 <!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
@@ -83,6 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewReddit"
+        style="@style/RedditTheme"
         >
 
     </TextView>

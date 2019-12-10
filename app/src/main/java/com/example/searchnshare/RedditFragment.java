@@ -107,7 +107,10 @@ public class RedditFragment extends Fragment {
         prefixRedditSubreddits = new ArrayList<String>();
         permalinkRedditSubreddits = new ArrayList<String>();
         articleArrayAdapter = new ArrayAdapter<String>(containerActivity, R.layout.layout_resource_file, R.id.redditTextView, titleRedditSubreddits);
-        redditListView.setAdapter(articleArrayAdapter);
+        if (redditListView != null){
+            redditListView.setAdapter(articleArrayAdapter);
+        }
+        //
         new DownloadRedditPosts().execute();
 
 

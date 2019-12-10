@@ -3,4 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="redditRed">#FF4500</color>
+    <color name="redditGrey">#C9C7C7</color>
+    <color name="redditAccent">#0079D3</color>
+    <color name="flickrBlue">#0063DC</color>
+    <color name="flickrPink">#FF0084</color>
+    <color name="flickrAccent">#858484</color>
+
+
+
 </resources>

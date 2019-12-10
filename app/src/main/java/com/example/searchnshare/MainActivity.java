@@ -1,5 +1,6 @@
 package com.example.searchnshare;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
@@ -300,6 +302,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
     // CollageCreator assignment.
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public File createImageFileToSend(Bitmap bitmap) {
         File file = null;
         try {
