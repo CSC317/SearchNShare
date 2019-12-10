@@ -5,14 +5,12 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,16 +25,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,8 +43,10 @@ public class MemeFragment extends Fragment {
     public String memeUrl = "https://meme-api.herokuapp.com/gimme/";
     public String APIkey = "/15";
     private ListView memeListView;
-    private ContactsFragment shareMemeFrag;
+    private ContactsFragment contactsFragment;
     List<HashMap<String, String>> memeArrayList;
+    public String fullUrl;
+    public ShareMemeFragment shareMemeFrag;
 
     public MemeFragment() {
     }
@@ -82,11 +78,10 @@ public class MemeFragment extends Fragment {
                         view.getWidth(), collageView.getHeight(), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(bitmap);
                 collageView.draw(canvas);
-                System.out.println(view.toString());
-                ContactsFragment cf = new ContactsFragment();
-                cf.setContainerActivity(getActivity());
+                shareMemeFrag = new ShareMemeFragment(collageView, fullUrl);
+//
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_inner, cf);
+                transaction.replace(R.id.main_inner, shareMemeFrag);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -173,7 +168,8 @@ public class MemeFragment extends Fragment {
                         searchText += "+";
                     }
                 }
-                URL url = new URL(memeUrl + searchText + APIkey);
+                fullUrl = memeUrl + searchText + APIkey;
+                URL url = new URL(fullUrl);
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                 while ((line = in.readLine()) != null) {
