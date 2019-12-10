@@ -110,7 +110,6 @@ public class RedditFragment extends Fragment {
         if (redditListView != null){
             redditListView.setAdapter(articleArrayAdapter);
         }
-        //
         new DownloadRedditPosts().execute();
 
 
