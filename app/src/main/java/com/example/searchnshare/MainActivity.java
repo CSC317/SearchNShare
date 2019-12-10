@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public RedditFragment redditFrag;
     public FlickrFragment flickrFrag;
     public NewsFragment newsFrag;
+    public AllFragment allFrag = new AllFragment();
     public FavoritesFragment favFrag;
 
     private EditText searchEdit; // EditText of the search Term
@@ -59,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
             transaction.commit();
+            searchText = search;
+            if (searchText.contains(" ")) {
+                String[] searchTerms = searchText.split(" ");
+                searchText = "";
+                for (int i = 0; i<searchTerms.length;i++){
+                    searchText += searchTerms[i];
+                    searchText += "+";
+                }
+            }
+            redditFrag.newSearchRequest(searchText);
         }
         else if (item.getItemId() == R.id.flickr_item) {
             FlickrFragment frag = new FlickrFragment();
@@ -73,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
             newsFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else if (item.getItemId() == R.id.all_item) {
+//            AllFragment frag = new AllFragment();
+//            allFrag = frag;
+            allFrag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, allFrag);
             transaction.addToBackStack(null);
             transaction.commit();
         }
@@ -125,11 +144,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void redditSearch(View v){
+    public String redditSearch(){
         searchEdit = findViewById(R.id.reddit_field);
         searchText = searchEdit.getText().toString();
         if (redditFrag == null)
-            return;
+            return "";
         if (searchText.contains(" ")) {
             String[] searchTerms = searchText.split(" ");
             searchText = "";
@@ -138,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 searchText += "+";
             }
         }
-        redditFrag.newSearchRequest(searchText);
+        return searchText;
     }
 
     @Override
@@ -222,7 +241,16 @@ public class MainActivity extends AppCompatActivity {
         else if (v.getId() == R.id.search_reddit) {
             EditText field = findViewById(R.id.reddit_field);
             search = field.getText().toString();
-            redditFrag.newSearchRequest(search);
+            searchText = search;
+            if (searchText.contains(" ")) {
+                String[] searchTerms = searchText.split(" ");
+                searchText = "";
+                for (int i = 0; i<searchTerms.length;i++){
+                    searchText += searchTerms[i];
+                    searchText += "+";
+                }
+            }
+            redditFrag.newSearchRequest(searchText);
         }
         else if (v.getId() == R.id.search_flickr) {
             EditText field = findViewById(R.id.flickr_field);

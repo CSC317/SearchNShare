@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/all_outer"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Some of each!"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:id="@+id/all_title"/>
+    <!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/flickr_outer"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/flickr_outer"/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/Allsearch"
+        android:weightSum="4">
+        <!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
+        <!--        app:layout_constraintTop_toBottomOf="@id/flickr_title"-->
+        <!--        app:layout_constraintEnd_toEndOf="@id/flickr_outer">-->
+
+        <EditText
+            android:id="@+id/all_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="20dp"/>
+
+        <Button
+            android:id="@+id/search_all"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="SEARCH"
+            android:textSize="15dp"
+            android:onClick="showFragSearch"
+            android:layout_weight="3" />
+        <!--            android:onClick="showSearch"-->
+
+    </LinearLayout>
+
+    <!--    <Button-->
+    <!--        android:id="@+id/FBackButton"-->
+    <!--        android:layout_width="60dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:background="@drawable/backbutton"-->
+    <!--        android:onClick="previousFragment"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
+    <!--        app:layout_constraintRight_toLeftOf="@id/image_list"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/flickr_outer"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/Fsearch"/>-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <ListView
+            android:id="@+id/all_reddit_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ListView
+            android:id="@+id/all_news_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ListView
+            android:id="@+id/all_flickr_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ListView
+            android:id="@+id/all_meme_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    </ScrollView>
+    <!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/flickr_outer"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/flickr_outer"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/Fsearch"/>-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/FForwardButton"-->
+    <!--        android:layout_width="60dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:background="@drawable/forwardbutton"-->
+    <!--        android:onClick="nextFragment"-->
+    <!--        app:layout_constraintLeft_toRightOf="@id/image_list"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/flickr_outer"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/flickr_outer"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/Fsearch"/>-->
+
+
+</LinearLayout>
