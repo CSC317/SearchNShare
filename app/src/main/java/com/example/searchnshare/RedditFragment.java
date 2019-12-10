@@ -68,6 +68,11 @@ public class RedditFragment extends Fragment {
         newFragment.openSubreddit();
     }
 
+
+    public SubredditFragment getCurrentContenxt(){
+        return newFragment;
+    }
+
     /**
      * @return String fro the webUrl to open for the content that is currently selected
      */
@@ -218,6 +223,7 @@ public class RedditFragment extends Fragment {
                     urlToOpen = "https://www.reddit.com"+currentFragmentPermalink;
 
                     newFragment = new SubredditFragment(urlToOpen, currentFragmentSubreddit);
+                    newFragment.setTitle(titleRedditSubreddits.get(position));
                     FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                     fragTransaction.replace(R.id.main_inner, newFragment);
                     fragTransaction.addToBackStack(null);
