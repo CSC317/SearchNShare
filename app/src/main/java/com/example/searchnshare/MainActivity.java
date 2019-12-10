@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void redditFavorites(View v){
+    public void redditFavorites(View v) {
         SubredditFragment reference = redditFrag.getCurrentContenxt();
         String title = reference.getTitle();
         String resource = "Reddit";
@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
         newFav.setURL(redditFrag.sharePosting());
         ourFavorites.add(newFav);
 
-
+    }
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
     // CollageCreator assignment.
     public File createImageFileToSend(Bitmap bitmap) {
