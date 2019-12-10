@@ -41,13 +41,15 @@ import java.util.List;
 public class MemeFragment extends Fragment {
     public Activity containerActivity = null;
     public String memeUrl = "https://meme-api.herokuapp.com/gimme/";
-    public String APIkey = "/15";
+
+    public String APIkey = "/10";
     private ListView memeListView;
     private ContactsFragment contactsFragment;
     List<HashMap<String, String>> memeArrayList;
     public String fullUrl;
     public ShareMemeFragment shareMemeFrag;
     public String jpgMeme;
+
 
     public MemeFragment() {
     }
@@ -183,12 +185,9 @@ public class MemeFragment extends Fragment {
 
                  memeArrayList = new ArrayList<HashMap<String, String>>();
                 List<MemeRowItem> rowItems = new ArrayList<>();
-                int length = 10;
-                if (memeList.length() < length) {
-                    length = memeList.length();
-                }
 
-                for (int i = 0; i < 15; i++) {
+
+                for (int i = 0; i < memeList.length(); i++) {
                     if (memeList.getJSONObject(i).has("url")) {
                         String title = memeList.getJSONObject(i).getString("title");
                         String imageUrl = memeList.getJSONObject(i).getString("url");

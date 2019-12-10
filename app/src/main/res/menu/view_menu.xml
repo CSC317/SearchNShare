@@ -22,6 +22,10 @@
         android:title="News"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/all_item"
+        android:title="ALL"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/favorites_item"
         android:title="Favorites"
         app:showAsAction="never"/>

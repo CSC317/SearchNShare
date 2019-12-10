@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     public static String search = "";
@@ -37,18 +39,23 @@ public class MainActivity extends AppCompatActivity {
     public RedditFragment redditFrag;
     public FlickrFragment flickrFrag;
     public NewsFragment newsFrag;
+    public AllFragment allFrag = new AllFragment();
     public FavoritesFragment favFrag;
 
     private EditText searchEdit; // EditText of the search Term
     private String searchText; // String reference to the search term
     private WebView myWebView;
 
+    private ArrayList<FavoriteListItem> ourFavorites;
+
     String currentPhotoPath = null;
     String contactEmail = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ourFavorites = new ArrayList<>();
         setContentView(R.layout.activity_main);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         MenuFragment frag = new MenuFragment();
@@ -78,6 +85,16 @@ public class MainActivity extends AppCompatActivity {
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
             transaction.commit();
+            searchText = search;
+            if (searchText.contains(" ")) {
+                String[] searchTerms = searchText.split(" ");
+                searchText = "";
+                for (int i = 0; i<searchTerms.length;i++){
+                    searchText += searchTerms[i];
+                    searchText += "+";
+                }
+            }
+            redditFrag.newSearchRequest(searchText);
         }
         else if (item.getItemId() == R.id.flickr_item) {
             FlickrFragment frag = new FlickrFragment();
@@ -95,9 +112,19 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
             transaction.commit();
         }
+        else if (item.getItemId() == R.id.all_item) {
+//            AllFragment frag = new AllFragment();
+//            allFrag = frag;
+            allFrag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, allFrag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
         else if (item.getItemId() == R.id.favorites_item) {
             FavoritesFragment frag = new FavoritesFragment();
             favFrag = frag;
+            favFrag.setFavs(ourFavorites);
+            favFrag.setAdapter(new FavoritesAdapter(this, R.layout.favorite_row, ourFavorites));
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -116,12 +143,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
-
         RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         RadioButton News = (RadioButton) findViewById(R.id.News);
-        // Check which radio button was clicked
         if (view.getId() == R.id.Meme && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
@@ -144,11 +169,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void redditSearch(View v){
+    public String redditSearch(){
         searchEdit = findViewById(R.id.reddit_field);
         searchText = searchEdit.getText().toString();
         if (redditFrag == null)
-            return;
+            return "";
         if (searchText.contains(" ")) {
             String[] searchTerms = searchText.split(" ");
             searchText = "";
@@ -157,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 searchText += "+";
             }
         }
-        redditFrag.newSearchRequest(searchText);
+        return searchText;
     }
 
     @Override
@@ -241,7 +266,16 @@ public class MainActivity extends AppCompatActivity {
         else if (v.getId() == R.id.search_reddit) {
             EditText field = findViewById(R.id.reddit_field);
             search = field.getText().toString();
-            redditFrag.newSearchRequest(search);
+            searchText = search;
+            if (searchText.contains(" ")) {
+                String[] searchTerms = searchText.split(" ");
+                searchText = "";
+                for (int i = 0; i<searchTerms.length;i++){
+                    searchText += searchTerms[i];
+                    searchText += "+";
+                }
+            }
+            redditFrag.newSearchRequest(searchText);
         }
         else if (v.getId() == R.id.search_flickr) {
             EditText field = findViewById(R.id.flickr_field);
@@ -254,6 +288,14 @@ public class MainActivity extends AppCompatActivity {
             newsFrag.showFragSearch();
         }
     }
+
+    public void redditFavorites(View v){
+        SubredditFragment reference = redditFrag.getCurrentContenxt();
+        String title = reference.getTitle();
+        String resource = "Reddit";
+        FavoriteListItem newFav = new FavoriteListItem(title, null, resource);
+        newFav.setURL(redditFrag.sharePosting());
+        ourFavorites.add(newFav);
 
 
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
@@ -323,6 +365,7 @@ System.out.println(memeFrag.fullUrl);
         transaction.replace(R.id.main_inner, cf);
         transaction.addToBackStack(null);
         transaction.commit();
+
     }
 
 //    public void nextFragment(View v) {
