@@ -62,7 +62,8 @@
     <ListView
         android:id="@+id/reddit_post_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        />
 <!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
 <!--        app:layout_constraintEnd_toEndOf="@id/reddit_outer"-->
 <!--        app:layout_constraintBottom_toBottomOf="@id/reddit_outer"-->

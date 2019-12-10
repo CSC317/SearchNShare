@@ -12,6 +12,8 @@ import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     public static String search = "";
@@ -26,10 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private String searchText; // String reference to the search term
     private WebView myWebView;
 
+    private ArrayList<FavoriteListItem> ourFavorites;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ourFavorites = new ArrayList<>();
         setContentView(R.layout.activity_main);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         MenuFragment frag = new MenuFragment();
@@ -79,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         else if (item.getItemId() == R.id.favorites_item) {
             FavoritesFragment frag = new FavoritesFragment();
             favFrag = frag;
+            favFrag.setFavs(ourFavorites);
+            favFrag.setAdapter(new FavoritesAdapter(this, R.layout.favorite_row, ourFavorites));
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -97,12 +104,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
-
         RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         RadioButton News = (RadioButton) findViewById(R.id.News);
-        // Check which radio button was clicked
         if (view.getId() == R.id.Meme && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
@@ -234,6 +239,15 @@ public class MainActivity extends AppCompatActivity {
             search = field.getText().toString();
             newsFrag.showFragSearch();
         }
+    }
+
+    public void redditFavorites(View v){
+        SubredditFragment reference = redditFrag.getCurrentContenxt();
+        String title = reference.getTitle();
+        String resource = "Reddit";
+        FavoriteListItem newFav = new FavoriteListItem(title, null, resource);
+        newFav.setURL(redditFrag.sharePosting());
+        ourFavorites.add(newFav);
     }
 
 //    public void nextFragment(View v) {
