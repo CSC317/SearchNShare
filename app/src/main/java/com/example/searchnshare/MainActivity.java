@@ -1,16 +1,33 @@
 package com.example.searchnshare;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.ContactsContract;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private String searchText; // String reference to the search term
     private WebView myWebView;
 
+    String currentPhotoPath = null;
+    String contactEmail = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,6 +253,99 @@ public class MainActivity extends AppCompatActivity {
             search = field.getText().toString();
             newsFrag.showFragSearch();
         }
+    }
+
+    /**
+     * This function presents a list of the user's contacts to the user and passes along the
+     * file path for the image. Creates and displays the fragment showing the contacts. Executes
+     * when the share button is pressed.
+     *
+     * @param v the current View object
+     */
+    public void showContacts(View v) {
+
+        ImageView collageView = findViewById(R.id.meme_row_image);
+
+        Bitmap bitmap = Bitmap.createBitmap(
+                collageView.getWidth(), collageView.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        collageView.draw(canvas);
+
+        ContactsFragment cf = new ContactsFragment();
+        cf.sketcherFile = createImageFileToSend(bitmap);
+        cf.setContainerActivity(this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.outer, cf);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    //Creates the image file of the screenshot taken of the drawing, this function was taken from
+    // CollageCreator assignment.
+    public File createImageFileToSend(Bitmap bitmap) {
+        File file = null;
+        try {
+            file = createImageFile();
+        } catch (IOException ex) {
+        }
+        try (FileOutputStream out = new FileOutputStream(file)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    //Creates the image file path of the screenshot taken of the drawing. This function was taken
+    // from CollageCreator assignment
+    public File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    /**
+     * This function executes when the user clicks on the contact that they want to send their
+     * drawing to. It gets the email of the contact by using a Content Provider and uses an Intent
+     * to start an activity that opens an email app that will send the drawing to whoever the user
+     * just clicked on.
+     *
+     * @param v the current View object
+     */
+    public void onInfoClick(View v) {
+        String text = ((TextView) v).getText().toString();
+        String id = text.substring(text.indexOf(" :: ") + 4);
+        String name = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
+
+        Cursor emails = memeFrag.containerActivity.getContentResolver().query(
+                ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+
+        if (emails.moveToNext()) {
+            String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
+            contactEmail = email; // string representing the email to send the drawing to
+        }
+        emails.close();
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("vnd.android.cursor.dir/email");
+
+        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{contactEmail});
+
+        Uri uri = FileProvider.getUriForFile(memeFrag.containerActivity,
+                BuildConfig.APPLICATION_ID + ".fileprovider", new File(currentPhotoPath));
+        intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
+
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
     }
 
 //    public void nextFragment(View v) {
