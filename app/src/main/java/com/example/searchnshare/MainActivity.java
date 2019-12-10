@@ -1,16 +1,35 @@
 package com.example.searchnshare;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.ContactsContract;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,10 +46,16 @@ public class MainActivity extends AppCompatActivity {
     private String searchText; // String reference to the search term
     private WebView myWebView;
 
+    private ArrayList<FavoriteListItem> ourFavorites;
+
+    String currentPhotoPath = null;
+    String contactEmail = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ourFavorites = new ArrayList<>();
         setContentView(R.layout.activity_main);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         MenuFragment frag = new MenuFragment();
@@ -98,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
         else if (item.getItemId() == R.id.favorites_item) {
             FavoritesFragment frag = new FavoritesFragment();
             favFrag = frag;
+            favFrag.setFavs(ourFavorites);
+            favFrag.setAdapter(new FavoritesAdapter(this, R.layout.favorite_row, ourFavorites));
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -116,12 +143,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
-
         RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         RadioButton News = (RadioButton) findViewById(R.id.News);
-        // Check which radio button was clicked
         if (view.getId() == R.id.Meme && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
@@ -262,6 +287,85 @@ public class MainActivity extends AppCompatActivity {
             search = field.getText().toString();
             newsFrag.showFragSearch();
         }
+    }
+
+    public void redditFavorites(View v){
+        SubredditFragment reference = redditFrag.getCurrentContenxt();
+        String title = reference.getTitle();
+        String resource = "Reddit";
+        FavoriteListItem newFav = new FavoriteListItem(title, null, resource);
+        newFav.setURL(redditFrag.sharePosting());
+        ourFavorites.add(newFav);
+
+
+    //Creates the image file of the screenshot taken of the drawing, this function was taken from
+    // CollageCreator assignment.
+    public File createImageFileToSend(Bitmap bitmap) {
+        File file = null;
+        try {
+            file = createImageFile();
+        } catch (IOException ex) {
+        }
+        try (FileOutputStream out = new FileOutputStream(file)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    public void onInfoClick(View v) {
+        String text = ((TextView) v).getText().toString();
+        String id = text.substring(text.indexOf(" :: ") + 4);
+        String name = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
+        String contactEmail = null;
+        Cursor emails = memeFrag.containerActivity.getContentResolver().query(
+                ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+
+        if (emails.moveToNext()) {
+            String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
+            contactEmail = email; // string representing the email to send the drawing to
+        }
+        emails.close();
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("vnd.android.cursor.dir/email");
+
+        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{contactEmail});
+
+        Uri uri = FileProvider.getUriForFile(memeFrag.containerActivity,
+                BuildConfig.APPLICATION_ID + ".fileprovider", new File(memeFrag.fullUrl));
+        intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
+
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
+    }
+
+    //Creates the image file path of the screenshot taken of the drawing. This function was taken
+    // from CollageCreator assignment
+    public File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+    public void shareMeme(View v){
+        ShareMemeFragment shareMemeFrag = memeFrag.shareMemeFrag;
+        ContactsFragment cf = new ContactsFragment(memeFrag.fullUrl);
+        cf.setContainerActivity(shareMemeFrag.getActivity());
+        FragmentTransaction transaction = shareMemeFrag.getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_inner, cf);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
     }
 
 //    public void nextFragment(View v) {

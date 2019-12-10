@@ -18,6 +18,8 @@ public class SubredditFragment extends Fragment {
 
     private WebView myWebView;
 
+    private String title;
+
     /**
      *
      * @param urlToOpen String of the URL to open
@@ -25,6 +27,14 @@ public class SubredditFragment extends Fragment {
     public SubredditFragment(String urlToOpen, String subreddit){
         this.urlToOpen = urlToOpen;
         this.subredditToOpen = subreddit;
+    }
+
+    public String getTitle(){
+        return this.title;
+    }
+
+    public void setTitle(String title){
+        this.title = title;
     }
 
     public void openSubreddit(){
