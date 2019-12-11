@@ -2,6 +2,7 @@ package com.example.searchnshare;
 
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,10 @@ public class AllSelectedFragment extends Fragment {
 
     public Activity containerActivity = null;
     private String AnyUrl;
+    private String title;
+    private Bitmap image;
+    private String website;
+    private String content;
 
     public AllSelectedFragment() {}
 
@@ -45,6 +50,42 @@ public class AllSelectedFragment extends Fragment {
 
     public void setAnyUrl(String url) {
         this.AnyUrl = url;
+    }
+
+    public void setAnyTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAnyImage(Bitmap image) {
+        this.image = image;
+    }
+
+    public String getAnyUrl() {
+        return AnyUrl;
+    }
+
+    public String getAnyTitle() {
+        return title;
+    }
+
+    public Bitmap getAnyImage() {
+        return image;
+    }
+
+    public void setAnyWebsite(String website) {
+        this.website = website;
+    }
+
+    public void setAnyContentStr(String content) {
+        this.content = content;
+    }
+
+    public String getAnyContentStr() {
+        return content;
+    }
+
+    public String getAnyWebsite() {
+        return website;
     }
 
 }

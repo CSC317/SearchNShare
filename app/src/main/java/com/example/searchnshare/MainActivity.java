@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public NewsFragment newsFrag;
     public ShareNewsFragment shareNewsFrag;
     public AllFragment allFrag = new AllFragment();
+    public AllSelectedFragment allSelectedFragment;
     public FavoritesFragment favFrag;
 
     private EditText searchEdit; // EditText of the search Term
@@ -73,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.main_inner, frag);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void setAllSelectedFragment(AllSelectedFragment frag) {
+        this.allSelectedFragment = frag;
     }
 
     @Override
@@ -350,6 +355,16 @@ public class MainActivity extends AppCompatActivity {
         newFav.setURL(shareNewsFrag.getNewsUrl());
         ourFavorites.add(newFav);
 
+    }
+
+    public void ALLFavorites(View v) {
+        String title = allSelectedFragment.getAnyTitle();
+        Bitmap image = allSelectedFragment.getAnyImage();
+
+        String resource = "all";
+        FavoriteListItem newFav = new FavoriteListItem(title, image, resource);
+        newFav.setURL(allSelectedFragment.getAnyUrl());
+        ourFavorites.add(newFav);
     }
 
     public void memeFavorites(View v) {
