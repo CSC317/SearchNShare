@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,15 +69,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (isBigScreen()) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            setContentView(R.layout.activity_main_big);
+        }
+        else {
+            setContentView(R.layout.activity_main);
+        }
         ourFavorites = new ArrayList<>();
-        setContentView(R.layout.activity_main);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         MenuFragment frag = new MenuFragment();
         menuFrag = frag;
         frag.setContainerActivity(this);
-        transaction.replace(R.id.main_inner, frag);
+        if (isBigScreen()) {
+            transaction.replace(R.id.outer, frag);
+        }
+        else {
+            transaction.replace(R.id.main_inner, frag);
+        }
+        //transaction.replace(R.id.main_inner, frag);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    /**
+     * @return true if the screen is larger than 5 by 5 inches, fale otherwise
+     */
+    private boolean isBigScreen() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        float xInches = (((float)metrics.widthPixels) / metrics.xdpi);
+        float yInches = (((float)metrics.widthPixels) / metrics.xdpi);
+        return xInches > 5.0 && yInches > 5.0;
     }
 
     public void setAllSelectedFragment(AllSelectedFragment frag) {
@@ -160,7 +185,13 @@ public class MainActivity extends AppCompatActivity {
             MenuFragment frag = new MenuFragment();
             menuFrag = frag;
             frag.setContainerActivity(this);
-            transaction.replace(R.id.main_inner, frag);
+            if (isBigScreen()) {
+                transaction.replace(R.id.outer, frag);
+            }
+            else {
+                transaction.replace(R.id.main_inner, frag);
+            }
+            //transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
             transaction.commit();
         }
