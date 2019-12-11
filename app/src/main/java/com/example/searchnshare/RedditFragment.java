@@ -68,6 +68,13 @@ public class RedditFragment extends Fragment {
         newFragment.openSubreddit();
     }
 
+    public String getCurrentFragPL(){
+        return this.currentFragmentPermalink;
+    }
+
+    public SubredditFragment getNewFragment(){
+        return newFragment;
+    }
 
     public SubredditFragment getCurrentContenxt(){
         return newFragment;
@@ -225,6 +232,7 @@ public class RedditFragment extends Fragment {
                     urlToOpen = "https://www.reddit.com"+currentFragmentPermalink;
 
                     newFragment = new SubredditFragment(urlToOpen, currentFragmentSubreddit);
+                    newFragment.setContainterActivity(containerActivity);
                     newFragment.setTitle(titleRedditSubreddits.get(position));
                     FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                     fragTransaction.replace(R.id.main_inner, newFragment);
