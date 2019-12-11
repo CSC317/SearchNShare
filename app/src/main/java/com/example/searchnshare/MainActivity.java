@@ -330,6 +330,11 @@ public class MainActivity extends AppCompatActivity {
             search = field.getText().toString();
             newsFrag.showFragSearch();
         }
+        else if (v.getId() == R.id.search_all) {
+            EditText field = findViewById(R.id.all_field);
+            search = field.getText().toString();
+            allFrag.showFragSearch();
+        }
     }
 
     public void redditFavorites(View v) {
