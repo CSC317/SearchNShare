@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public AllFragment allFrag = new AllFragment();
     public AllSelectedFragment allSelectedFragment;
     public FavoritesFragment favFrag;
+    public FavoriteSelectedFragment favSelectedFragment;
 
     private EditText searchEdit; // EditText of the search Term
     private String searchText; // String reference to the search term
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setAllSelectedFragment(AllSelectedFragment frag) {
         this.allSelectedFragment = frag;
+    }
+
+    public void setFavSelectedFragment(FavoriteSelectedFragment frag) {
+        this.favSelectedFragment = frag;
     }
 
     @Override
@@ -503,6 +508,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        if (x==5) {
+            try{
+                emails = favSelectedFragment.getActivity().getContentResolver().query(
+                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
+                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
+            }
+            catch(Exception e){
+                x+=1;
+                e.printStackTrace();
+            }
+        }
+
         if (emails.moveToNext()) {
             String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
             contactEmail = email; // string representing the email to send the drawing to
@@ -530,6 +547,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (x ==4){
             intent.putExtra(Intent.EXTRA_TEXT, allSelectedFragment.getAnyUrl());
+        }
+        else if (x ==5){
+            intent.putExtra(Intent.EXTRA_TEXT, favSelectedFragment.getURL());
         }
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
@@ -601,6 +621,16 @@ public class MainActivity extends AppCompatActivity {
         cf.setContainerActivity(this);
         cf.url = allSelectedFragment.getAnyUrl();
         FragmentTransaction trans = allSelectedFragment.getActivity().getSupportFragmentManager().beginTransaction();
+        trans.replace(R.id.main_inner, cf);
+        trans.addToBackStack(null);
+        trans.commit();
+    }
+
+    public void shareFavs(View v) {
+        ContactsFragment cf = new ContactsFragment(favSelectedFragment.getURL());
+        cf.setContainerActivity(this);
+        cf.url = favSelectedFragment.getURL();
+        FragmentTransaction trans = favSelectedFragment.getActivity().getSupportFragmentManager().beginTransaction();
         trans.replace(R.id.main_inner, cf);
         trans.addToBackStack(null);
         trans.commit();

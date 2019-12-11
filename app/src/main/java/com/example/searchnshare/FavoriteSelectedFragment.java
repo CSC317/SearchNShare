@@ -33,4 +33,8 @@ public class FavoriteSelectedFragment extends Fragment {
         wb.loadUrl(URL);
         return v;
     }
+
+    public String getURL() {
+        return URL;
+    }
 }
