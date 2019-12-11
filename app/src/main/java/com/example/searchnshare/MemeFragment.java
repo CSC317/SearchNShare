@@ -66,10 +66,23 @@ public class MemeFragment extends Fragment {
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
+
+    /**
+     * Getter for current Activity
+     * @return Activity current activity
+     */
     public Activity getContainerActivity() {
         return this.containerActivity;
     }
 
+
+    /**
+     * This method is used to set the view for this fragment
+     * @param inflater inflater used to inflate view
+     * @param container the container
+     * @param savedInstanceState bundle of instance state
+     * @return view to open
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,6 +117,10 @@ public class MemeFragment extends Fragment {
         ///just send the link, don't bother making the imageFile, delete below functions
     }
 
+    /**
+     * getter for the full url for this item
+     * @return String full url to attached
+     */
     public String getFullUrl(){
         return this.fullUrl;
     }
@@ -115,36 +132,12 @@ public class MemeFragment extends Fragment {
     public ImageView getMemeClickedImageView(){
         return this.memeClickedImageView;
     }
-    //Creates the image file of the screenshot taken of the drawing, this function was taken from
-    // CollageCreator assignment.
-//    public File createImageFileToSend(Bitmap bitmap) {
-//        File file = null;
-//        try {
-//            file = createImageFile();
-//        } catch (IOException ex) {
-//        }
-//        try (FileOutputStream out = new FileOutputStream(file)) {
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return file;
-//    }
 
-    //Creates the image file path of the screenshot taken of the drawing. This function was taken
-    // from CollageCreator assignment
-//    public File createImageFile() throws IOException {
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        String imageFileName = "JPEG_" + timeStamp + "_";
-//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        File image = File.createTempFile(
-//                imageFileName,  /* prefix */
-//                ".jpg",         /* suffix */
-//                storageDir      /* directory */
-//        );
-//        currentPhotoPath = image.getAbsolutePath();
-//        return image;
-//    }
+    /**
+     * This is used to attach the menu item
+     * @param menu menu item created
+     * @param inflater this is reernced from
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_menu, menu);
@@ -155,12 +148,9 @@ public class MemeFragment extends Fragment {
         try {
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            System.out.println("POOOOP");
             connection.setDoInput(true);
             connection.connect();
-            System.out.println("POOOOP");
             InputStream input = connection.getInputStream();
-            System.out.println("POOOOP");
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
             input.close();
             return myBitmap;
@@ -169,6 +159,10 @@ public class MemeFragment extends Fragment {
             return null;
         }
     }
+
+    /**
+     * Execute a new search
+     */
     public void showFragSearch() {
         new MemeFragment.GetMemesTask().execute();
     }
@@ -212,8 +206,6 @@ public class MemeFragment extends Fragment {
                         String imageUrl = memeList.getJSONObject(i).getString("url");
                         String memeWebView = memeList.getJSONObject(i).getString("postLink");
                         jpgMeme = imageUrl;
-                        System.out.println(title);
-                        System.out.println(imageUrl);
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
 
                         MemeRowItem rowItem = new MemeRowItem(title, imageBitmap);
@@ -249,14 +241,26 @@ public class MemeFragment extends Fragment {
         }
     }
 
+    /**
+     * String for the mem item that was clicked
+     * @return String of the meme title
+     */
     public String getMemeClickedtitle(){
         return this.memeClickedtitle;
     }
 
+    /**
+     * getter for a Bitmap that is attached
+     * @return Bitmap attached to this item
+     */
     public Bitmap getMemeBitmap(){
         return this.memeBitmap;
     }
 
+    /**
+     * getter for the url attached to this item
+     * @return String that is attached to this tem
+     */
     public String getMemeWebUrl()
     {
         return this.memeWebUrl;

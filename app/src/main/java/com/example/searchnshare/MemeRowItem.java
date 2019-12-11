@@ -14,15 +14,30 @@ public class MemeRowItem{
         this.imageBitmap = imageBitmap;
         this.title = title;
     }
+
+    /**
+     * This method will return the curent bitmap
+     * @return Bitmap that is attached to this item
+     */
     public Bitmap getImageBitmap() {
         return imageBitmap;
     }
     public void setImageBitmap(Bitmap imageBitmap) {
         this.imageBitmap = imageBitmap;
     }
+
+    /**
+     * used to get the title
+     * @return String title
+     */
     public String getTitle() {
         return title;
     }
+
+    /**
+     * Used to set the title
+     * @param title String to set tile
+     */
     public void setTitle(String title) {
         this.title = title;
     }
