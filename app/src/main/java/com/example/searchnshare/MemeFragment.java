@@ -49,6 +49,7 @@ public class MemeFragment extends Fragment {
     public String fullUrl;
     public ShareMemeFragment shareMemeFrag;
     public String jpgMeme;
+    public String memeWebUrl;
     public ImageView memeClickedImageView;
 
 
@@ -76,13 +77,15 @@ public class MemeFragment extends Fragment {
         memeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                HashMap<String, String> map = memeArrayList.get(position);
+                memeWebUrl = map.get("meme_web_view");
                 ImageView collageView = view.findViewById(R.id.meme_row_image);
                 memeClickedImageView = collageView;
                 Bitmap bitmap = Bitmap.createBitmap(
                         collageView.getWidth(), collageView.getHeight(), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(bitmap);
                 collageView.draw(canvas);
-                shareMemeFrag = new ShareMemeFragment(collageView, fullUrl);
+                shareMemeFrag = new ShareMemeFragment(collageView, fullUrl, memeWebUrl);
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_inner, shareMemeFrag);
@@ -192,6 +195,7 @@ public class MemeFragment extends Fragment {
                     if (memeList.getJSONObject(i).has("url")) {
                         String title = memeList.getJSONObject(i).getString("title");
                         String imageUrl = memeList.getJSONObject(i).getString("url");
+                        String memeWebView = memeList.getJSONObject(i).getString("postLink");
                         jpgMeme = imageUrl;
                         System.out.println(title);
                         System.out.println(imageUrl);
@@ -203,6 +207,7 @@ public class MemeFragment extends Fragment {
                         HashMap<String, String> hm = new HashMap<String, String>();
                         hm.put("meme_row_title", title);
                         hm.put("meme_row_image", imageBitmap.toString());
+                        hm.put("meme_web_view", memeWebView);
                         memeArrayList.add(hm);
                     }
 
