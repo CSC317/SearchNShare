@@ -10,7 +10,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+
+import android.graphics.drawable.BitmapDrawable;
+
 import android.media.Image;
+
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -306,6 +310,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void NewsRowClick(View v) {
+        LinearLayout LL = (LinearLayout) v;
+        TextView contentView = v.findViewById(R.id.news_row_content);
+        TextView websiteView = v.findViewById(R.id.news_row_website);
+        TextView urlView = v.findViewById(R.id.news_row_url);
+
+        String content = contentView.getText().toString();
+        String website = websiteView.getText().toString();
+        String url = urlView.getText().toString();
+        ShareNewsFragment frag = new ShareNewsFragment();
+        frag.setWebsite(website);
+        frag.setContentStr(content);
+        frag.setNewsUrl(url);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        frag.setContainerActivity(this);
+        transaction.replace(R.id.main_inner, frag);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void FlickrRowClick(View v) {
+        LinearLayout LL = (LinearLayout) v;
+        TextView titleView = v.findViewById(R.id.flickr_row_title);
+        ImageView imageView = v.findViewById(R.id.flickr_row_image);
+        TextView urlView = v.findViewById(R.id.flickr_row_url);
+
+        String title = titleView.getText().toString();
+        Bitmap image = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        String url = urlView.getText().toString();
+        ShareFlickrFragment frag = new ShareFlickrFragment();
+        frag.setTitle(title);
+        frag.setImage(image);
+        frag.setFlickrUrl(url);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        frag.setContainerActivity(this);
+        transaction.replace(R.id.main_inner, frag);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
     // CollageCreator assignment.
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -382,6 +428,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
     }
+
 
 
 //    public void nextFragment(View v) {
