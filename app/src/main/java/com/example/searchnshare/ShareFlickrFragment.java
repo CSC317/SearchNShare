@@ -58,4 +58,16 @@ public class ShareFlickrFragment extends Fragment {
         this.image = image;
     }
 
+    public String getFlickrUrl() {
+        return flickrUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
 }
