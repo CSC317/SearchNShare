@@ -154,25 +154,36 @@ public class MainActivity extends AppCompatActivity {
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         RadioButton News = (RadioButton) findViewById(R.id.News);
+        RadioButton all = (RadioButton) findViewById(R.id.ALL);
         if (view.getId() == R.id.Meme && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
             News.setChecked(false);
+            all.setChecked(false);
         }
         if (view.getId() == R.id.Reddit && checked) {
             Meme.setChecked(false);
             Flickr.setChecked(false);
             News.setChecked(false);
+            all.setChecked(false);
         }
         if (view.getId() == R.id.Flickr && checked) {
             Reddit.setChecked(false);
             Meme.setChecked(false);
             News.setChecked(false);
+            all.setChecked(false);
         }
         if (view.getId() == R.id.News && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
             Meme.setChecked(false);
+            all.setChecked(false);
+        }
+        if (view.getId() == R.id.ALL && checked) {
+            Reddit.setChecked(false);
+            Flickr.setChecked(false);
+            Meme.setChecked(false);
+            News.setChecked(false);
         }
     }
 
@@ -217,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
+        RadioButton News = (RadioButton) findViewById(R.id.News);
         search = textField.getText().toString();
 
         if (search.equals("")){
@@ -257,9 +269,17 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
             transaction.commit();
         }
-        else {
+        else if (News.isChecked()) {
             NewsFragment frag = new NewsFragment();
             newsFrag = frag;
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else {
+            AllFragment frag = new AllFragment();
+            allFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);

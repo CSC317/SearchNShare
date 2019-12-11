@@ -143,9 +143,24 @@
                 android:background="@color/colorPrimary"
                 android:onClick="onRadioButtonClicked"
                 app:layout_constraintStart_toStartOf="@id/inner"
-                app:layout_constraintBottom_toBottomOf="@id/inner"
+                app:layout_constraintBottom_toTopOf="@id/ALL"
                 app:layout_constraintTop_toBottomOf="@id/Flickr">
             </RadioButton>
+
+        <RadioButton
+            android:id="@+id/ALL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="ALL"
+            style="@style/AppTheme"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
+            android:onClick="onRadioButtonClicked"
+            app:layout_constraintStart_toStartOf="@id/inner"
+            app:layout_constraintBottom_toBottomOf="@id/inner"
+            app:layout_constraintTop_toBottomOf="@id/News">
+        </RadioButton>
 
 <!--        </LinearLayout>-->
 
