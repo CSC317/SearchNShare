@@ -161,6 +161,17 @@ public class AllFragment extends Fragment {
 //        });
         try {
             String json = "" ;
+            if (MainActivity.search.contains(" ")) {
+                String[] searchTerms = MainActivity.search.split(" ");
+                RedditURLTerm = "";
+                for (int i = 0; i<searchTerms.length;i++){
+                    RedditURLTerm += searchTerms[i];
+                    RedditURLTerm += "+";
+                }
+            }
+            else {
+                RedditURLTerm = MainActivity.search;
+            }
             URL url = new URL(RedditURL+RedditURLTerm+endURL);
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
