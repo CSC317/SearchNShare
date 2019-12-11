@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<FavoriteListItem> ourFavorites;
 
-    String currentPhotoPath = null;
+    String currentPhotoPath ;
     String contactEmail = "";
 
 
@@ -401,13 +401,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public void onInfoClick(View v) {
         String text = ((TextView) v).getText().toString();
         String id = text.substring(text.indexOf(" :: ") + 4);
         String name = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
-        Cursor emails = memeFrag.getContainerActivity().getContentResolver().query(
-                ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+        Cursor emails = null;
+        int x = 0;
+        try {
+            emails = memeFrag.containerActivity.getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+        }
+        catch(Exception e){
+            x+=1;
+            e.printStackTrace();
+        }
+        if (x==1){
+            try{
+            emails = redditFrag.getNewFragment().getContainterActivity().getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
+            }
+            catch(Exception e){
+                x+=1;
+                e.printStackTrace();
+            }
+        }
 
         if (emails.moveToNext()) {
             String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
@@ -420,10 +440,14 @@ public class MainActivity extends AppCompatActivity {
 
         intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{contactEmail});
 
-        Uri uri = FileProvider.getUriForFile(this,
-                BuildConfig.APPLICATION_ID + ".fileprovider", new File(currentPhotoPath));
-        intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
-
+        if (x==0) {
+            Uri uri = FileProvider.getUriForFile(this,
+                    BuildConfig.APPLICATION_ID + ".fileprovider", new File(currentPhotoPath));
+            intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
+        }
+        else if (x ==1){
+            intent.putExtra(Intent.EXTRA_TEXT, redditFrag.getNewFragment().getUrlToOpen());
+        }
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         startActivity(intent);
@@ -458,6 +482,18 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    public void shareReddit(View v){
+        ContactsFragment cf = new ContactsFragment(redditFrag.getCurrentFragPL());
+        cf.setContainerActivity(redditFrag.getNewFragment().getActivity());
+        cf.url = redditFrag.getCurrentFragPL();
+        FragmentTransaction trans = redditFrag.getNewFragment().getActivity().getSupportFragmentManager().beginTransaction();
+        trans.replace(R.id.main_inner, cf);
+        trans.addToBackStack(null);
+        trans.commit();
+    }
+
+
 
 //    public void nextFragment(View v) {
 //        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
