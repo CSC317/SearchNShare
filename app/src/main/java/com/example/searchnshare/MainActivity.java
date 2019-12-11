@@ -150,6 +150,12 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
             transaction.commit();
         }
+        else if (item.getItemId() == R.id.help_item) {
+            HelpFragment frag = new HelpFragment();
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
         else {
             MenuFragment frag = new MenuFragment();
             menuFrag = frag;

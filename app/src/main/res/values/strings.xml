@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">SearchNShare</string>
     <string name="searchButton">Search with:</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_menu_help">On the main menu, you can select the API of your choice using the radio buttons on the screen and enter a search term or phrase into the search box. After pressing the "search with" button, you will be taken to the API you chose and view results from your given search query.</string>
+    <string name="other_apis_help">While searching through any of the APIs, you can select multiple menu buttons at the top right of the screen. The "main menu" button will bring you to back to the main menu. The three dots will drop down a list of the other APIs along with the ALL and the favorites page to allow you to visit any of those pages instantly.</string>
+    <string name="search_help">Another feature while on any of the four APIs or the ALL page is that you can search a new term on that specific API! Just enter your search into the search box and click the search button to see your new results. After searching, your new search will be saved across all other APIs when you choose to check another one out. </string>
+    <string name="post_click_help">While looking through posts of any API, you can select a specific post to open a new fragment to open the actual web view of the post! There will also be buttons at the top of the screen that you can use to either share the link of the post or add this post to your favorites.</string>
+    <string name="favorites_help">You can also save any posts you like from any of the APIs into your favorites page! Just click on a specific post and then select the "share to favorites" button at the top!</string>
+    <string name="sharing_help">When clicking on a specific post, you have the option to share the link of this post with someone from your contacts. When selecting the "share" button at the top of the screen, you will be shown a list of your contacts. When you select a contact you will be taken to Gmail where the email of that contact will be in the receiving slot and the link of the post will be attached to the email.</string>
+    <string name="all_help">The ALL page is special because it gives you the chance to view all four APIs at once! This page will show the results of Reddit, News, Flickr, and Meme APIs (In that order.) along with the all of the capabilities of the individual APIs!</string>
 </resources>

@@ -44,21 +44,9 @@ import java.util.List;
  */
 public class AllFragment extends Fragment {
 
-    private ListView redditListView; // ListView reference to attach content to
-    private ArrayAdapter<String> articleArrayAdapter = null;
     private String RedditURL = "https://www.reddit.com/r/";
     private String RedditURLTerm = "BabyShark";
     private String endURL = "/new.json?limit=25";
-    private ArrayList<String> titleRedditSubreddits;
-    private ArrayList<String> urlRedditSubreddits;
-    private ArrayList<String> permalinkRedditSubreddits;
-    private ArrayList<String> prefixRedditSubreddits;
-
-    private String currentFragmentPermalink;
-    private String currentFragmentSubreddit;
-    private String urlToOpen;
-
-    private SubredditFragment newFragment;
 
     public Activity containerActivity = null;
     public Calendar rightNow = Calendar.getInstance();
@@ -88,23 +76,6 @@ public class AllFragment extends Fragment {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_all, container, false);
-        redditListView = v.findViewById(R.id.all_reddit_list);
-//        articleArrayAdapter = new ArrayAdapter<String>(containerActivity, R.layout.layout_resource_file, R.id.redditTextView, titleRedditSubreddits);
-//        redditListView.setAdapter(articleArrayAdapter);
-//        redditListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                currentFragmentPermalink = permalinkRedditSubreddits.get(position);
-//                currentFragmentSubreddit = prefixRedditSubreddits.get(position);
-//                urlToOpen = "https://www.reddit.com"+currentFragmentPermalink;
-//
-//                newFragment = new SubredditFragment(urlToOpen, currentFragmentSubreddit);
-//                FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                fragTransaction.replace(R.id.main_inner, newFragment);
-//                fragTransaction.addToBackStack(null);
-//                fragTransaction.commit();
-//            }
-//        });
         EditText field = v.findViewById(R.id.all_field);
         field.setText(MainActivity.search);
         new GetAllTask().execute();
@@ -131,7 +102,6 @@ public class AllFragment extends Fragment {
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
-            System.out.println("Im here");
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
             input.close();
             return myBitmap;
@@ -142,26 +112,6 @@ public class AllFragment extends Fragment {
     }
 
     private JSONArray getRedditInfo() {
-//        titleRedditSubreddits = new ArrayList<String>();
-//        urlRedditSubreddits = new ArrayList<String>();
-//        prefixRedditSubreddits = new ArrayList<String>();
-//        permalinkRedditSubreddits = new ArrayList<String>();
-//        articleArrayAdapter = new ArrayAdapter<String>(containerActivity, R.layout.layout_resource_file, R.id.redditTextView, titleRedditSubreddits);
-//        redditListView.setAdapter(articleArrayAdapter);
-//        redditListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                currentFragmentPermalink = permalinkRedditSubreddits.get(position);
-//                currentFragmentSubreddit = prefixRedditSubreddits.get(position);
-//                urlToOpen = "https://www.reddit.com"+currentFragmentPermalink;
-//
-//                newFragment = new SubredditFragment(urlToOpen, currentFragmentSubreddit);
-//                FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                fragTransaction.replace(R.id.main_inner, newFragment);
-//                fragTransaction.addToBackStack(null);
-//                fragTransaction.commit();
-//            }
-//        });
         try {
             String json = "" ;
             if (MainActivity.search.contains(" ")) {
@@ -185,68 +135,12 @@ public class AllFragment extends Fragment {
                 JSONObject redditJSON = new JSONObject(json);
                 JSONObject arrayPointer = redditJSON.getJSONObject("data");
                 JSONArray articleArray =  arrayPointer.getJSONArray("children");
-                for (int i = 0; i< 2;i++) {
-                    JSONObject data = articleArray.getJSONObject(i).getJSONObject("data");
-                    if (data.has("url")) {
-                        String title = "This post has no title.";
-                        if (data.has("title")) {
-                            title = data.getString("title");
-                        }
-                        String subreddit_name_prefixed = "No prefix found.";
-                        if (data.has("subreddit_name_prefixed")) {
-                            subreddit_name_prefixed = data.getString("subreddit_name_prefixed");
-                        }
-                        String permalink = "";
-                        if (data.has("permalink")) {
-                            permalink = data.getString("permalink");
-                        }
-//                        permalinkRedditSubreddits.add(permalink);
-//                        prefixRedditSubreddits.add(subreddit_name_prefixed);
-//                        titleRedditSubreddits.add("Post Title:  " + title + "\t\n"
-//                                + "Subreddit of Posting:  " + prefixRedditSubreddits.get(i));
-//                        urlRedditSubreddits.add(data.getString("url"));
+                in.close();
+                return articleArray;
 
-                        FavoriteListItem item = new FavoriteListItem(title + "\n" + subreddit_name_prefixed, null, "Reddit");
-
-                        //allList.add(item);
-                        return articleArray;
-                    }
-                }
-                    in.close();
-                //return jsonObject;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            JSONObject redditJSON = new JSONObject(json);
-//            //JSONObject redditJSON = (JSONObject) aList[0];
-//            JSONObject arrayPointer = redditJSON.getJSONObject("data");
-//            JSONArray articleArray =  arrayPointer.getJSONArray("children");
-//            for (int i = 0; i< 2;i++) {
-//                JSONObject data = articleArray.getJSONObject(i).getJSONObject("data");
-//                if (data.has("url")){
-//                    String title = "This post has no title.";
-//                    if (data.has("title")){
-//                        title = data.getString("title");
-//                    }
-//                    String subreddit_name_prefixed = "No prefix found.";
-//                    if (data.has("subreddit_name_prefixed")){
-//                        subreddit_name_prefixed = data.getString("subreddit_name_prefixed");
-//                    }
-//                    String permalink = "";
-//                    if (data.has("permalink")){
-//                        permalink = data.getString("permalink");
-//                    }
-//                    permalinkRedditSubreddits.add(permalink);
-//                    prefixRedditSubreddits.add(subreddit_name_prefixed);
-//                    titleRedditSubreddits.add("Post Title:  "+title+"\t\n"
-//                            +"Subreddit of Posting:  "+prefixRedditSubreddits.get(i));
-//                    urlRedditSubreddits.add(data.getString("url"));
-//
-//                    FavoriteListItem item = new FavoriteListItem(title, null, "reddit");
-//
-//                    allList.add(item);
-//                }
-//            }
 
         } catch (Exception e) { e.printStackTrace(); }
         return null;
@@ -269,23 +163,6 @@ public class AllFragment extends Fragment {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray articleList = jsonObject.getJSONArray("articles");
 
-            String[] websites = new String[articleList.length()];
-            String[] contents = new String[articleList.length()];
-            List<HashMap<String, String>> newsList = new ArrayList<HashMap<String, String>>();
-
-            for (int i = 0; i < 2; i++) {
-                websites[i] = articleList.getJSONObject(i).getJSONObject("source").getString("name");
-                contents[i] = articleList.getJSONObject(i).getString("content");
-
-                HashMap<String, String> hm = new HashMap<String, String>();
-                hm.put("news_row_website", websites[i]);
-                hm.put("news_row_content", contents[i]);
-                newsList.add(hm);
-                String imageUrl = articleList.getJSONObject(i).getString("urlToImage");
-                Bitmap image = getBitmapFromURL(imageUrl);
-                FavoriteListItem item = new FavoriteListItem("NEWS\n" + contents[i], image, "news");
-                //allList.add(item);
-            }
             return articleList;
 
         } catch (Exception e) { e.printStackTrace(); }
@@ -310,28 +187,6 @@ public class AllFragment extends Fragment {
             JSONObject photos = jsonObject.getJSONObject("photos");
             JSONArray photoList = photos.getJSONArray("photo");
 
-
-            List<HashMap<String, String>> imageList = new ArrayList<HashMap<String, String>>();
-            List<FlickrRowItem> rowItems = new ArrayList<>();
-
-            for (int i = 0; i < 2; i++) {
-                if (photoList.getJSONObject(i).has("url_c")) {
-                    String title = photoList.getJSONObject(i).getString("title");
-                    String imageUrl = photoList.getJSONObject(i).getString("url_c");
-
-                    Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-                    System.out.println("Hello?");
-                    //FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
-                    //rowItems.add(rowItem);
-
-                    FavoriteListItem item = new FavoriteListItem("FLICKR\n"+title, imageBitmap, "flickr");
-                    //allList.add(item);
-//                        HashMap<String, String> hm = new HashMap<String, String>();
-//                        hm.put("flickr_row_title", title);
-//                        hm.put("flickr_row_image", imageBitmap.toString());
-//                        imageList.add(hm);
-                }
-            }
             return photoList;
         }
 
@@ -366,32 +221,6 @@ public class AllFragment extends Fragment {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray memeList = jsonObject.getJSONArray("memes");
 
-            List<HashMap<String, String>> memeArrayList = new ArrayList<HashMap<String, String>>();
-            List<MemeRowItem> rowItems = new ArrayList<>();
-
-
-            for (int i = 0; i < 2; i++) {
-                if (memeList.getJSONObject(i).has("url")) {
-                    String title = memeList.getJSONObject(i).getString("title");
-                    String imageUrl = memeList.getJSONObject(i).getString("url");
-
-                    System.out.println(title);
-                    System.out.println(imageUrl);
-                    Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-
-                    MemeRowItem rowItem = new MemeRowItem(title, imageBitmap);
-                    rowItems.add(rowItem);
-
-                    HashMap<String, String> hm = new HashMap<String, String>();
-                    hm.put("meme_row_title", title);
-                    hm.put("meme_row_image", imageBitmap.toString());
-                    memeArrayList.add(hm);
-
-                    FavoriteListItem item = new FavoriteListItem("MEME\n"+title, imageBitmap, "meme");
-                    //allList.add(item);
-                }
-
-            }
             return memeList;
         } catch (Exception e) {
             e.printStackTrace();
@@ -422,11 +251,6 @@ public class AllFragment extends Fragment {
                         if (data.has("permalink")) {
                             permalink = data.getString("permalink");
                         }
-//                        permalinkRedditSubreddits.add(permalink);
-//                        prefixRedditSubreddits.add(subreddit_name_prefixed);
-//                        titleRedditSubreddits.add("Post Title:  " + title + "\t\n"
-//                                + "Subreddit of Posting:  " + prefixRedditSubreddits.get(i));
-//                        urlRedditSubreddits.add(data.getString("url"));
 
                         FavoriteListItem item = new FavoriteListItem(title + "\n" + subreddit_name_prefixed, null, "Reddit");
                         item.setURL("https://www.reddit.com" + permalink);
@@ -455,17 +279,10 @@ public class AllFragment extends Fragment {
                         String postUrl = "https://flickr.com/photos/" + owner + "/" + id;
 
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-                        //System.out.println("Hello?");
-//                        FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
-//                        rowItems.add(rowItem);
 
                         FavoriteListItem item = new FavoriteListItem("FLICKR\n"+title, imageBitmap, "flickr");
                         item.setURL(postUrl);
                         allList.add(item);
-//                        HashMap<String, String> hm = new HashMap<String, String>();
-//                        hm.put("flickr_row_title", title);
-//                        hm.put("flickr_row_image", imageBitmap.toString());
-//                        imageList.add(hm);
                     }
                     flickrIndex++;
                 }
@@ -474,17 +291,7 @@ public class AllFragment extends Fragment {
                         String title = array[3].getJSONObject(memeIndex).getString("title");
                         String imageUrl = array[3].getJSONObject(memeIndex).getString("url");
                         String memePostUrl = array[3].getJSONObject(memeIndex).getString("postLink");
-//                        System.out.println(title);
-//                        System.out.println(imageUrl);
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-
-//                        MemeRowItem rowItem = new MemeRowItem(title, imageBitmap);
-//                        rowItems.add(rowItem);
-//
-//                        HashMap<String, String> hm = new HashMap<String, String>();
-//                        hm.put("meme_row_title", title);
-//                        hm.put("meme_row_image", imageBitmap.toString());
-//                        memeArrayList.add(hm);
 
                         FavoriteListItem item = new FavoriteListItem("MEME\n"+title, imageBitmap, "meme");
                         item.setURL(memePostUrl);
