@@ -382,6 +382,19 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void AnyRowClick(View v) {
+        TextView urlView = v.findViewById(R.id.favorite_row_url);
+        String url = urlView.getText().toString();
+        AllSelectedFragment frag = new AllSelectedFragment();
+
+        frag.setAnyUrl(url);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        frag.setContainerActivity(this);
+        transaction.replace(R.id.main_inner, frag);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
     // CollageCreator assignment.

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    style="@style/GithubTheme"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        style="@style/GithubTheme"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            style="@style/GithubTheme"
+            >
+
+            <Button
+                android:layout_margin="2dp"
+                android:id="@+id/visitAnyPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Add to Favorites"
+                android:textSize="10dp"
+                android:textAllCaps="false"
+                style="@style/GithubTheme"
+
+                >
+
+            </Button>
+
+            <Button
+                android:layout_margin="2dp"
+                android:id="@+id/shareAny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:text="Share"
+                android:textSize="10dp"
+                android:textAllCaps="false"
+                style="@style/GithubTheme"
+                >
+            </Button>
+
+        </LinearLayout>
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/anyWebView"
+            />
+    </LinearLayout>
+
+</FrameLayout>

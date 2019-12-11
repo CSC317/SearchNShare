@@ -26,6 +26,7 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteListItem> {
     private class ViewHolder {
         ImageView imageView;
         TextView txtTitle;
+        TextView urlView;
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
@@ -38,6 +39,7 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteListItem> {
             holder = new ViewHolder();
             holder.txtTitle = (TextView) convertView.findViewById(R.id.favorite_row_title);
             holder.imageView = (ImageView) convertView.findViewById(R.id.favorite_row_image);
+            holder.urlView = (TextView) convertView.findViewById(R.id.favorite_row_url);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
@@ -50,6 +52,8 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteListItem> {
         else {
             holder.imageView.setImageBitmap(rowItem.getImageBitmap());
         }
+
+        holder.urlView.setText(rowItem.getURL());
 
         return convertView;
     }

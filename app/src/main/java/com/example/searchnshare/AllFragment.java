@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -426,7 +427,7 @@ public class AllFragment extends Fragment {
 //                        urlRedditSubreddits.add(data.getString("url"));
 
                         FavoriteListItem item = new FavoriteListItem(title + "\n" + subreddit_name_prefixed, null, "Reddit");
-
+                        item.setURL("https://www.reddit.com" + permalink);
                         allList.add(item);
 
                     }
@@ -436,8 +437,10 @@ public class AllFragment extends Fragment {
                     String website  = array[1].getJSONObject(newsIndex).getJSONObject("source").getString("name");
                     String content = array[1].getJSONObject(newsIndex).getString("content");
                     String imageUrl = array[1].getJSONObject(newsIndex).getString("urlToImage");
+                    String postUrl = array[1].getJSONObject(newsIndex).getString("url");
                     Bitmap image = getBitmapFromURL(imageUrl);
                     FavoriteListItem item = new FavoriteListItem("NEWS\n" + website + "\n" + content, image, "news");
+                    item.setURL(postUrl);
                     allList.add(item);
                     newsIndex++;
                 }
@@ -445,6 +448,9 @@ public class AllFragment extends Fragment {
                     if (array[2].getJSONObject(flickrIndex).has("url_c")) {
                         String title = array[2].getJSONObject(flickrIndex).getString("title");
                         String imageUrl = array[2].getJSONObject(flickrIndex).getString("url_c");
+                        String owner = array[2].getJSONObject(flickrIndex).getString("owner");
+                        String id = array[2].getJSONObject(flickrIndex).getString("id");
+                        String postUrl = "https://flickr.com/photos/" + owner + "/" + id;
 
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
                         //System.out.println("Hello?");
@@ -452,6 +458,7 @@ public class AllFragment extends Fragment {
 //                        rowItems.add(rowItem);
 
                         FavoriteListItem item = new FavoriteListItem("FLICKR\n"+title, imageBitmap, "flickr");
+                        item.setURL(postUrl);
                         allList.add(item);
 //                        HashMap<String, String> hm = new HashMap<String, String>();
 //                        hm.put("flickr_row_title", title);
@@ -464,7 +471,7 @@ public class AllFragment extends Fragment {
                     if (array[3].getJSONObject(memeIndex).has("url")) {
                         String title = array[3].getJSONObject(memeIndex).getString("title");
                         String imageUrl = array[3].getJSONObject(memeIndex).getString("url");
-
+                        String memePostUrl = array[3].getJSONObject(memeIndex).getString("postLink");
 //                        System.out.println(title);
 //                        System.out.println(imageUrl);
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
@@ -478,6 +485,7 @@ public class AllFragment extends Fragment {
 //                        memeArrayList.add(hm);
 
                         FavoriteListItem item = new FavoriteListItem("MEME\n"+title, imageBitmap, "meme");
+                        item.setURL(memePostUrl);
                         allList.add(item);
                     }
                     memeIndex++;
@@ -537,6 +545,21 @@ public class AllFragment extends Fragment {
 
                 ListView allListView = (ListView) containerActivity.findViewById(R.id.all_list);
                 allListView.setAdapter(AllAdapter);
+                allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        TextView urlView = view.findViewById(R.id.favorite_row_url);
+                        String url = urlView.getText().toString();
+                        AllSelectedFragment frag = new AllSelectedFragment();
+
+                        frag.setAnyUrl(url);
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        frag.setContainerActivity(containerActivity);
+                        transaction.replace(R.id.main_inner, frag);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                });
 
             } catch (Exception e) { e.printStackTrace(); }
         }
