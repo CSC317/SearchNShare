@@ -305,6 +305,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void memeFavorites(View v) {
+        String title = memeFrag.getMemeClickedtitle();
+        String resource = "Meme";
+        Bitmap memeBitmap = memeFrag.getMemeBitmap();
+        FavoriteListItem memeFav = new FavoriteListItem(title, memeBitmap, resource);
+        memeFav.setURL(memeFrag.getMemeWebUrl());
+        ourFavorites.add(memeFav);
+
+    }
+
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
     // CollageCreator assignment.
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -327,7 +337,7 @@ public class MainActivity extends AppCompatActivity {
         String text = ((TextView) v).getText().toString();
         String id = text.substring(text.indexOf(" :: ") + 4);
         String name = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
-        Cursor emails = memeFrag.containerActivity.getContentResolver().query(
+        Cursor emails = memeFrag.getContainerActivity().getContentResolver().query(
                 ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
                 ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
 
@@ -366,21 +376,22 @@ public class MainActivity extends AppCompatActivity {
         return image;
     }
     public void shareMeme(View v){
-        ShareMemeFragment shareMemeFrag = memeFrag.shareMemeFrag;
-        ImageView memeView = memeFrag.memeClickedImageView;
+        ShareMemeFragment shareMemeFrag = memeFrag.getShareMemeFrag();
+        ImageView memeView = memeFrag.getMemeClickedImageView();
         Bitmap bitmap = Bitmap.createBitmap(
                 memeView.getWidth(), memeView.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         memeView.draw(canvas);
-        ContactsFragment cf = new ContactsFragment(memeFrag.fullUrl);
+        ContactsFragment cf = new ContactsFragment(memeFrag.getFullUrl());
         cf.setContainerActivity(shareMemeFrag.getActivity());
         cf.sketcherFile = createImageFileToSend(bitmap);
         FragmentTransaction transaction = shareMemeFrag.getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_inner, cf);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
+
+
 
 
 //    public void nextFragment(View v) {
