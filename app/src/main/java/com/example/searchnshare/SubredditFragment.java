@@ -1,5 +1,6 @@
 package com.example.searchnshare;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -21,6 +22,7 @@ public class SubredditFragment extends Fragment {
     private WebView myWebView;
 
     private String title;
+    private Activity containterActivity;
 
     /**
      *
@@ -35,8 +37,23 @@ public class SubredditFragment extends Fragment {
         return this.title;
     }
 
+    public void setContainterActivity(Activity containterActivity){
+        this.containterActivity = containterActivity;
+    }
+
+    public Activity getContainterActivity(){
+        return this.containterActivity;
+    }
     public void setTitle(String title){
         this.title = title;
+    }
+
+    public void setUrlToOpen(String urlToOpen){
+        this.urlToOpen = urlToOpen;
+    }
+
+    public String getUrlToOpen(){
+        return urlToOpen;
     }
 
     public void openSubreddit(){
