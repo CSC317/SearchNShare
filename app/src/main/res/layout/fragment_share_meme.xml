@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Visit Meme Website"
+                android:text="Add to Favorites"
                 android:textSize="10dp"
                 android:textAllCaps="false"
                 style="@style/GithubTheme"
@@ -57,7 +57,7 @@
         <WebView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/webView"
+            android:id="@+id/memeWebView"
             />
     </LinearLayout>
 
