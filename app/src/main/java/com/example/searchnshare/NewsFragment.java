@@ -53,6 +53,14 @@ public class NewsFragment extends Fragment {
         this.containerActivity = containerActivity;
     }
 
+
+    /**
+     * This method is used to set the view for this fragment
+     * @param inflater inflater used to inflate view
+     * @param container the container
+     * @param savedInstanceState bundle of instance state
+     * @return view to open
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,12 +73,21 @@ public class NewsFragment extends Fragment {
         return v;
     }
 
+
+    /**
+     * This is used to attach the menu item
+     * @param menu menu item created
+     * @param inflater this is reernced from
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_menu, menu);
         return;
     }
 
+    /**
+     * execute new search
+     */
     public void showFragSearch() {
         new GetNewsTask().execute();
     }
@@ -154,7 +171,4 @@ public class NewsFragment extends Fragment {
         }
     }
 
-    public String getFullNewsUrl() {
-        return fullNewsUrl;
-    }
 }

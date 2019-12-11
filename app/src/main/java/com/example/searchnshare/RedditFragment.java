@@ -39,17 +39,18 @@ public class RedditFragment extends Fragment {
     //private String RedditURL = "https://www.reddit.com/subreddits/search.json?q=";
     private String RedditURLTerm = "BabyShark";
     private String endURL = "/new.json?limit=25";
-    private ArrayList<String> titleRedditSubreddits;
-    private ArrayList<String> urlRedditSubreddits;
-    private ArrayList<String> permalinkRedditSubreddits;
-    private ArrayList<String> prefixRedditSubreddits;
+    private ArrayList<String> titleRedditSubreddits; //Arraylist of titles
+    private ArrayList<String> urlRedditSubreddits;//arraylist of urls
+    private ArrayList<String> permalinkRedditSubreddits;// arraylist of permalink
+    private ArrayList<String> prefixRedditSubreddits;// arraylist of subreddits
     private Activity containerActivity; // Activity to which this fragment is contained in
 
-    private String currentFragmentPermalink;
-    private String currentFragmentSubreddit;
-    private String urlToOpen;
+    private String currentFragmentPermalink; // current permalink
+    private String currentFragmentSubreddit; // current subreddit
+    private String urlToOpen; // url to open as string
 
-    private SubredditFragment newFragment;
+    private SubredditFragment newFragment; // the current foremost fragment if there is one
+
 
 
     public RedditFragment() {
@@ -60,22 +61,34 @@ public class RedditFragment extends Fragment {
         permalinkRedditSubreddits = new ArrayList<String>();
     }
 
-    public void loadWebView() {
-        newFragment.loadWebView();
-    }
 
+    /**
+     * This method u=is ide to start a new subredit
+     */
     public void openSubreddit() {
         newFragment.openSubreddit();
     }
 
+    /**
+     * getter for the current context permalink
+     * @return String the current permalink
+     */
     public String getCurrentFragPL(){
         return this.currentFragmentPermalink;
     }
 
+    /**
+     * getter for the current context
+     * @return SubredditFragment the fragment to reference
+     */
     public SubredditFragment getNewFragment(){
         return newFragment;
     }
 
+    /**
+     * getter for the current context
+     * @return SubredditFragment the fragment to reference
+     */
     public SubredditFragment getCurrentContenxt(){
         return newFragment;
     }
@@ -88,9 +101,6 @@ public class RedditFragment extends Fragment {
     }
 
 
-    public String shareSubreddit() {
-        return "https://www.reddit.com" + currentFragmentSubreddit;
-    }
 
     public void initialSearchRequest(String searchTerm) {
         this.RedditURLTerm = searchTerm;
@@ -160,8 +170,8 @@ public class RedditFragment extends Fragment {
         }
 
         /**
-         * This method will be used to mine data from the url that was sent to flickr to recieve
-         * access to public photos in order to process requests
+         * This method will be used to mine data from the url that was sent to reddit to recieve
+         * access to public posts in order to process requests
          * @param redditJSON JSONObject from the api request sent
          */
         @Override
@@ -253,7 +263,11 @@ public class RedditFragment extends Fragment {
     }
 
 
-
+    /**
+     * This method will be used to add our menu bar to this fragment
+     * @param menu our menu item
+     * @param inflater the inflater to attach this to
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_menu, menu);

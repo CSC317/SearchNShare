@@ -32,6 +32,14 @@ public class MenuFragment extends Fragment {
         this.containerActivity = containerActivity;
     }
 
+
+    /**
+     * This method is used to set the view for this fragment
+     * @param inflater inflater used to inflate view
+     * @param container the container
+     * @param savedInstanceState bundle of instance state
+     * @return view to open
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,6 +51,9 @@ public class MenuFragment extends Fragment {
         return v;
     }
 
+    /**
+     * This method is used in order to load the webview of the content for this fragment
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.help_menu, menu);

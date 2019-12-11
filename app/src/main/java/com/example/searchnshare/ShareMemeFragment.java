@@ -19,8 +19,8 @@ import android.widget.ImageView;
 public class ShareMemeFragment extends Fragment {
 
 
-    private String webUrl;
-    private WebView myWebView;
+    private String webUrl; // String of the url to open
+    private WebView myWebView; // webview refernce
 
 
     public ShareMemeFragment(String webViewUrl) {
@@ -29,6 +29,9 @@ public class ShareMemeFragment extends Fragment {
     }
 
 
+    /**
+     * This method is used in order to load the webview of the content for this fragment
+     */
     public void loadWebView(){
         System.out.println("MEME URL IN WEBVIEW---" + webUrl);
 

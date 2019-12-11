@@ -35,6 +35,14 @@ public class ShareFlickrFragment extends Fragment {
         this.containerActivity = containerActivity;
     }
 
+
+    /**
+     * This method is used to set the view for this fragment
+     * @param inflater inflater used to inflate view
+     * @param container the container
+     * @param savedInstanceState bundle of instance state
+     * @return view to open
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,26 +54,50 @@ public class ShareFlickrFragment extends Fragment {
         return v;
     }
 
+    /**
+     * Setter for the url
+     * @param url String for url
+     */
     public void setFlickrUrl(String url) {
         this.flickrUrl = url;
     }
 
+    /**
+     * Setter for the new title
+     * @param title String the title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Setter for the image to populate
+     * @param image Bitmap to reference
+     */
     public void setImage(Bitmap image) {
         this.image = image;
     }
 
+    /**
+     * GEtter for the url
+     * @return STring url to open
+     */
     public String getFlickrUrl() {
         return flickrUrl;
     }
 
+    /**
+     * getter for the current title of this item
+     * @return STring the title for this item
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Getter for the current bitmap attached tothis item
+     * @return Bitmap that is attached to this item
+     */
     public Bitmap getImage() {
         return image;
     }

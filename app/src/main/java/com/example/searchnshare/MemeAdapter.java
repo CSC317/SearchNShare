@@ -21,12 +21,18 @@ public class MemeAdapter extends ArrayAdapter<MemeRowItem> {
         super(context, resourceId, items);
         this.context = context;
     }
-
-    /*private view holder class*/
     private class ViewHolder {
         ImageView imageView;
         TextView txtTitle;
     }
+
+    /**
+     * This method will be used to attach items to an adapter
+     * @param position current position in list
+     * @param convertView view to convert
+     * @param parent viewgroup for the parent
+     * @return View th new view to reference for the adapter getView method
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         MemeRowItem rowItem = getItem(position);
