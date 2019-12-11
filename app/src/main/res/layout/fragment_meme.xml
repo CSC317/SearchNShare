@@ -5,13 +5,15 @@
     android:layout_height="match_parent"
     android:id="@+id/meme_outer"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    style="@style/GithubTheme">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Meme"
         android:textSize="30dp"
+        style="@style/GithubTheme"
         android:gravity="center"
         android:id="@+id/meme_title"/>
 
@@ -20,6 +22,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/Msearch"
+        style="@style/GithubTheme"
         android:weightSum="4">
 
 
@@ -28,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            style="@style/GithubTheme"
             android:textSize="20dp"/>
 
         <Button
@@ -37,11 +41,13 @@
             android:text="SEARCH"
             android:textSize="15dp"
             android:onClick="showFragSearch"
+            style="@style/GithubTheme"
             android:layout_weight="3" />
 
     </LinearLayout>
     <ListView
         android:id="@+id/memes_list"
         android:layout_width="match_parent"
+        style="@style/GithubTheme"
         android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#0079D3</color>
+    <color name="colorPrimaryDark">#FFB000</color>
+    <color name="colorAccent">#C9C7C7</color>
+    <color name="redditRed">#FF4500</color>
+    <color name="redditGrey">#C9C7C7</color>
+    <color name="redditAccent">#0079D3</color>
+    <color name="flickrBlue">#0063DC</color>
+    <color name="flickrPink">#FF0084</color>
+    <color name="flickrAccent">#858484</color>
+    <color name="gitGreen">#24292e</color>
+    <color name="gitBackground">#28a745</color>
+    <color name="gitAccent">#f6f8fa</color>
+    <color name="newsPrimary">#20883F</color>
+    <color name="newsText">#020101</color>
+    <color name="newsAccent">#f6f8fa</color>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.example.searchnshare;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
@@ -202,9 +204,9 @@ public class MainActivity extends AppCompatActivity {
         redditFrag.openSubreddit();
     }
 
-    public void redditWebViewOpen(View v){
-        redditFrag.loadWebView();
-    }
+//    public void redditWebViewOpen(View v){
+//        redditFrag.loadWebView();
+//    }
 
     public void showSearch(View view) {
         EditText textField = (EditText) findViewById(R.id.text_field);
@@ -212,6 +214,9 @@ public class MainActivity extends AppCompatActivity {
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         search = textField.getText().toString();
+        if (search.equals("")){
+            search = "java";
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (Meme.isChecked()) {
             MemeFragment frag = new MemeFragment();
@@ -247,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
             transaction.commit();
         }
-        else  {
+        else {
             NewsFragment frag = new NewsFragment();
             newsFrag = frag;
             frag.setContainerActivity(this);
@@ -298,6 +303,23 @@ public class MainActivity extends AppCompatActivity {
         newFav.setURL(redditFrag.sharePosting());
         ourFavorites.add(newFav);
 
+    }
+
+    //Creates the image file of the screenshot taken of the drawing, this function was taken from
+    // CollageCreator assignment.
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public File createImageFileToSend(Bitmap bitmap) {
+        File file = null;
+        try {
+            file = createImageFile();
+        } catch (IOException ex) {
+        }
+        try (FileOutputStream out = new FileOutputStream(file)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
 

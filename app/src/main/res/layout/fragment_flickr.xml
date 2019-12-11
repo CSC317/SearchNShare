@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/flickr_outer"
     android:orientation="vertical"
+    style="@style/FlickrTheme"
     tools:context=".MainActivity">
 
     <TextView
@@ -14,6 +15,7 @@
         android:text="Flickr"
         android:textSize="30dp"
         android:gravity="center"
+        style="@style/FlickrTheme"
         android:id="@+id/flickr_title"/>
 <!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
 <!--        app:layout_constraintTop_toTopOf="@id/flickr_outer"-->
@@ -24,6 +26,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/Fsearch"
+        style="@style/FlickrTheme"
         android:weightSum="4">
 <!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
 <!--        app:layout_constraintTop_toBottomOf="@id/flickr_title"-->
@@ -34,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            style="@style/FlickrTheme"
             android:textSize="20dp"/>
 
         <Button
@@ -42,6 +46,7 @@
             android:layout_height="match_parent"
             android:text="SEARCH"
             android:textSize="15dp"
+            style="@style/FlickrTheme"
             android:onClick="showFragSearch"
             android:layout_weight="3" />
         <!--            android:onClick="showSearch"-->
@@ -62,7 +67,8 @@
     <ListView
         android:id="@+id/image_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        style="@style/FlickrTheme"/>
 <!--        app:layout_constraintStart_toStartOf="@id/flickr_outer"-->
 <!--        app:layout_constraintEnd_toEndOf="@id/flickr_outer"-->
 <!--        app:layout_constraintBottom_toBottomOf="@id/flickr_outer"-->

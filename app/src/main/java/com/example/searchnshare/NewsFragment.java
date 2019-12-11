@@ -93,7 +93,7 @@ public class NewsFragment extends Fragment {
 
                 String json = "";
                 String line;
-
+                System.out.println(urlBeginning + MainActivity.search + urlMid + urlEnd);
                 URL url = new URL(urlBeginning + MainActivity.search + urlMid + urlEnd);
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
