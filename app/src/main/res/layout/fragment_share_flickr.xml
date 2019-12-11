@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Add to Favorites"
+                android:onClick="flickrFavorites"
                 android:textSize="10dp"
                 android:textAllCaps="false"
                 style="@style/FlickrTheme"

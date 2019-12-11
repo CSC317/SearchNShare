@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
     public MemeFragment memeFrag;
     public RedditFragment redditFrag;
     public FlickrFragment flickrFrag;
+    public ShareFlickrFragment shareFlickrFrag;
     public NewsFragment newsFrag;
+    public ShareNewsFragment shareNewsFrag;
     public AllFragment allFrag = new AllFragment();
     public FavoritesFragment favFrag;
 
@@ -330,6 +332,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void flickrFavorites(View v) {
+        String title = shareFlickrFrag.getTitle();
+        Bitmap image = shareFlickrFrag.getImage();
+        String resource = "flickr";
+        FavoriteListItem newFav = new FavoriteListItem(title, image, resource);
+        newFav.setURL(shareFlickrFrag.getFlickrUrl());
+        ourFavorites.add(newFav);
+
+    }
+
+    public void newsFavorites(View v) {
+        String website = shareNewsFrag.getWebsite();
+        String content = shareNewsFrag.getContentStr();
+        String resource = "news";
+        FavoriteListItem newFav = new FavoriteListItem(website + "\n" + content, null, resource);
+        newFav.setURL(shareNewsFrag.getNewsUrl());
+        ourFavorites.add(newFav);
+
+    }
+
     public void memeFavorites(View v) {
         String title = memeFrag.getMemeClickedtitle();
         String resource = "Meme";
@@ -352,6 +374,7 @@ public class MainActivity extends AppCompatActivity {
         String website = websiteView.getText().toString();
         String url = urlView.getText().toString();
         ShareNewsFragment frag = new ShareNewsFragment();
+        shareNewsFrag = frag;
         frag.setWebsite(website);
         frag.setContentStr(content);
         frag.setNewsUrl(url);
@@ -372,22 +395,10 @@ public class MainActivity extends AppCompatActivity {
         Bitmap image = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
         String url = urlView.getText().toString();
         ShareFlickrFragment frag = new ShareFlickrFragment();
+        shareFlickrFrag = frag;
         frag.setTitle(title);
         frag.setImage(image);
         frag.setFlickrUrl(url);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        frag.setContainerActivity(this);
-        transaction.replace(R.id.main_inner, frag);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    public void AnyRowClick(View v) {
-        TextView urlView = v.findViewById(R.id.favorite_row_url);
-        String url = urlView.getText().toString();
-        AllSelectedFragment frag = new AllSelectedFragment();
-
-        frag.setAnyUrl(url);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         frag.setContainerActivity(this);
         transaction.replace(R.id.main_inner, frag);
@@ -422,7 +433,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor emails = null;
         int x = 0;
         try {
-            emails = memeFrag.containerActivity.getContentResolver().query(
+            emails = memeFrag.getContainerActivity().getContentResolver().query(
                     ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
                     ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
         }

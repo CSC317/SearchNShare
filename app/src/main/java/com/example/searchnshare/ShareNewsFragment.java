@@ -2,6 +2,7 @@ package com.example.searchnshare;
 
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,7 @@ public class ShareNewsFragment extends Fragment {
     private String newsUrl;
     private String website;
     private String content;
+    private Bitmap image;
 
     public ShareNewsFragment() {}
 
@@ -55,6 +57,18 @@ public class ShareNewsFragment extends Fragment {
 
     public void setContentStr(String content) {
         this.content = content;
+    }
+
+    public String getNewsUrl() {
+        return newsUrl;
+    }
+
+    public String getContentStr() {
+        return content;
+    }
+
+    public String getWebsite() {
+        return website;
     }
 
 }
