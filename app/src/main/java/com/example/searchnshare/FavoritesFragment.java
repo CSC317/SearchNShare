@@ -60,6 +60,7 @@ public class FavoritesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FavoriteSelectedFragment newFrag = new FavoriteSelectedFragment(currentFavs.get(position).getURL());
+                ((MainActivity)containerActivity).setFavSelectedFragment(newFrag);
                 FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragTransaction.replace(R.id.main_inner, newFrag);
                 fragTransaction.addToBackStack(null);
