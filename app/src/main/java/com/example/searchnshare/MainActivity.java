@@ -154,25 +154,36 @@ public class MainActivity extends AppCompatActivity {
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         RadioButton News = (RadioButton) findViewById(R.id.News);
+        RadioButton all = (RadioButton) findViewById(R.id.ALL);
         if (view.getId() == R.id.Meme && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
             News.setChecked(false);
+            all.setChecked(false);
         }
         if (view.getId() == R.id.Reddit && checked) {
             Meme.setChecked(false);
             Flickr.setChecked(false);
             News.setChecked(false);
+            all.setChecked(false);
         }
         if (view.getId() == R.id.Flickr && checked) {
             Reddit.setChecked(false);
             Meme.setChecked(false);
             News.setChecked(false);
+            all.setChecked(false);
         }
         if (view.getId() == R.id.News && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
             Meme.setChecked(false);
+            all.setChecked(false);
+        }
+        if (view.getId() == R.id.ALL && checked) {
+            Reddit.setChecked(false);
+            Flickr.setChecked(false);
+            Meme.setChecked(false);
+            News.setChecked(false);
         }
     }
 
@@ -217,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
+        RadioButton News = (RadioButton) findViewById(R.id.News);
         search = textField.getText().toString();
 
         if (search.equals("")){
@@ -257,9 +269,17 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
             transaction.commit();
         }
-        else {
+        else if (News.isChecked()) {
             NewsFragment frag = new NewsFragment();
             newsFrag = frag;
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else {
+            AllFragment frag = new AllFragment();
+            allFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -309,6 +329,17 @@ public class MainActivity extends AppCompatActivity {
         ourFavorites.add(newFav);
 
     }
+
+    public void memeFavorites(View v) {
+        String title = memeFrag.getMemeClickedtitle();
+        String resource = "Meme";
+        Bitmap memeBitmap = memeFrag.getMemeBitmap();
+        FavoriteListItem memeFav = new FavoriteListItem(title, memeBitmap, resource);
+        memeFav.setURL(memeFrag.getMemeWebUrl());
+        ourFavorites.add(memeFav);
+
+    }
+
 
 
     public void NewsRowClick(View v) {
@@ -397,6 +428,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
         if (emails.moveToNext()) {
             String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
             contactEmail = email; // string representing the email to send the drawing to
@@ -436,13 +468,13 @@ public class MainActivity extends AppCompatActivity {
         return image;
     }
     public void shareMeme(View v){
-        ShareMemeFragment shareMemeFrag = memeFrag.shareMemeFrag;
-        ImageView memeView = memeFrag.memeClickedImageView;
+        ShareMemeFragment shareMemeFrag = memeFrag.getShareMemeFrag();
+        ImageView memeView = memeFrag.getMemeClickedImageView();
         Bitmap bitmap = Bitmap.createBitmap(
                 memeView.getWidth(), memeView.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         memeView.draw(canvas);
-        ContactsFragment cf = new ContactsFragment(memeFrag.fullUrl);
+        ContactsFragment cf = new ContactsFragment(memeFrag.getFullUrl());
         cf.setContainerActivity(shareMemeFrag.getActivity());
         cf.sketcherFile = createImageFileToSend(bitmap);
         FragmentTransaction transaction = shareMemeFrag.getActivity().getSupportFragmentManager().beginTransaction();
@@ -460,6 +492,7 @@ public class MainActivity extends AppCompatActivity {
         trans.addToBackStack(null);
         trans.commit();
     }
+
 
 
 //    public void nextFragment(View v) {
