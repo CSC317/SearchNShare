@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -72,5 +74,11 @@ public class SubredditFragment extends Fragment {
         }
         loadWebView();
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.view_menu, menu);
+        return;
     }
 }

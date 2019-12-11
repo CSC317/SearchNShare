@@ -49,6 +49,7 @@ public class MemeFragment extends Fragment {
     public String fullUrl;
     public ShareMemeFragment shareMemeFrag;
     public String jpgMeme;
+    public ImageView memeClickedImageView;
 
 
     public MemeFragment() {
@@ -76,13 +77,13 @@ public class MemeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageView collageView = view.findViewById(R.id.meme_row_image);
-
+                memeClickedImageView = collageView;
                 Bitmap bitmap = Bitmap.createBitmap(
-                        view.getWidth(), collageView.getHeight(), Bitmap.Config.ARGB_8888);
+                        collageView.getWidth(), collageView.getHeight(), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(bitmap);
                 collageView.draw(canvas);
                 shareMemeFrag = new ShareMemeFragment(collageView, fullUrl);
-//
+
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_inner, shareMemeFrag);
                 transaction.addToBackStack(null);

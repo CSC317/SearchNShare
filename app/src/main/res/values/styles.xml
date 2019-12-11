@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:typeface">serif</item>
     </style>
 
 
@@ -15,6 +16,7 @@
         <item name="android:background">@color/redditGrey</item>
         <item name="colorAccent">@color/redditAccent</item>
         <item name="android:textSize">12dp</item>
+        <item name="android:typeface">monospace</item>
     </style>
 
     <style name="FlickrTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -22,6 +24,7 @@
         <item name="android:textColor">@color/flickrBlue</item>
         <item name="android:background">@color/flickrAccent</item>
         <item name="colorAccent">@color/flickrPink</item>
+        <item name="android:typeface">sans</item>
     </style>
 
     <style name="GithubTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -29,6 +32,7 @@
         <item name="android:textColor">@color/gitBackground</item>
         <item name="android:background">@color/gitGreen</item>
         <item name="colorAccent">@color/gitAccent</item>
+        <item name="android:typeface">monospace</item>
     </style>
 
 
@@ -37,6 +41,7 @@
         <item name="android:textColor">@color/newsText</item>
         <item name="android:background">@color/newsPrimary</item>
         <item name="colorAccent">@color/newsAccent</item>
+        <item name="android:typeface">sans</item>
     </style>
 
 </resources>
