@@ -10,7 +10,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+
+import android.graphics.drawable.BitmapDrawable;
+
 import android.media.Image;
+
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -150,25 +154,36 @@ public class MainActivity extends AppCompatActivity {
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         RadioButton News = (RadioButton) findViewById(R.id.News);
+        RadioButton all = (RadioButton) findViewById(R.id.ALL);
         if (view.getId() == R.id.Meme && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
             News.setChecked(false);
+            all.setChecked(false);
         }
         if (view.getId() == R.id.Reddit && checked) {
             Meme.setChecked(false);
             Flickr.setChecked(false);
             News.setChecked(false);
+            all.setChecked(false);
         }
         if (view.getId() == R.id.Flickr && checked) {
             Reddit.setChecked(false);
             Meme.setChecked(false);
             News.setChecked(false);
+            all.setChecked(false);
         }
         if (view.getId() == R.id.News && checked) {
             Reddit.setChecked(false);
             Flickr.setChecked(false);
             Meme.setChecked(false);
+            all.setChecked(false);
+        }
+        if (view.getId() == R.id.ALL && checked) {
+            Reddit.setChecked(false);
+            Flickr.setChecked(false);
+            Meme.setChecked(false);
+            News.setChecked(false);
         }
     }
 
@@ -213,7 +228,9 @@ public class MainActivity extends AppCompatActivity {
         RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
+        RadioButton News = (RadioButton) findViewById(R.id.News);
         search = textField.getText().toString();
+
         if (search.equals("")){
             search = "java";
         }
@@ -252,9 +269,17 @@ public class MainActivity extends AppCompatActivity {
             transaction.addToBackStack(null);
             transaction.commit();
         }
-        else {
+        else if (News.isChecked()) {
             NewsFragment frag = new NewsFragment();
             newsFrag = frag;
+            frag.setContainerActivity(this);
+            transaction.replace(R.id.main_inner, frag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else {
+            AllFragment frag = new AllFragment();
+            allFrag = frag;
             frag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
@@ -314,6 +339,49 @@ public class MainActivity extends AppCompatActivity {
         ourFavorites.add(memeFav);
 
     }
+
+
+
+    public void NewsRowClick(View v) {
+        LinearLayout LL = (LinearLayout) v;
+        TextView contentView = v.findViewById(R.id.news_row_content);
+        TextView websiteView = v.findViewById(R.id.news_row_website);
+        TextView urlView = v.findViewById(R.id.news_row_url);
+
+        String content = contentView.getText().toString();
+        String website = websiteView.getText().toString();
+        String url = urlView.getText().toString();
+        ShareNewsFragment frag = new ShareNewsFragment();
+        frag.setWebsite(website);
+        frag.setContentStr(content);
+        frag.setNewsUrl(url);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        frag.setContainerActivity(this);
+        transaction.replace(R.id.main_inner, frag);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void FlickrRowClick(View v) {
+        LinearLayout LL = (LinearLayout) v;
+        TextView titleView = v.findViewById(R.id.flickr_row_title);
+        ImageView imageView = v.findViewById(R.id.flickr_row_image);
+        TextView urlView = v.findViewById(R.id.flickr_row_url);
+
+        String title = titleView.getText().toString();
+        Bitmap image = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        String url = urlView.getText().toString();
+        ShareFlickrFragment frag = new ShareFlickrFragment();
+        frag.setTitle(title);
+        frag.setImage(image);
+        frag.setFlickrUrl(url);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        frag.setContainerActivity(this);
+        transaction.replace(R.id.main_inner, frag);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
     // CollageCreator assignment.
@@ -390,9 +458,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
-
-
 
 //    public void nextFragment(View v) {
 //        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

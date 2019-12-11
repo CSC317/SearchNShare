@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:onClick="FlickrRowClick"
     style="@style/FlickrTheme"
     android:id="@+id/flickr_row">
     <!--    android:weightSum="5"-->
@@ -24,6 +25,14 @@
         style="@style/FlickrTheme"
         android:gravity="center"/>
     <!--        android:layout_weight="3"/>-->
+
+    <TextView
+        android:id="@+id/flickr_row_url"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        style="@style/FlickrTheme"
+        android:textSize="0dp"/>
 
 
 </LinearLayout>

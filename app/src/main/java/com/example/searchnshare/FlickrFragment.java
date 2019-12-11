@@ -135,10 +135,13 @@ public class FlickrFragment extends Fragment {
                     if (photoList.getJSONObject(i).has("url_c")) {
                         String title = photoList.getJSONObject(i).getString("title");
                         String imageUrl = photoList.getJSONObject(i).getString("url_c");
+                        String owner = photoList.getJSONObject(i).getString("owner");
+                        String id = photoList.getJSONObject(i).getString("id");
+                        String postUrl = "https://flickr.com/photos/" + owner + "/" + id;
 
                         Bitmap imageBitmap = getBitmapFromURL(imageUrl);
                         System.out.println("Hello?");
-                        FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
+                        FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap, postUrl);
                         rowItems.add(rowItem);
 
 

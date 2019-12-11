@@ -161,6 +161,17 @@ public class AllFragment extends Fragment {
 //        });
         try {
             String json = "" ;
+            if (MainActivity.search.contains(" ")) {
+                String[] searchTerms = MainActivity.search.split(" ");
+                RedditURLTerm = "";
+                for (int i = 0; i<searchTerms.length;i++){
+                    RedditURLTerm += searchTerms[i];
+                    RedditURLTerm += "+";
+                }
+            }
+            else {
+                RedditURLTerm = MainActivity.search;
+            }
             URL url = new URL(RedditURL+RedditURLTerm+endURL);
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -307,8 +318,8 @@ public class AllFragment extends Fragment {
 
                     Bitmap imageBitmap = getBitmapFromURL(imageUrl);
                     System.out.println("Hello?");
-                    FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
-                    rowItems.add(rowItem);
+                    //FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
+                    //rowItems.add(rowItem);
 
                     FavoriteListItem item = new FavoriteListItem("FLICKR\n"+title, imageBitmap, "flickr");
                     //allList.add(item);

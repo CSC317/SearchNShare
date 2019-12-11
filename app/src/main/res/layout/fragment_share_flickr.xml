@@ -6,73 +6,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    style="@style/GithubTheme"
+    style="@style/FlickrTheme"
+
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        style="@style/GithubTheme"
+        style="@style/FlickrTheme"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3"
-            style="@style/GithubTheme"
+            android:weightSum="2"
+            style="@style/FlickrTheme"
             >
 
-
-
             <Button
                 android:layout_margin="2dp"
-                android:id="@+id/visitThread"
+                android:id="@+id/visitFlickrPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="openSubreddit"
-                android:text="Visit /r Thread"
-                android:textSize="15dp"
+                android:text="Add to Favorites"
+                android:textSize="10dp"
                 android:textAllCaps="false"
-                style="@style/RedditTheme"
+                style="@style/FlickrTheme"
+
                 >
 
             </Button>
+
             <Button
                 android:layout_margin="2dp"
-                android:id="@+id/shareUrl"
+                android:id="@+id/shareFlickr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Share Posting"
-                android:textSize="15dp"
+
+                android:text="Share"
+                android:textSize="10dp"
                 android:textAllCaps="false"
-                style="@style/RedditTheme"
+                style="@style/FlickrTheme"
                 >
             </Button>
-            <Button
-                android:layout_margin="2dp"
-                android:id="@+id/shareWithContacts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Favorites"
-                android:textSize="15dp"
-                android:textAllCaps="false"
-                android:onClick="redditFavorites"
-                style="@style/RedditTheme"
-                >
-            </Button>
-
-
-
 
         </LinearLayout>
 
         <WebView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/webView"
+            android:id="@+id/flickrWebView"
             />
     </LinearLayout>
 
