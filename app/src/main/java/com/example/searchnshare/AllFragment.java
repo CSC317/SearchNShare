@@ -307,8 +307,8 @@ public class AllFragment extends Fragment {
 
                     Bitmap imageBitmap = getBitmapFromURL(imageUrl);
                     System.out.println("Hello?");
-                    FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
-                    rowItems.add(rowItem);
+                    //FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
+                    //rowItems.add(rowItem);
 
                     FavoriteListItem item = new FavoriteListItem("FLICKR\n"+title, imageBitmap, "flickr");
                     //allList.add(item);

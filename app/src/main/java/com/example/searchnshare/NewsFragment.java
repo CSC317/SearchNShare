@@ -120,6 +120,7 @@ public class NewsFragment extends Fragment {
                     HashMap<String, String> hm = new HashMap<String, String>();
                     hm.put("news_row_website", websites[i]);
                     hm.put("news_row_content", articles[i][2]);
+                    hm.put("news_row_url", articles[i][3]);
                     newsList.add(hm);
                 }
                 return newsList;
@@ -137,8 +138,8 @@ public class NewsFragment extends Fragment {
         @Override
         protected void onPostExecute(List<HashMap<String, String>> aList) {
             try {
-                String[] from = {"news_row_website", "news_row_content"};
-                int[] to = {R.id.news_row_website, R.id.news_row_content};
+                String[] from = {"news_row_website", "news_row_content", "news_row_url"};
+                int[] to = {R.id.news_row_website, R.id.news_row_content, R.id.news_row_url};
 
                 SimpleAdapter simpleAdapter =
                         new SimpleAdapter(containerActivity, aList,
