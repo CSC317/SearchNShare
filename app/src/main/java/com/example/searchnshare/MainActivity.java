@@ -214,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
         RadioButton Reddit = (RadioButton) findViewById(R.id.Reddit);
         RadioButton Flickr = (RadioButton) findViewById(R.id.Flickr);
         search = textField.getText().toString();
+
         if (search.equals("")){
             search = "java";
         }

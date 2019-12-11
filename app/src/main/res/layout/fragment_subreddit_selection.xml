@@ -32,7 +32,7 @@
                 android:layout_weight="1"
                 android:onClick="openSubreddit"
                 android:text="Visit Subreddit Thread"
-                android:textSize="10dp"
+                android:textSize="25dp"
                 android:textAllCaps="false"
                 style="@style/RedditTheme"
                 >
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Share Posting"
-                android:textSize="10dp"
+                android:textSize="25dp"
                 android:textAllCaps="false"
                 style="@style/RedditTheme"
                 >
@@ -56,8 +56,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Share Posting"
-                android:textSize="10dp"
+                android:text="Favorites"
+                android:textSize="25dp"
                 android:textAllCaps="false"
                 android:onClick="redditFavorites"
                 style="@style/RedditTheme"
