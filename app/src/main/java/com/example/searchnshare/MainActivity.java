@@ -350,21 +350,7 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
-    //Creates the image file of the screenshot taken of the drawing, this function was taken from
-    // CollageCreator assignment.
-    public File createImageFileToSend(Bitmap bitmap) {
-        File file = null;
-        try {
-            file = createImageFile();
-        } catch (IOException ex) {
-        }
-        try (FileOutputStream out = new FileOutputStream(file)) {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
+
     //Creates the image file path of the screenshot taken of the drawing. This function was taken
     // from CollageCreator assignment
     public File createImageFile() throws IOException {
