@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<FavoriteListItem> ourFavorites;
 
     String currentPhotoPath = null;
-    String contactEmail = null;
+    String contactEmail = "";
 
 
     @Override
@@ -298,6 +299,35 @@ public class MainActivity extends AppCompatActivity {
         ourFavorites.add(newFav);
 
     }
+
+
+    public void onInfoClick(View v) {
+        String text = ((TextView) v).getText().toString();
+        String id = text.substring(text.indexOf(" :: ") + 4);
+        String name = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
+        Cursor emails = memeFrag.containerActivity.getContentResolver().query(
+                ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+
+        if (emails.moveToNext()) {
+            String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
+            contactEmail = email; // string representing the email to send the drawing to
+        }
+        emails.close();
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("vnd.android.cursor.dir/email");
+
+        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{contactEmail});
+
+        Uri uri = FileProvider.getUriForFile(this,
+                BuildConfig.APPLICATION_ID + ".fileprovider", new File(currentPhotoPath));
+        intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
+
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
+    }
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
     // CollageCreator assignment.
     public File createImageFileToSend(Bitmap bitmap) {
@@ -313,36 +343,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return file;
     }
-
-    public void onInfoClick(View v) {
-        String text = ((TextView) v).getText().toString();
-        String id = text.substring(text.indexOf(" :: ") + 4);
-        String name = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
-        String contactEmail = null;
-        Cursor emails = memeFrag.containerActivity.getContentResolver().query(
-                ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
-                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
-
-        if (emails.moveToNext()) {
-            String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
-            contactEmail = email; // string representing the email to send the drawing to
-        }
-        emails.close();
-
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("vnd.android.cursor.dir/email");
-
-        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{contactEmail});
-System.out.println(memeFrag.fullUrl);
-        Uri uri = FileProvider.getUriForFile(this,
-                BuildConfig.APPLICATION_ID + ".fileprovider", new File(memeFrag.jpgMeme));
-        intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
-
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        startActivity(intent);
-    }
-
     //Creates the image file path of the screenshot taken of the drawing. This function was taken
     // from CollageCreator assignment
     public File createImageFile() throws IOException {
@@ -359,14 +359,21 @@ System.out.println(memeFrag.fullUrl);
     }
     public void shareMeme(View v){
         ShareMemeFragment shareMemeFrag = memeFrag.shareMemeFrag;
+        ImageView memeView = memeFrag.memeClickedImageView;
+        Bitmap bitmap = Bitmap.createBitmap(
+                memeView.getWidth(), memeView.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        memeView.draw(canvas);
         ContactsFragment cf = new ContactsFragment(memeFrag.fullUrl);
         cf.setContainerActivity(shareMemeFrag.getActivity());
+        cf.sketcherFile = createImageFileToSend(bitmap);
         FragmentTransaction transaction = shareMemeFrag.getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_inner, cf);
         transaction.addToBackStack(null);
         transaction.commit();
 
     }
+
 
 //    public void nextFragment(View v) {
 //        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
