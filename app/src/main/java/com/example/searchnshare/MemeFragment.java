@@ -39,18 +39,20 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class MemeFragment extends Fragment {
-    public Activity containerActivity = null;
-    public String memeUrl = "https://meme-api.herokuapp.com/gimme/";
+    private Activity containerActivity = null;
+    private String memeUrl = "https://meme-api.herokuapp.com/gimme/";
 
-    public String APIkey = "/10";
+    private String APIkey = "/10";
     private ListView memeListView;
     private ContactsFragment contactsFragment;
-    List<HashMap<String, String>> memeArrayList;
-    public String fullUrl;
-    public ShareMemeFragment shareMemeFrag;
-    public String jpgMeme;
-    public String memeWebUrl;
-    public ImageView memeClickedImageView;
+    private List<HashMap<String, String>> memeArrayList;
+    private String fullUrl;
+    private ShareMemeFragment shareMemeFrag;
+    private String jpgMeme;
+    private String memeWebUrl;
+    private ImageView memeClickedImageView;
+    private String memeClickedtitle;
+    private Bitmap memeBitmap;
 
 
     public MemeFragment() {
@@ -63,6 +65,9 @@ public class MemeFragment extends Fragment {
      */
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
+    }
+    public Activity getContainerActivity() {
+        return this.containerActivity;
     }
 
     @Override
@@ -79,14 +84,15 @@ public class MemeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HashMap<String, String> map = memeArrayList.get(position);
                 memeWebUrl = map.get("meme_web_view");
+                memeClickedtitle = map.get("meme_row_title");
                 ImageView collageView = view.findViewById(R.id.meme_row_image);
                 memeClickedImageView = collageView;
                 Bitmap bitmap = Bitmap.createBitmap(
                         collageView.getWidth(), collageView.getHeight(), Bitmap.Config.ARGB_8888);
                 Canvas canvas = new Canvas(bitmap);
                 collageView.draw(canvas);
-                shareMemeFrag = new ShareMemeFragment(collageView, fullUrl, memeWebUrl);
-
+                shareMemeFrag = new ShareMemeFragment(memeWebUrl);
+                memeBitmap = bitmap;
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_inner, shareMemeFrag);
                 transaction.addToBackStack(null);
@@ -95,10 +101,19 @@ public class MemeFragment extends Fragment {
         });
         new GetMemesTask().execute();
         return v;
-
-
-
         ///just send the link, don't bother making the imageFile, delete below functions
+    }
+
+    public String getFullUrl(){
+        return this.fullUrl;
+    }
+
+    public ShareMemeFragment getShareMemeFrag(){
+        return this.shareMemeFrag;
+    }
+
+    public ImageView getMemeClickedImageView(){
+        return this.memeClickedImageView;
     }
     //Creates the image file of the screenshot taken of the drawing, this function was taken from
     // CollageCreator assignment.
@@ -187,7 +202,7 @@ public class MemeFragment extends Fragment {
                 JSONObject jsonObject = new JSONObject(json);
                 JSONArray memeList = jsonObject.getJSONArray("memes");
 
-                 memeArrayList = new ArrayList<HashMap<String, String>>();
+                memeArrayList = new ArrayList<HashMap<String, String>>();
                 List<MemeRowItem> rowItems = new ArrayList<>();
 
 
@@ -232,6 +247,19 @@ public class MemeFragment extends Fragment {
 
             } catch (Exception e) { e.printStackTrace(); }
         }
+    }
+
+    public String getMemeClickedtitle(){
+        return this.memeClickedtitle;
+    }
+
+    public Bitmap getMemeBitmap(){
+        return this.memeBitmap;
+    }
+
+    public String getMemeWebUrl()
+    {
+        return this.memeWebUrl;
     }
 }
 

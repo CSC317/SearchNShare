@@ -18,15 +18,13 @@ import android.widget.ImageView;
 
 public class ShareMemeFragment extends Fragment {
 
-    public ImageView memeImage;
-    public String memeUrl;
-    public String webUrl;
-    public WebView myWebView;
+
+    private String webUrl;
+    private WebView myWebView;
 
 
-    public ShareMemeFragment(ImageView memeView, String url, String webViewUrl) {
-        memeImage = memeView;
-        memeUrl = url;
+    public ShareMemeFragment(String webViewUrl) {
+
         webUrl = webViewUrl;
     }
 

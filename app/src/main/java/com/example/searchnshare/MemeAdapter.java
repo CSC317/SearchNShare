@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MemeAdapter extends ArrayAdapter<MemeRowItem> {
 
-    Context context;
+    private Context context;
 
     public MemeAdapter(Context context, int resourceId,
                          List<MemeRowItem> items) {
