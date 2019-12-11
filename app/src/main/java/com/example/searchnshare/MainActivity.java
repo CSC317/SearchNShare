@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private WebView myWebView;
 
     private ArrayList<FavoriteListItem> ourFavorites;
+    private int x;
 
     String currentPhotoPath ;
     String contactEmail = "";
@@ -451,110 +452,73 @@ public class MainActivity extends AppCompatActivity {
         String id = text.substring(text.indexOf(" :: ") + 4);
         String name = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
         Cursor emails = null;
-        int x = 0;
-        try {
+        System.out.println("X--------------------------------------------------------" + x);
+
+        if (x == 0) {
             emails = memeFrag.getContainerActivity().getContentResolver().query(
                     ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
                     ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
-        }
-        catch(Exception e){
-            x+=1;
-            e.printStackTrace();
-        }
-        if (x==1){
-            try{
+        } else if (x == 1) {
             emails = redditFrag.getNewFragment().getContainterActivity().getContentResolver().query(
-                    ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
-                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
-            }
-            catch(Exception e){
-                x+=1;
-                e.printStackTrace();
-            }
+                    ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+        } else if (x == 2) {
+            emails = shareFlickrFrag.getActivity().getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+        } else if (x == 3) {
+            emails = shareNewsFrag.getActivity().getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+        } else if (x == 4) {
+
+            System.out.println("----------------------------------");
+            System.out.println("USING ALL FRAG");
+            emails = allSelectedFragment.getActivity().getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+        } else if (x == 5) {
+
+            System.out.println("----------------------------------");
+            System.out.println("USING FAV FRAG");
+
+            emails = favSelectedFragment.getActivity().getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
+
         }
-        if (x==2) {
-            try{
-                emails = shareFlickrFrag.getActivity().getContentResolver().query(
-                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
-                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
+            if (emails.moveToNext()) {
+                String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
+                contactEmail = email; // string representing the email to send the drawing to
             }
-            catch(Exception e){
-                x+=1;
-                e.printStackTrace();
+            emails.close();
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("vnd.android.cursor.dir/email");
+
+            intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{contactEmail});
+
+            if (x == 0) {
+                Uri uri = FileProvider.getUriForFile(this,
+                        BuildConfig.APPLICATION_ID + ".fileprovider", new File(currentPhotoPath));
+                intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
+            } else if (x == 1) {
+                intent.putExtra(Intent.EXTRA_TEXT, redditFrag.getNewFragment().getUrlToOpen());
+            } else if (x == 2) {
+                intent.putExtra(Intent.EXTRA_TEXT, shareFlickrFrag.getFlickrUrl());
+            } else if (x == 3) {
+                intent.putExtra(Intent.EXTRA_TEXT, shareNewsFrag.getNewsUrl());
+            } else if (x == 4) {
+                intent.putExtra(Intent.EXTRA_TEXT, allSelectedFragment.getAnyUrl());
+            } else if (x == 5) {
+                intent.putExtra(Intent.EXTRA_TEXT, favSelectedFragment.getURL());
             }
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            startActivity(intent);
         }
 
-        if (x==3) {
-            try{
-                emails = shareNewsFrag.getActivity().getContentResolver().query(
-                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
-                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
-            }
-            catch(Exception e){
-                x+=1;
-                e.printStackTrace();
-            }
-        }
 
-        if (x==4) {
-            try{
-                emails = allSelectedFragment.getActivity().getContentResolver().query(
-                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
-                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
-            }
-            catch(Exception e){
-                x+=1;
-                e.printStackTrace();
-            }
-        }
-
-        if (x==5) {
-            try{
-                emails = favSelectedFragment.getActivity().getContentResolver().query(
-                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
-                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
-            }
-            catch(Exception e){
-                x+=1;
-                e.printStackTrace();
-            }
-        }
-
-        if (emails.moveToNext()) {
-            String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
-            contactEmail = email; // string representing the email to send the drawing to
-        }
-        emails.close();
-
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("vnd.android.cursor.dir/email");
-
-        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{contactEmail});
-
-        if (x==0) {
-            Uri uri = FileProvider.getUriForFile(this,
-                    BuildConfig.APPLICATION_ID + ".fileprovider", new File(currentPhotoPath));
-            intent.putExtra(android.content.Intent.EXTRA_STREAM, uri);
-        }
-        else if (x ==1){
-            intent.putExtra(Intent.EXTRA_TEXT, redditFrag.getNewFragment().getUrlToOpen());
-        }
-        else if (x ==2){
-            intent.putExtra(Intent.EXTRA_TEXT, shareFlickrFrag.getFlickrUrl());
-        }
-        else if (x ==3){
-            intent.putExtra(Intent.EXTRA_TEXT, shareNewsFrag.getNewsUrl());
-        }
-        else if (x ==4){
-            intent.putExtra(Intent.EXTRA_TEXT, allSelectedFragment.getAnyUrl());
-        }
-        else if (x ==5){
-            intent.putExtra(Intent.EXTRA_TEXT, favSelectedFragment.getURL());
-        }
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        startActivity(intent);
-    }
 
     //Creates the image file path of the screenshot taken of the drawing. This function was taken
     // from CollageCreator assignment
@@ -571,6 +535,7 @@ public class MainActivity extends AppCompatActivity {
         return image;
     }
     public void shareMeme(View v){
+        x = 0;
         ShareMemeFragment shareMemeFrag = memeFrag.getShareMemeFrag();
         ImageView memeView = memeFrag.getMemeClickedImageView();
         Bitmap bitmap = Bitmap.createBitmap(
@@ -587,6 +552,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void shareReddit(View v){
+        x = 1;
         ContactsFragment cf = new ContactsFragment(redditFrag.getCurrentFragPL());
         cf.setContainerActivity(redditFrag.getNewFragment().getActivity());
         cf.url = redditFrag.getCurrentFragPL();
@@ -597,6 +563,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void shareFlickr(View v) {
+        x = 2;
         ContactsFragment cf = new ContactsFragment(shareFlickrFrag.getFlickrUrl());
         cf.setContainerActivity(this);
         cf.url = shareFlickrFrag.getFlickrUrl();
@@ -607,6 +574,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void shareNews(View v) {
+        x = 3;
         ContactsFragment cf = new ContactsFragment(shareNewsFrag.getNewsUrl());
         cf.setContainerActivity(this);
         cf.url = shareNewsFrag.getNewsUrl();
@@ -617,6 +585,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void shareAll(View v) {
+        x = 4;
         ContactsFragment cf = new ContactsFragment(allSelectedFragment.getAnyUrl());
         cf.setContainerActivity(this);
         cf.url = allSelectedFragment.getAnyUrl();
@@ -627,6 +596,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void shareFavs(View v) {
+        x = 5;
         ContactsFragment cf = new ContactsFragment(favSelectedFragment.getURL());
         cf.setContainerActivity(this);
         cf.url = favSelectedFragment.getURL();
