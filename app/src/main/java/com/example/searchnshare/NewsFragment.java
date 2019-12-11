@@ -40,6 +40,7 @@ public class NewsFragment extends Fragment {
     public String urlBeginning = "https://newsapi.org/v2/everything?sortBy=publishedAt&q=";
     public String urlMid = "&from=" + startDate;
     public String urlEnd = "&apiKey=19cb84b5a36f4d1cb00e290e84a93eeb";
+    private String fullNewsUrl = "";
 
     public NewsFragment() {}
 
@@ -94,7 +95,8 @@ public class NewsFragment extends Fragment {
                 String json = "";
                 String line;
                 System.out.println(urlBeginning + MainActivity.search + urlMid + urlEnd);
-                URL url = new URL(urlBeginning + MainActivity.search + urlMid + urlEnd);
+                fullNewsUrl = urlBeginning + MainActivity.search + urlMid + urlEnd;
+                URL url = new URL(fullNewsUrl);
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                 while ((line = in.readLine()) != null) {
@@ -152,4 +154,7 @@ public class NewsFragment extends Fragment {
         }
     }
 
+    public String getFullNewsUrl() {
+        return fullNewsUrl;
+    }
 }
