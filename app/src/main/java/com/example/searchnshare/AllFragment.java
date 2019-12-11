@@ -70,6 +70,9 @@ public class AllFragment extends Fragment {
     public String memeUrl = "https://meme-api.herokuapp.com/gimme/";
     public String MemeAPIkey = "/10";
 
+    private ArrayList<FavoriteListItem> allList;
+    private FavoritesAdapter AllAdapter;
+
     public AllFragment() {}
 
     public void setContainerActivity(Activity containerActivity) {
@@ -135,27 +138,27 @@ public class AllFragment extends Fragment {
         }
     }
 
-    private JSONObject getRedditInfo() {
-        titleRedditSubreddits = new ArrayList<String>();
-        urlRedditSubreddits = new ArrayList<String>();
-        prefixRedditSubreddits = new ArrayList<String>();
-        permalinkRedditSubreddits = new ArrayList<String>();
-        articleArrayAdapter = new ArrayAdapter<String>(containerActivity, R.layout.layout_resource_file, R.id.redditTextView, titleRedditSubreddits);
-        redditListView.setAdapter(articleArrayAdapter);
-        redditListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentFragmentPermalink = permalinkRedditSubreddits.get(position);
-                currentFragmentSubreddit = prefixRedditSubreddits.get(position);
-                urlToOpen = "https://www.reddit.com"+currentFragmentPermalink;
-
-                newFragment = new SubredditFragment(urlToOpen, currentFragmentSubreddit);
-                FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragTransaction.replace(R.id.main_inner, newFragment);
-                fragTransaction.addToBackStack(null);
-                fragTransaction.commit();
-            }
-        });
+    private JSONArray getRedditInfo() {
+//        titleRedditSubreddits = new ArrayList<String>();
+//        urlRedditSubreddits = new ArrayList<String>();
+//        prefixRedditSubreddits = new ArrayList<String>();
+//        permalinkRedditSubreddits = new ArrayList<String>();
+//        articleArrayAdapter = new ArrayAdapter<String>(containerActivity, R.layout.layout_resource_file, R.id.redditTextView, titleRedditSubreddits);
+//        redditListView.setAdapter(articleArrayAdapter);
+//        redditListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                currentFragmentPermalink = permalinkRedditSubreddits.get(position);
+//                currentFragmentSubreddit = prefixRedditSubreddits.get(position);
+//                urlToOpen = "https://www.reddit.com"+currentFragmentPermalink;
+//
+//                newFragment = new SubredditFragment(urlToOpen, currentFragmentSubreddit);
+//                FragmentTransaction fragTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                fragTransaction.replace(R.id.main_inner, newFragment);
+//                fragTransaction.addToBackStack(null);
+//                fragTransaction.commit();
+//            }
+//        });
         try {
             String json = "" ;
             URL url = new URL(RedditURL+RedditURLTerm+endURL);
@@ -165,17 +168,77 @@ public class AllFragment extends Fragment {
                 while ((hold = in.readLine()) != null){
                     json += hold;
                 }
-                JSONObject jsonObject = new JSONObject(json);
-                in.close();
-                return jsonObject;
+                JSONObject redditJSON = new JSONObject(json);
+                JSONObject arrayPointer = redditJSON.getJSONObject("data");
+                JSONArray articleArray =  arrayPointer.getJSONArray("children");
+                for (int i = 0; i< 2;i++) {
+                    JSONObject data = articleArray.getJSONObject(i).getJSONObject("data");
+                    if (data.has("url")) {
+                        String title = "This post has no title.";
+                        if (data.has("title")) {
+                            title = data.getString("title");
+                        }
+                        String subreddit_name_prefixed = "No prefix found.";
+                        if (data.has("subreddit_name_prefixed")) {
+                            subreddit_name_prefixed = data.getString("subreddit_name_prefixed");
+                        }
+                        String permalink = "";
+                        if (data.has("permalink")) {
+                            permalink = data.getString("permalink");
+                        }
+//                        permalinkRedditSubreddits.add(permalink);
+//                        prefixRedditSubreddits.add(subreddit_name_prefixed);
+//                        titleRedditSubreddits.add("Post Title:  " + title + "\t\n"
+//                                + "Subreddit of Posting:  " + prefixRedditSubreddits.get(i));
+//                        urlRedditSubreddits.add(data.getString("url"));
+
+                        FavoriteListItem item = new FavoriteListItem(title + "\n" + subreddit_name_prefixed, null, "Reddit");
+
+                        //allList.add(item);
+                        return articleArray;
+                    }
+                }
+                    in.close();
+                //return jsonObject;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+//            JSONObject redditJSON = new JSONObject(json);
+//            //JSONObject redditJSON = (JSONObject) aList[0];
+//            JSONObject arrayPointer = redditJSON.getJSONObject("data");
+//            JSONArray articleArray =  arrayPointer.getJSONArray("children");
+//            for (int i = 0; i< 2;i++) {
+//                JSONObject data = articleArray.getJSONObject(i).getJSONObject("data");
+//                if (data.has("url")){
+//                    String title = "This post has no title.";
+//                    if (data.has("title")){
+//                        title = data.getString("title");
+//                    }
+//                    String subreddit_name_prefixed = "No prefix found.";
+//                    if (data.has("subreddit_name_prefixed")){
+//                        subreddit_name_prefixed = data.getString("subreddit_name_prefixed");
+//                    }
+//                    String permalink = "";
+//                    if (data.has("permalink")){
+//                        permalink = data.getString("permalink");
+//                    }
+//                    permalinkRedditSubreddits.add(permalink);
+//                    prefixRedditSubreddits.add(subreddit_name_prefixed);
+//                    titleRedditSubreddits.add("Post Title:  "+title+"\t\n"
+//                            +"Subreddit of Posting:  "+prefixRedditSubreddits.get(i));
+//                    urlRedditSubreddits.add(data.getString("url"));
+//
+//                    FavoriteListItem item = new FavoriteListItem(title, null, "reddit");
+//
+//                    allList.add(item);
+//                }
+//            }
+
         } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
 
-    private List<HashMap<String, String>> getNewsInfo() {
+    private JSONArray getNewsInfo() {
         try {
 
             String json = "";
@@ -204,15 +267,19 @@ public class AllFragment extends Fragment {
                 hm.put("news_row_website", websites[i]);
                 hm.put("news_row_content", contents[i]);
                 newsList.add(hm);
+                String imageUrl = articleList.getJSONObject(i).getString("urlToImage");
+                Bitmap image = getBitmapFromURL(imageUrl);
+                FavoriteListItem item = new FavoriteListItem("NEWS\n" + contents[i], image, "news");
+                //allList.add(item);
             }
-            return newsList;
+            return articleList;
 
         } catch (Exception e) { e.printStackTrace(); }
 
         return null;
     }
 
-    private List<FlickrRowItem> getFlickrInfo() {
+    private JSONArray getFlickrInfo() {
         try {
             String json = "";
             String line;
@@ -243,14 +310,15 @@ public class AllFragment extends Fragment {
                     FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
                     rowItems.add(rowItem);
 
-
+                    FavoriteListItem item = new FavoriteListItem("FLICKR\n"+title, imageBitmap, "flickr");
+                    //allList.add(item);
 //                        HashMap<String, String> hm = new HashMap<String, String>();
 //                        hm.put("flickr_row_title", title);
 //                        hm.put("flickr_row_image", imageBitmap.toString());
 //                        imageList.add(hm);
                 }
             }
-            return rowItems;
+            return photoList;
         }
 
         catch (Exception e) { e.printStackTrace(); }
@@ -258,7 +326,7 @@ public class AllFragment extends Fragment {
         return null;
     }
 
-    private List<MemeRowItem> getMemeInfo() {
+    private JSONArray getMemeInfo() {
         try {
 
             String json = "";
@@ -304,14 +372,109 @@ public class AllFragment extends Fragment {
                     hm.put("meme_row_title", title);
                     hm.put("meme_row_image", imageBitmap.toString());
                     memeArrayList.add(hm);
+
+                    FavoriteListItem item = new FavoriteListItem("MEME\n"+title, imageBitmap, "meme");
+                    //allList.add(item);
                 }
 
             }
-            return rowItems;
+            return memeList;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void fillAllList(JSONArray[] array) {
+        int redditIndex = 0;
+        int newsIndex = 0;
+        int flickrIndex = 0;
+        int memeIndex = 0;
+        int index = 0;
+        while (index < 12) {
+            try {
+                if (index == 0 || index == 4 || index == 8) {
+                    JSONObject data = array[0].getJSONObject(redditIndex).getJSONObject("data");
+                    if (data.has("url")) {
+                        String title = "This post has no title.";
+                        if (data.has("title")) {
+                            title = data.getString("title");
+                        }
+                        String subreddit_name_prefixed = "No prefix found.";
+                        if (data.has("subreddit_name_prefixed")) {
+                            subreddit_name_prefixed = data.getString("subreddit_name_prefixed");
+                        }
+                        String permalink = "";
+                        if (data.has("permalink")) {
+                            permalink = data.getString("permalink");
+                        }
+//                        permalinkRedditSubreddits.add(permalink);
+//                        prefixRedditSubreddits.add(subreddit_name_prefixed);
+//                        titleRedditSubreddits.add("Post Title:  " + title + "\t\n"
+//                                + "Subreddit of Posting:  " + prefixRedditSubreddits.get(i));
+//                        urlRedditSubreddits.add(data.getString("url"));
+
+                        FavoriteListItem item = new FavoriteListItem(title + "\n" + subreddit_name_prefixed, null, "Reddit");
+
+                        allList.add(item);
+
+                    }
+                    redditIndex++;
+                }
+                if (index == 1 || index == 5 || index == 9) {
+                    String website  = array[1].getJSONObject(newsIndex).getJSONObject("source").getString("name");
+                    String content = array[1].getJSONObject(newsIndex).getString("content");
+                    String imageUrl = array[1].getJSONObject(newsIndex).getString("urlToImage");
+                    Bitmap image = getBitmapFromURL(imageUrl);
+                    FavoriteListItem item = new FavoriteListItem("NEWS\n" + website + "\n" + content, image, "news");
+                    allList.add(item);
+                    newsIndex++;
+                }
+                if (index == 2 || index == 6 || index == 10) {
+                    if (array[2].getJSONObject(flickrIndex).has("url_c")) {
+                        String title = array[2].getJSONObject(flickrIndex).getString("title");
+                        String imageUrl = array[2].getJSONObject(flickrIndex).getString("url_c");
+
+                        Bitmap imageBitmap = getBitmapFromURL(imageUrl);
+                        //System.out.println("Hello?");
+//                        FlickrRowItem rowItem = new FlickrRowItem(title, imageBitmap);
+//                        rowItems.add(rowItem);
+
+                        FavoriteListItem item = new FavoriteListItem("FLICKR\n"+title, imageBitmap, "flickr");
+                        allList.add(item);
+//                        HashMap<String, String> hm = new HashMap<String, String>();
+//                        hm.put("flickr_row_title", title);
+//                        hm.put("flickr_row_image", imageBitmap.toString());
+//                        imageList.add(hm);
+                    }
+                    flickrIndex++;
+                }
+                if (index == 3 || index == 7 || index == 11) {
+                    if (array[3].getJSONObject(memeIndex).has("url")) {
+                        String title = array[3].getJSONObject(memeIndex).getString("title");
+                        String imageUrl = array[3].getJSONObject(memeIndex).getString("url");
+
+//                        System.out.println(title);
+//                        System.out.println(imageUrl);
+                        Bitmap imageBitmap = getBitmapFromURL(imageUrl);
+
+//                        MemeRowItem rowItem = new MemeRowItem(title, imageBitmap);
+//                        rowItems.add(rowItem);
+//
+//                        HashMap<String, String> hm = new HashMap<String, String>();
+//                        hm.put("meme_row_title", title);
+//                        hm.put("meme_row_image", imageBitmap.toString());
+//                        memeArrayList.add(hm);
+
+                        FavoriteListItem item = new FavoriteListItem("MEME\n"+title, imageBitmap, "meme");
+                        allList.add(item);
+                    }
+                    memeIndex++;
+                }
+            }
+            catch (Exception e) { e.printStackTrace(); }
+            index++;
+        }
     }
 
     public void showFragSearch() {
@@ -329,23 +492,28 @@ public class AllFragment extends Fragment {
          * @return the List of HashMaps for the simpleAdapter.
          */
         @Override
-        protected Object[] doInBackground(Object[] objs) {
+        protected JSONArray[] doInBackground(Object[] objs) {
+            allList = new ArrayList<>();
 
-            Object[] apis = new Object[4];
+            JSONArray[] apis = new JSONArray[4];
 
-            JSONObject reddit = getRedditInfo();
+            JSONArray reddit = getRedditInfo();
             apis[0] = reddit;
 
-            List<HashMap<String, String>> news = getNewsInfo();
+            JSONArray news = getNewsInfo();
             apis[1] = news;
 
-            List<FlickrRowItem> flickr = getFlickrInfo();
+            JSONArray flickr = getFlickrInfo();
             apis[2] = flickr;
 
-            List<MemeRowItem> memes = getMemeInfo();
+            JSONArray memes = getMemeInfo();
             apis[3] = memes;
 
-            return apis;
+            fillAllList(apis);
+
+            AllAdapter = new FavoritesAdapter(containerActivity, R.id.favorite_row, allList);
+
+            return null;
         }
 
         /**
@@ -355,57 +523,9 @@ public class AllFragment extends Fragment {
          */@Override
         protected void onPostExecute(Object[] aList) {
             try {
-                    JSONObject redditJSON = (JSONObject) aList[0];
-                    JSONObject arrayPointer = redditJSON.getJSONObject("data");
-                    JSONArray articleArray =  arrayPointer.getJSONArray("children");
-                    for (int i = 0; i< 2;i++) {
-                        JSONObject data = articleArray.getJSONObject(i).getJSONObject("data");
-                        if (data.has("url")){
-                            String title = "This post has no title.";
-                            if (data.has("title")){
-                                title = data.getString("title");
-                            }
-                            String subreddit_name_prefixed = "No prefix found.";
-                            if (data.has("subreddit_name_prefixed")){
-                                subreddit_name_prefixed = data.getString("subreddit_name_prefixed");
-                            }
-                            String permalink = "";
-                            if (data.has("permalink")){
-                                permalink = data.getString("permalink");
-                            }
-                            permalinkRedditSubreddits.add(permalink);
-                            prefixRedditSubreddits.add(subreddit_name_prefixed);
-                            titleRedditSubreddits.add("Post Title:  "+title+"\t\n"
-                                    +"Subreddit of Posting:  "+prefixRedditSubreddits.get(i));
-                            urlRedditSubreddits.add(data.getString("url"));
-                        }
-                    }
 
-                    articleArrayAdapter.notifyDataSetChanged();
-
-
-                String[] from = {"news_row_website", "news_row_content"};
-                int[] to = {R.id.news_row_website, R.id.news_row_content};
-
-                SimpleAdapter simpleAdapter =
-                        new SimpleAdapter(containerActivity, (List<HashMap<String, String>>)aList[1],
-                                R.layout.news_row, from, to);
-
-                ListView tierListView = (ListView) containerActivity.findViewById(R.id.all_news_list);
-                tierListView.setAdapter(simpleAdapter);
-
-                CustomAdapter FlickrAdapter = new CustomAdapter(containerActivity,
-                        R.layout.flickr_row, (List<FlickrRowItem>)aList[2]);
-
-
-                ListView imageListView = (ListView) containerActivity.findViewById(R.id.all_flickr_list);
-                imageListView.setAdapter(FlickrAdapter);
-
-                MemeAdapter memeAdapter = new MemeAdapter(containerActivity,
-                        R.layout.meme_row, (List<MemeRowItem>)aList[3]);
-
-                ListView memeListView = (ListView) containerActivity.findViewById(R.id.all_meme_list);
-                imageListView.setAdapter(memeAdapter);
+                ListView allListView = (ListView) containerActivity.findViewById(R.id.all_list);
+                allListView.setAdapter(AllAdapter);
 
             } catch (Exception e) { e.printStackTrace(); }
         }
