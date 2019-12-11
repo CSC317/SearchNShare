@@ -467,6 +467,41 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        if (x==2) {
+            try{
+                emails = shareFlickrFrag.getActivity().getContentResolver().query(
+                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
+                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
+            }
+            catch(Exception e){
+                x+=1;
+                e.printStackTrace();
+            }
+        }
+
+        if (x==3) {
+            try{
+                emails = shareNewsFrag.getActivity().getContentResolver().query(
+                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
+                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
+            }
+            catch(Exception e){
+                x+=1;
+                e.printStackTrace();
+            }
+        }
+
+        if (x==4) {
+            try{
+                emails = allSelectedFragment.getActivity().getContentResolver().query(
+                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,
+                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id,null,null);
+            }
+            catch(Exception e){
+                x+=1;
+                e.printStackTrace();
+            }
+        }
 
         if (emails.moveToNext()) {
             String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
@@ -486,6 +521,15 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (x ==1){
             intent.putExtra(Intent.EXTRA_TEXT, redditFrag.getNewFragment().getUrlToOpen());
+        }
+        else if (x ==2){
+            intent.putExtra(Intent.EXTRA_TEXT, shareFlickrFrag.getFlickrUrl());
+        }
+        else if (x ==3){
+            intent.putExtra(Intent.EXTRA_TEXT, shareNewsFrag.getNewsUrl());
+        }
+        else if (x ==4){
+            intent.putExtra(Intent.EXTRA_TEXT, allSelectedFragment.getAnyUrl());
         }
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
@@ -527,6 +571,36 @@ public class MainActivity extends AppCompatActivity {
         cf.setContainerActivity(redditFrag.getNewFragment().getActivity());
         cf.url = redditFrag.getCurrentFragPL();
         FragmentTransaction trans = redditFrag.getNewFragment().getActivity().getSupportFragmentManager().beginTransaction();
+        trans.replace(R.id.main_inner, cf);
+        trans.addToBackStack(null);
+        trans.commit();
+    }
+
+    public void shareFlickr(View v) {
+        ContactsFragment cf = new ContactsFragment(shareFlickrFrag.getFlickrUrl());
+        cf.setContainerActivity(this);
+        cf.url = shareFlickrFrag.getFlickrUrl();
+        FragmentTransaction trans = shareFlickrFrag.getActivity().getSupportFragmentManager().beginTransaction();
+        trans.replace(R.id.main_inner, cf);
+        trans.addToBackStack(null);
+        trans.commit();
+    }
+
+    public void shareNews(View v) {
+        ContactsFragment cf = new ContactsFragment(shareNewsFrag.getNewsUrl());
+        cf.setContainerActivity(this);
+        cf.url = shareNewsFrag.getNewsUrl();
+        FragmentTransaction trans = shareNewsFrag.getActivity().getSupportFragmentManager().beginTransaction();
+        trans.replace(R.id.main_inner, cf);
+        trans.addToBackStack(null);
+        trans.commit();
+    }
+
+    public void shareAll(View v) {
+        ContactsFragment cf = new ContactsFragment(allSelectedFragment.getAnyUrl());
+        cf.setContainerActivity(this);
+        cf.url = allSelectedFragment.getAnyUrl();
+        FragmentTransaction trans = allSelectedFragment.getActivity().getSupportFragmentManager().beginTransaction();
         trans.replace(R.id.main_inner, cf);
         trans.addToBackStack(null);
         trans.commit();
