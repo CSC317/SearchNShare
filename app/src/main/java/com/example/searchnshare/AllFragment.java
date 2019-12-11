@@ -4,6 +4,7 @@ package com.example.searchnshare;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -549,10 +551,16 @@ public class AllFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         TextView urlView = view.findViewById(R.id.favorite_row_url);
+                        TextView titleView = view.findViewById(R.id.favorite_row_title);
+                        ImageView imageView = view.findViewById(R.id.favorite_row_image);
                         String url = urlView.getText().toString();
+                        String title = titleView.getText().toString();
+                        Bitmap image = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                         AllSelectedFragment frag = new AllSelectedFragment();
-
+                        ((MainActivity)containerActivity).setAllSelectedFragment(frag);
                         frag.setAnyUrl(url);
+                        frag.setAnyTitle(title);
+                        frag.setAnyImage(image);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         frag.setContainerActivity(containerActivity);
                         transaction.replace(R.id.main_inner, frag);

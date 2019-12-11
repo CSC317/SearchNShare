@@ -45,7 +45,7 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteListItem> {
             holder = (ViewHolder) convertView.getTag();
 
         holder.txtTitle.setText(rowItem.getTitle());
-        if (rowItem.getResource().contentEquals("Reddit")) {
+        if (rowItem.getResource().contentEquals("Reddit") || rowItem.getImageBitmap() == null) {
             Drawable myImage = context.getResources().getDrawable(R.drawable.reddit);
             holder.imageView.setImageDrawable(myImage);
         }
