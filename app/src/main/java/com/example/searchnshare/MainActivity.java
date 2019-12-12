@@ -40,6 +40,10 @@ import java.util.Date;
 
 import java.util.ArrayList;
 
+/**
+ * This class is the main activity for our SearchNShare Application. It will save the most recent
+ * search term at all times.
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static String search = "";
@@ -65,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
     String currentPhotoPath ;
     String contactEmail = "";
 
-
+    /**
+     * This method will call when the Main Activity is crated. It will check if the screen size is
+     * normal or a tablet an set the menuFragment to replace specific layouts. The Menu Fragment is
+     * then brought into the foreground.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,14 +113,31 @@ public class MainActivity extends AppCompatActivity {
         return xInches > 5.0 && yInches > 5.0;
     }
 
+    /**
+     * Sets the ALL Selected Fragment to the parameter frag.
+     *
+     * @param frag is an AllSelectedFragment.
+     */
     public void setAllSelectedFragment(AllSelectedFragment frag) {
         this.allSelectedFragment = frag;
     }
 
+    /**
+     * Sets the Favorite Selected Fragment to the parameter frag.
+     *
+     * @param frag is an FavoriteSelectedFragment.
+     */
     public void setFavSelectedFragment(FavoriteSelectedFragment frag) {
         this.favSelectedFragment = frag;
     }
 
+    /**
+     * This method is called when a menu item is selected from any menu. Depending on which item was
+     * clicked, a fragment transaction will bring the selected API fragment into the foreground.
+     *
+     * @param item is a MenuItem.
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -158,8 +185,6 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         }
         else if (item.getItemId() == R.id.all_item) {
-//            AllFragment frag = new AllFragment();
-//            allFrag = frag;
             allFrag.setContainerActivity(this);
             transaction.replace(R.id.main_inner, allFrag);
             transaction.addToBackStack(null);
@@ -191,13 +216,18 @@ public class MainActivity extends AppCompatActivity {
             else {
                 transaction.replace(R.id.main_inner, frag);
             }
-            //transaction.replace(R.id.main_inner, frag);
             transaction.addToBackStack(null);
             transaction.commit();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This method is called when a Radio Button is clicked from the main Menu. It will check the one
+     * the user selected and uncheck all of the others.
+     *
+     * @param view is the radio button view that was clicked.
+     */
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
         RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
@@ -237,22 +267,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String redditSearch(){
-        searchEdit = findViewById(R.id.reddit_field);
-        searchText = searchEdit.getText().toString();
-        if (redditFrag == null)
-            return "";
-        if (searchText.contains(" ")) {
-            String[] searchTerms = searchText.split(" ");
-            searchText = "";
-            for (int i = 0; i<searchTerms.length;i++){
-                searchText += searchTerms[i];
-                searchText += "+";
-            }
-        }
-        return searchText;
-    }
-
+    /**
+     * This method is called when the back button is pressed while in the fragment of a selected
+     * Reddit item. This method ensures the user will go back to the fragment after opening the
+     * subreddit website and have the previous post in the webview.
+     */
     @Override
     public void onBackPressed() {
         myWebView = findViewById(R.id.webView);
@@ -265,14 +284,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method calls a method in the Reddit fragment to open the current Subreddit.
+     *
+     * @param v is the view of the button clicked.
+     */
     public void openSubreddit(View v){
         redditFrag.openSubreddit();
     }
 
-//    public void redditWebViewOpen(View v){
-//        redditFrag.loadWebView();
-//    }
-
+    /**
+     * This method opens an API fragment depending on which radio button is selected on the main menu.
+     * The search term is automatically searched when entering the new fragment.
+     *
+     * @param view is the view of the "search with" button clicked.
+     */
     public void showSearch(View view) {
         EditText textField = (EditText) findViewById(R.id.text_field);
         RadioButton Meme = (RadioButton) findViewById(R.id.Meme);
@@ -282,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
         search = textField.getText().toString();
 
         if (search.equals("")){
-            search = "java";
+            search = "news";
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (Meme.isChecked()) {
@@ -338,6 +364,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method shows the individual fragment search depending on the fragment in which the user
+     * searched a new term.
+     *
+     * @param v is the view of a button clicked in one of the 4 APIs or the ALL fragment.
+     */
     public void showFragSearch(View v) {
         if (v.getId() == R.id.search_meme) {
             EditText field = findViewById(R.id.meme_field);
@@ -375,6 +407,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method adds the current reddit post to the favorites page.
+     *
+     * @param v is the view of the "favorites" button in the subreddit fragment.
+     */
     public void redditFavorites(View v) {
         SubredditFragment reference = redditFrag.getCurrentContenxt();
         String title = reference.getTitle();
@@ -385,6 +422,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method adds the current flickr post to the favorites page.
+     *
+     * @param v is the view of the "add to favorites" button in the shareFlickrfragment.
+     */
     public void flickrFavorites(View v) {
         String title = shareFlickrFrag.getTitle();
         Bitmap image = shareFlickrFrag.getImage();
@@ -395,6 +437,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method adds the current news post to the favorites page.
+     *
+     * @param v is the view of the "add to favorites" button in the share news fragment.
+     */
     public void newsFavorites(View v) {
         String website = shareNewsFrag.getWebsite();
         String content = shareNewsFrag.getContentStr();
@@ -405,6 +452,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method adds the current post to the favorites page.
+     *
+     * @param v is the view of the "add to favorites" button in the all selected fragment.
+     */
     public void ALLFavorites(View v) {
         String title = allSelectedFragment.getAnyTitle();
         Bitmap image = allSelectedFragment.getAnyImage();
@@ -415,6 +467,11 @@ public class MainActivity extends AppCompatActivity {
         ourFavorites.add(newFav);
     }
 
+    /**
+     * This method adds the current meme post to the favorites page.
+     *
+     * @param v is the view of the "add to favorites" button in the meme fragment.
+     */
     public void memeFavorites(View v) {
         String title = memeFrag.getMemeClickedtitle();
         String resource = "Meme";
@@ -425,8 +482,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
+    /**
+     * This method is called when a row in the News Fragment is clicked. It will open a new
+     * ShareNewsFragment with the current post information.
+     *
+     * @param v is the view of the news row clicked.
+     */
     public void NewsRowClick(View v) {
         LinearLayout LL = (LinearLayout) v;
         TextView contentView = v.findViewById(R.id.news_row_content);
@@ -448,6 +509,12 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    /**
+     * This method is called when a row in the Flickr Fragment is clicked. It will open a new
+     * ShareFlickrFragment with the current post information.
+     *
+     * @param v is the view of the flickr row clicked.
+     */
     public void FlickrRowClick(View v) {
         LinearLayout LL = (LinearLayout) v;
         TextView titleView = v.findViewById(R.id.flickr_row_title);
@@ -470,8 +537,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //Creates the image file of the screenshot taken of the drawing, this function was taken from
-    // CollageCreator assignment.
+    /**
+     * Creates the image file of the screenshot taken of the drawing, this function was taken from
+     * CollageCreator assignment.
+     *
+     * @param bitmap
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public File createImageFileToSend(Bitmap bitmap) {
         File file = null;
@@ -487,14 +559,18 @@ public class MainActivity extends AppCompatActivity {
         return file;
     }
 
-
-
+    /**
+     * This method is called when a row in the Contact Fragment is clicked. It will get the url of the
+     * current post and open an email with the contact's email as the receiver and the current url
+     * as an attachment.
+     *
+     * @param v is the view of the contact row clicked.
+     */
     public void onInfoClick(View v) {
         String text = ((TextView) v).getText().toString();
         String id = text.substring(text.indexOf(" :: ") + 4);
         String name = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
         Cursor emails = null;
-        System.out.println("X--------------------------------------------------------" + x);
 
         if (x == 0) {
             emails = memeFrag.getContainerActivity().getContentResolver().query(
@@ -514,15 +590,11 @@ public class MainActivity extends AppCompatActivity {
                     ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
         } else if (x == 4) {
 
-            System.out.println("----------------------------------");
-            System.out.println("USING ALL FRAG");
             emails = allSelectedFragment.getActivity().getContentResolver().query(
                     ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
                     ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
         } else if (x == 5) {
 
-            System.out.println("----------------------------------");
-            System.out.println("USING FAV FRAG");
 
             emails = favSelectedFragment.getActivity().getContentResolver().query(
                     ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
@@ -561,9 +633,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-    //Creates the image file path of the screenshot taken of the drawing. This function was taken
-    // from CollageCreator assignment
+    /**
+     * Creates the image file path of the screenshot taken of the drawing. This function was taken
+     * from CollageCreator assignment
+     *
+     * @return
+     * @throws IOException
+     */
     public File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -576,6 +652,13 @@ public class MainActivity extends AppCompatActivity {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
+    /**
+     * This method is called when the "share" button in the ShareMemeFragment is clicked and it opens
+     * the contact fragment to select the contact to send a link to.
+     *
+     * @param v is the view of the "share" button.
+     */
     public void shareMeme(View v){
         x = 0;
         ShareMemeFragment shareMemeFrag = memeFrag.getShareMemeFrag();
@@ -593,6 +676,12 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    /**
+     * This method is called when the "share" button in the SubredditFragment is clicked and it opens
+     * the contact fragment to select the contact to send a link to.
+     *
+     * @param v is the view of the "share" button.
+     */
     public void shareReddit(View v){
         x = 1;
         ContactsFragment cf = new ContactsFragment(redditFrag.getCurrentFragPL());
@@ -604,6 +693,12 @@ public class MainActivity extends AppCompatActivity {
         trans.commit();
     }
 
+    /**
+     * This method is called when the "share" button in the ShareFlickrFragment is clicked and it opens
+     * the contact fragment to select the contact to send a link to.
+     *
+     * @param v is the view of the "share" button.
+     */
     public void shareFlickr(View v) {
         x = 2;
         ContactsFragment cf = new ContactsFragment(shareFlickrFrag.getFlickrUrl());
@@ -615,6 +710,12 @@ public class MainActivity extends AppCompatActivity {
         trans.commit();
     }
 
+    /**
+     * This method is called when the "share" button in the ShareNewsFragment is clicked and it opens
+     * the contact fragment to select the contact to send a link to.
+     *
+     * @param v is the view of the "share" button.
+     */
     public void shareNews(View v) {
         x = 3;
         ContactsFragment cf = new ContactsFragment(shareNewsFrag.getNewsUrl());
@@ -626,6 +727,12 @@ public class MainActivity extends AppCompatActivity {
         trans.commit();
     }
 
+    /**
+     * This method is called when the "share" button in the AllSelectedFragment is clicked and it opens
+     * the contact fragment to select the contact to send a link to.
+     *
+     * @param v is the view of the "share" button.
+     */
     public void shareAll(View v) {
         x = 4;
         ContactsFragment cf = new ContactsFragment(allSelectedFragment.getAnyUrl());
@@ -637,6 +744,12 @@ public class MainActivity extends AppCompatActivity {
         trans.commit();
     }
 
+    /**
+     * This method is called when the "share" button in the FavoriteSelectedFragment is clicked and it opens
+     * the contact fragment to select the contact to send a link to.
+     *
+     * @param v is the view of the "share" button.
+     */
     public void shareFavs(View v) {
         x = 5;
         ContactsFragment cf = new ContactsFragment(favSelectedFragment.getURL());
@@ -648,85 +761,4 @@ public class MainActivity extends AppCompatActivity {
         trans.commit();
     }
 
-
-
-//    public void nextFragment(View v) {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        if (v.getId() == R.id.TForwardButton) {
-//            RedditFragment frag = new RedditFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//        else if (v.getId() == R.id.RForwardButton) {
-//            FlickrFragment frag = new FlickrFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//        else if (v.getId() == R.id.FForwardButton) {
-//            NewsFragment frag = new NewsFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//        else if (v.getId() == R.id.NForwardButton) {
-//            FavoritesFragment frag = new FavoritesFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//        // Favorites forward button
-//        else {
-//            MenuFragment frag = new MenuFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//    }
-//
-//    public void previousFragment(View v) {
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        if (v.getId() == R.id.TBackButton) {
-//            MenuFragment frag = new MenuFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//        else if (v.getId() == R.id.RBackButton) {
-//            TwitterFragment frag = new TwitterFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//        else if (v.getId() == R.id.FBackButton) {
-//            RedditFragment frag = new RedditFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//        else if (v.getId() == R.id.NBackButton) {
-//            FlickrFragment frag = new FlickrFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//        // Favorites back button
-//        else {
-//            NewsFragment frag = new NewsFragment();
-//            frag.setContainerActivity(this);
-//            transaction.replace(R.id.main_inner, frag);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
-//    }
 }
