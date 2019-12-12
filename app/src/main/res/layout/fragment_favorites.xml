@@ -10,6 +10,7 @@
     style="@style/GithubTheme"
     tools:context=".MainActivity">
 
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/GithubTheme"/>
+
 
 
 </LinearLayout>

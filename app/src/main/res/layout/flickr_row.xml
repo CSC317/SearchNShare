@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="#F10655"
-        android:background="#0F0F0F"
+        style="@style/FlickrTheme"
         android:textSize="25dp"/>
 
     <ImageView
@@ -21,7 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/FlickrTheme"
-        android:background="#0F0F0F"
         android:gravity="center"/>
 
     <TextView
@@ -30,7 +28,6 @@
         android:layout_height="0dp"
         android:gravity="center"
         style="@style/FlickrTheme"
-        android:textColor="#F10655"
         android:textSize="0dp"/>
 
 
