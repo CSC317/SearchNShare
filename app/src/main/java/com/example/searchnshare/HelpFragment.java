@@ -11,14 +11,21 @@ import android.view.ViewGroup;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment shows pointers on how to use the app for the user and/or the grader.
  */
 public class HelpFragment extends Fragment {
 
 
     public HelpFragment() {}
 
-
+    /**
+     * This method is called when the Help Fragment comes into the view.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -40,7 +40,8 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment shows all four APIs in a single list view. The order of the posts in the list view
+ * are Reddit, News, Flickr, and then the Meme posts.
  */
 public class AllFragment extends Fragment {
 
@@ -66,10 +67,26 @@ public class AllFragment extends Fragment {
 
     public AllFragment() {}
 
+    /**
+     * Sets the container activity to the activity passed as a parameter.
+     *
+     * @param containerActivity the current activity.
+     */
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
 
+    /**
+     * This method is called when the All Fragment comes into the view. This fragment has a menu at
+     * the top of the screen, and the text of the Edit Text of this fragment is set to the current
+     * most recent search term. The GetAllTask async task is then executed and the listView is filled
+     * with posts from all four APIs.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,6 +99,12 @@ public class AllFragment extends Fragment {
         return v;
     }
 
+    /**
+     * This method tells this fragment which menu to show at the top of the screen.
+     *
+     * @param menu is a Menu object.
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_menu, menu);
@@ -111,6 +134,11 @@ public class AllFragment extends Fragment {
         }
     }
 
+    /**
+     * This method returns a JSONArray for the Reddit API.
+     *
+     * @return a JSONArray object.
+     */
     private JSONArray getRedditInfo() {
         try {
             String json = "" ;
@@ -146,6 +174,11 @@ public class AllFragment extends Fragment {
         return null;
     }
 
+    /**
+     * This method returns a JSONArray for the News API.
+     *
+     * @return a JSONArray object.
+     */
     private JSONArray getNewsInfo() {
         try {
 
@@ -170,6 +203,11 @@ public class AllFragment extends Fragment {
         return null;
     }
 
+    /**
+     * This method returns a JSONArray for the Flickr API.
+     *
+     * @return a JSONArray object.
+     */
     private JSONArray getFlickrInfo() {
         try {
             String json = "";
@@ -195,6 +233,11 @@ public class AllFragment extends Fragment {
         return null;
     }
 
+    /**
+     * This method returns a JSONArray for the Meme API.
+     *
+     * @return a JSONArray object.
+     */
     private JSONArray getMemeInfo() {
         try {
 
@@ -228,6 +271,13 @@ public class AllFragment extends Fragment {
         return null;
     }
 
+    /**
+     * This method fills the list view of this fragment with posts from all four APIs. It uses an
+     * array of JSONArray objects, one from each API, to fill the list view. The list view will
+     * contain at most, 3 posts from each API for performance purposes.
+     *
+     * @param array is an array of JSONArray objects
+     */
     private void fillAllList(JSONArray[] array) {
         int redditIndex = 0;
         int newsIndex = 0;
@@ -305,19 +355,24 @@ public class AllFragment extends Fragment {
         }
     }
 
+    /**
+     * This method runs the GetAllTask async task when the search button on the ALL Fragment is pressed.
+     */
     public void showFragSearch() {
         new GetAllTask().execute();
     }
 
+    /**
+     * This class fills the list view of this all fragment with posts from all four APIs.
+     */
     public class GetAllTask extends AsyncTask<Object, Void, Object[]> {
 
         /**
-         * Creates a new JSON object with the current url with the given search term.
-         * Fills the contents of a String[][] with the articles information for later use.
-         * Uses a simpleAdapter for conversion into the ListView.
+         * Runs all four methods to fetch the JSONArray from each API and fills the allList ArrayList
+         * for the Listview. Also sets the AllAdapter to a new FavoritesAdapter.
          *
          * @param objs
-         * @return the List of HashMaps for the simpleAdapter.
+         * @return null
          */
         @Override
         protected JSONArray[] doInBackground(Object[] objs) {
@@ -345,9 +400,10 @@ public class AllFragment extends Fragment {
         }
 
         /**
+         * This method sets the adapter of the listView to the AllAdapter and sets the o
+         * nItemClickListener for the list view.
          *
-         *
-         * @param aList a List of HashMaps for the simpleAdapter.
+         * @param aList is not used.(null)
          */@Override
         protected void onPostExecute(Object[] aList) {
             try {

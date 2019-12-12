@@ -19,7 +19,8 @@ import java.util.ArrayList;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment shows all four APIs in a single list view. It starts off empty, but any post the
+ * user likes can be added as the last item the list view.
  */
 public class FavoritesFragment extends Fragment {
 
@@ -40,14 +41,34 @@ public class FavoritesFragment extends Fragment {
         this.containerActivity = containerActivity;
     }
 
+    /**
+     * This method sets the currentFavs ArrayList to the parameter favs.
+     *
+     * @param favs is an ArrayList<FavoriteListItem>.
+     */
     public void setFavs(ArrayList<FavoriteListItem> favs){
         this.currentFavs = favs;
     }
 
+    /**
+     * This method sets the ourAdapter FavoritesAdapter to the parameter ourAdapter.
+     *
+     * @param ourAdapter is a FavoritesAdapter object.
+     */
     public void setAdapter(FavoritesAdapter ourAdapter){
         this.ourAdapter = ourAdapter;
     }
 
+    /**
+     * This method is called when the Favorites Fragment comes into the view. This fragment has a menu at
+     * the top of the screen, and ourAdapter is set to the adapter of the list view of the fragment.
+     * The listview also has an onItemClickListener.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +91,12 @@ public class FavoritesFragment extends Fragment {
         return v;
     }
 
+    /**
+     * This method tells this fragment which menu to show at the top of the screen.
+     *
+     * @param menu is a Menu object.
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_menu, menu);

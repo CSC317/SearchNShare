@@ -32,7 +32,8 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment shows the Flickr API in a single list view. It gets the most recent search term and
+ * runs a query on the Flickr API to then fill the list view from its results.
  */
 public class FlickrFragment extends Fragment {
 
@@ -51,6 +52,17 @@ public class FlickrFragment extends Fragment {
         this.containerActivity = containerActivity;
     }
 
+    /**
+     * This method is called when the Flickr Fragment comes into the view. This fragment has a menu at
+     * the top of the screen, and the text of the Edit Text of this fragment is set to the current
+     * most recent search term. The GetImagesTask async task is then executed and the listView is filled
+     * with posts from the Flickr API.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,6 +75,12 @@ public class FlickrFragment extends Fragment {
         return v;
     }
 
+    /**
+     * This method tells this fragment which menu to show at the top of the screen.
+     *
+     * @param menu is a Menu object.
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.view_menu, menu);
@@ -93,19 +111,25 @@ public class FlickrFragment extends Fragment {
         }
     }
 
+    /**
+     * This method runs the GetImagesTask async task when the search button on the Flickr Fragment
+     * is pressed.
+     */
     public void showFragSearch() {
         new GetImagesTask().execute();
     }
 
+    /**
+     * This class fills the list view of this flickr fragment with posts from the Flickr API.
+     */
     public class GetImagesTask extends AsyncTask<Object, Void, List<FlickrRowItem>> {
 
         /**
-         * Creates a new JSON object with the current url with the given search term.
-         * Fills the contents of a String[][] with the articles information for later use.
-         * Uses a simpleAdapter for conversion into the ListView.
+         * Fetches the JSONObject and fills the rowItems ArrayList with FlickrRowItems with the correct
+         * information for each post.
          *
          * @param objs
-         * @return the List of HashMaps for the simpleAdapter.
+         * @return a List of FlickrRowItems
          */
         @Override
         protected List<FlickrRowItem> doInBackground(Object[] objs) {
@@ -159,9 +183,10 @@ public class FlickrFragment extends Fragment {
         }
 
         /**
+         * Sets the adapter of the imageListView to a new CustomAdapter to fill the list view with
+         * Flickr Posts.
          *
-         *
-         * @param aList a List of HashMaps for the simpleAdapter.
+         * @param aList a List of FlickrRowItem for the CustomAdapter.
          */@Override
         protected void onPostExecute(List<FlickrRowItem> aList) {
             try {
