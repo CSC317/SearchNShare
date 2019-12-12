@@ -7,7 +7,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/favorites_outer"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    style="@style/AppTheme"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:layout_width="match_parent"
@@ -15,7 +17,10 @@
         android:text="Favorites"
         android:textSize="30dp"
         android:gravity="center"
-        android:id="@+id/favorites_title"/>
+        android:id="@+id/favorites_title"
+        style="@style/AppTheme"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryDark"/>
 <!--        app:layout_constraintStart_toStartOf="@id/favorites_outer"-->
 <!--        app:layout_constraintTop_toTopOf="@id/favorites_outer"-->
 <!--        app:layout_constraintEnd_toEndOf="@id/favorites_outer"/>-->
@@ -34,7 +39,9 @@
     <ListView
         android:id="@+id/favorites_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        />
 <!--        app:layout_constraintStart_toStartOf="@id/favorites_outer"-->
 <!--        app:layout_constraintEnd_toEndOf="@id/favorites_outer"-->
 <!--        app:layout_constraintBottom_toBottomOf="@id/favorites_outer"-->
