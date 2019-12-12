@@ -17,9 +17,6 @@
         android:gravity="center"
         style="@style/RedditTheme"
         android:id="@+id/reddit_title"/>
-<!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
-<!--        app:layout_constraintTop_toTopOf="@id/reddit_outer"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/reddit_outer"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,9 +25,6 @@
         android:id="@+id/Rsearch"
         style="@style/RedditTheme"
         android:weightSum="4">
-<!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/reddit_title"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/reddit_outer">-->
 
         <EditText
             android:id="@+id/reddit_field"
@@ -49,20 +43,9 @@
             style="@style/RedditTheme"
             android:onClick="showFragSearch"
             android:layout_weight="3" />
-        <!--            android:onClick="showSearch"-->
 
     </LinearLayout>
 
-<!--    <Button-->
-<!--        android:id="@+id/RBackButton"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:background="@drawable/backbutton"-->
-<!--        android:onClick="previousFragment"-->
-<!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
-<!--        app:layout_constraintRight_toLeftOf="@id/reddit_post_list"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/reddit_outer"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/Rsearch"/>-->
 
     <ListView
         android:id="@+id/reddit_post_list"
@@ -70,21 +53,7 @@
         style="@style/RedditTheme"
         android:layout_height="wrap_content"
         />
-<!--        app:layout_constraintStart_toStartOf="@id/reddit_outer"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/reddit_outer"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/reddit_outer"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/Rsearch"/>-->
 
-<!--    <Button-->
-<!--        android:id="@+id/RForwardButton"-->
-<!--        android:layout_width="60dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:background="@drawable/forwardbutton"-->
-<!--        android:onClick="nextFragment"-->
-<!--        app:layout_constraintLeft_toRightOf="@id/reddit_post_list"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/reddit_outer"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/reddit_outer"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/Rsearch"/>-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

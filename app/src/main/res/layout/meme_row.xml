@@ -5,8 +5,6 @@
     android:layout_height="wrap_content"
     style="@style/GithubTheme"
     android:id="@+id/meme_row">
-    <!--    android:weightSum="5"-->
-    <!--    android:onClick="showPreview"-->
 
     <TextView
         android:id="@+id/meme_row_title"
@@ -15,7 +13,6 @@
         android:gravity="center"
         style="@style/GithubTheme"
         android:textSize="25dp"/>
-    <!--        android:layout_weight="2"/>-->
 
     <ImageView
         android:id="@+id/meme_row_image"
@@ -24,6 +21,5 @@
         style="@style/GithubTheme"
         android:gravity="center"
         />
-    <!--        android:layout_weight="3"/>-->
 
 </LinearLayout>

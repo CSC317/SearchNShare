@@ -163,18 +163,6 @@
             app:layout_constraintTop_toBottomOf="@id/News">
         </RadioButton>
 
-<!--        </LinearLayout>-->
-
-<!--        <Button-->
-<!--            android:id="@+id/forwardButton"-->
-<!--            android:layout_width="60dp"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:background="@drawable/forwardbutton"-->
-<!--            app:layout_constraintLeft_toRightOf="@id/radioButtons"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/inner"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/inner"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/search"/>-->
-        <!--            android:onClick="nextPage"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
