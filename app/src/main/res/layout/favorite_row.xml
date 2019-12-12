@@ -5,8 +5,6 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
     style="@style/AppTheme"
     android:id="@+id/favorite_row">
-<!--    android:weightSum="5"-->
-<!--    android:onClick="showPreview"-->
 
 <TextView
     android:id="@+id/favorite_row_title"
@@ -15,7 +13,6 @@ android:layout_height="wrap_content"
     android:gravity="center"
     style="@style/AppTheme"
     android:textSize="25dp"/>
-<!--        android:layout_weight="2"/>-->
 
 <ImageView
     android:id="@+id/favorite_row_image"
@@ -23,7 +20,6 @@ android:layout_height="wrap_content"
     style="@style/AppTheme"
     android:layout_height="wrap_content"
     android:gravity="center"/>
-<!--        android:layout_weight="3"/>-->
 
     <TextView
         android:id="@+id/favorite_row_url"

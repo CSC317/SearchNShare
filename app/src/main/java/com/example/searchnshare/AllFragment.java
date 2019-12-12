@@ -314,7 +314,8 @@ public class AllFragment extends Fragment {
                     String content = array[1].getJSONObject(newsIndex).getString("content");
                     String imageUrl = array[1].getJSONObject(newsIndex).getString("urlToImage");
                     String postUrl = array[1].getJSONObject(newsIndex).getString("url");
-                    Bitmap image = getBitmapFromURL(imageUrl);
+                    Bitmap image;
+                    image = getBitmapFromURL(imageUrl);
                     FavoriteListItem item = new FavoriteListItem("NEWS\n" + website + "\n" + content, image, "news");
                     item.setURL(postUrl);
                     allList.add(item);
