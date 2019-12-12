@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * This class extends ArrayAdapter and is used to populate the listView inside of the FavoritesFragment.
+ */
 public class FavoritesAdapter extends ArrayAdapter<FavoriteListItem> {
 
     Context context;
@@ -28,6 +31,15 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteListItem> {
         TextView txtTitle;
         TextView urlView;
     }
+    /**
+     * This method gets the current row and fills the views with the correct information from the
+     * current FavoriteListItem.
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         FavoriteListItem rowItem = getItem(position);
